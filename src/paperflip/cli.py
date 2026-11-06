@@ -8,11 +8,12 @@ import subprocess
 import sys
 import time
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 import numpy as np
 import pandas as pd
 from .model import load_model
 from .exact import mincut, flip_intervals
-from .solvers import simulated_annealing, dqa_aer, qaoa_aer
+from .solvers import simulated_annealing, dqa_aer, qaoa_aer, _decode
 from .metrics import observed_flip_years, flip_comparison
 from .scenarios import twelve_region, no_ties, resistance_influence
 
@@ -43,21 +44,21 @@ def _write_figures(out: Path, model, years, exact, states, energy_rows, influenc
     flip_data["Exact (canonical)"] = exact_intervals["late"]
     for method, state in states.items():
         flip_data[method] = observed_flip_years(state)[0]
-    fig, axes = plt.subplots(1, len(flip_data), figsize=(4 * len(flip_data), 7), sharey=True)
+    fig, axes = plt.subplots(1, len(flip_data), figsize=(4 * len(flip_data), 7), sharey=True,
+                             layout="constrained")
     axes = np.atleast_1d(axes)
+    cmap = plt.colormaps["viridis"].copy()
+    cmap.set_bad("#9e9e9e")
     for ax, (label, values) in zip(axes, flip_data.items()):
-        shown = np.where(values < 0, max(years) + 1, values)
-        image = ax.imshow(shown[:, None], aspect="auto", cmap="viridis",
-                          vmin=min(years), vmax=max(years) + 1)
+        shown = np.ma.masked_where(values[:, None] < 0, values[:, None])
+        image = ax.imshow(shown, aspect="auto", cmap=cmap, vmin=min(years), vmax=max(years))
         ax.set_title(label)
         ax.set_xticks([])
         ax.set_yticks(range(model.n), model.names, fontsize=7)
-        for i, value in enumerate(values):
-            if value < 0:
-                ax.text(0, i, ">2040", ha="center", va="center", color="white", fontsize=6)
-    fig.colorbar(image, ax=axes, label="first digital year; >2040 is censored")
+    fig.colorbar(image, ax=axes, label="first digital year")
+    fig.legend(handles=[Patch(facecolor="#9e9e9e", label="never flips within 2026–2040")],
+               loc="outside lower center", ncols=1)
     fig.suptitle("Tipping-point heatmap: illustrative one-region scenario")
-    fig.tight_layout()
     fig.savefig(figdir / "flip_year_heatmap.png", dpi=160)
     plt.close(fig)
     df = pd.DataFrame(energy_rows)
@@ -65,6 +66,10 @@ def _write_figures(out: Path, model, years, exact, states, energy_rows, influenc
     for method, sub in df.groupby("method"):
         ax.plot(sub.year, sub.energy_error / model.unit, marker="o",
                 linestyle="-" if len(sub) == len(years) else "None", label=method)
+        if "best_observed_bitstring" in sub and sub.best_observed_bitstring.notna().any():
+            ax.plot(sub.year, sub.best_energy_error / model.unit, marker="x",
+                    linestyle="--" if len(sub) == len(years) else "None",
+                    label=f"{method} best measured")
     ax.axhline(0, color="black", lw=.8)
     ax.set(title="Raw solver energy error vs exact min-cut", xlabel="Year", ylabel="ΔE (model units)")
     ax.legend()
@@ -108,12 +113,15 @@ def run(args) -> int:
         n = args.quantum_nodes
         qmodel = type(model)(model.names[:n], model.resistance[:n], model.ties[:n, :n], model.pressure_step, model.unit)
     dqa = {}
+    dqa_best = {}
     for year in years:
         result = dqa_aer(qmodel, year, args.seed + 1000 + year, shots=args.shots, p=args.dqa_p, total_time=args.dqa_time)
         dqa[year] = result.state
+        dqa_best[year] = _decode(result.meta["best_observed_bitstring"], qmodel.n)
         method_results.setdefault("dqa_aer", {})[year] = result
     if qmodel.n == model.n:
-        methods["dqa_aer"] = dqa
+        methods["dqa_modal"] = dqa
+        methods["dqa_best_observed"] = dqa_best
     # QAOA is tested only at representative years due to statevector grid-search cost.
     qaoa_years = [min(years), list(years)[len(years)//2], max(years)]
     qaoa_results = {}
@@ -126,11 +134,42 @@ def run(args) -> int:
             truth = mincut(qmodel if qmodel.n != model.n else model, year)
             scope = ("CLASSICAL-1R" if method == "sa" else
                      ("QUANTUM-FULL-1R" if qmodel.n == model.n else f"QUANTUM-SUBSET-{qmodel.n}"))
+            ground_shots = None
+            ground_probability = None
+            if result.samples is not None:
+                ground_shots = sum(
+                    count for bitstring, count in result.samples.items()
+                    if (qmodel if qmodel.n != model.n else model).energy(_decode(bitstring, qmodel.n), year) == truth.energy
+                )
+                ground_probability = ground_shots / result.meta["shots"]
             rows.append({"method": method, "year": year, "scope": scope,
                          "raw_energy": result.energy, "exact_energy": truth.energy, "energy_error": result.energy - truth.energy,
-                         "is_ground": result.energy == truth.energy, "seconds": result.seconds, **result.meta})
+                         "is_ground": result.energy == truth.energy, "best_energy_error": result.meta.get("best_observed_energy", result.energy) - truth.energy,
+                         "best_is_ground": result.meta.get("best_observed_energy", result.energy) == truth.energy,
+                         "ground_shots": ground_shots, "ground_shot_probability": ground_probability,
+                         "seconds": result.seconds, **result.meta})
     energy = pd.DataFrame(rows)
     energy.to_csv(out / "per_year_metrics.csv", index=False)
+    # Bounded schedule study: same full 20-node instance, representative low/mid/high
+    # pressure years, identical shot budget. This is evidence for the selected default,
+    # not an optimizer and does not use the exact result to choose schedule parameters.
+    benchmark_rows = []
+    for benchmark_year in (min(years), list(years)[len(years)//2], max(years)):
+        truth = mincut(qmodel, benchmark_year)
+        for p, total_time in ((3, 3.0), (20, 10.0), (40, 20.0)):
+            result = dqa_aer(qmodel, benchmark_year, args.seed + 3000 + benchmark_year,
+                             shots=args.shots, p=p, total_time=total_time)
+            ground_shots = sum(
+                count for bitstring, count in result.samples.items()
+                if qmodel.energy(_decode(bitstring, qmodel.n), benchmark_year) == truth.energy
+            )
+            benchmark_rows.append({"year": benchmark_year, "p": p, "total_time": total_time,
+                                   "shots": args.shots, "modal_energy_error": result.energy - truth.energy,
+                                   "best_observed_energy_error": result.meta["best_observed_energy"] - truth.energy,
+                                   "ground_shot_probability": ground_shots / args.shots,
+                                   "seconds": result.seconds, "depth": result.meta["depth"]})
+    benchmark = pd.DataFrame(benchmark_rows)
+    benchmark.to_csv(out / "dqa_schedule_benchmark.csv", index=False)
     flip_rows = []
     for method, state in methods.items():
         observed, flipback = observed_flip_years(state)
@@ -156,13 +195,25 @@ def run(args) -> int:
         f"- Exact one-region min-cut: {model.n} nodes × {len(years)} years.",
         f"- Classical 12-region exact min-cut: {regional.n} nodes × {len(years)} years in {regional_time:.3f}s.",
         f"- Quantum scope: {'full one-region 20-node model' if qmodel.n == model.n else f'ONLY {qmodel.n}-node subset; full outputs are classical'}; Aer circuit simulation, not hardware.",
-        "- DQA and QAOA results are raw modal measured bitstrings; no local search/polishing is applied.",
-        "- `per_year_metrics.csv` reports raw energy errors and failure rates (`is_ground`). `per_node_flip_metrics.csv` reports business-relevant flip-year categories, censored values, and flip-backs.",
+        "- DQA and QAOA results include a raw modal measured bitstring and the conventional best *measured* sample; no local search/polishing is applied.",
+        "- `per_year_metrics.csv` reports raw modal and best-observed energy errors, exact-ground failure rates, and ground-state shot probability. `per_node_flip_metrics.csv` reports business-relevant flip-year categories, censored values, and flip-backs.",
         "- Exact degeneracy is represented with [early, late] flip intervals. A small nonzero energy error remains an error even if it is fragile.",
         "- Ties are mutual-dependence assumptions, not causal evidence. Equilibrium years are not switching-delay dynamics.",
         "",
         "## Solver summary",
-        energy.groupby("method").agg(runs=("year", "count"), ground_rate=("is_ground", "mean"), median_seconds=("seconds", "median"), mean_energy_error=("energy_error", "mean")).to_markdown(),
+        energy.groupby("method").agg(runs=("year", "count"), modal_ground_rate=("is_ground", "mean"),
+                                     best_sample_ground_rate=("best_is_ground", "mean"),
+                                     mean_ground_shot_probability=("ground_shot_probability", "mean"),
+                                     median_seconds=("seconds", "median"),
+                                     mean_modal_energy_error=("energy_error", "mean"),
+                                     mean_best_energy_error=("best_energy_error", "mean")).to_markdown(),
+        "",
+        "## Bounded DQA schedule study (20 nodes; 4,096 shots per run)",
+        benchmark.groupby(["p", "total_time"]).agg(years=("year", "count"),
+                                                     modal_ground_rate=("modal_energy_error", lambda x: (x == 0).mean()),
+                                                     best_sample_ground_rate=("best_observed_energy_error", lambda x: (x == 0).mean()),
+                                                     mean_ground_shot_probability=("ground_shot_probability", "mean"),
+                                                     median_seconds=("seconds", "median")).to_markdown(),
     ]
     (out / "RESULTS.md").write_text("\n".join(report) + "\n")
     meta = {"config": config, "python": sys.version, "platform": platform.platform(),
@@ -179,9 +230,9 @@ def main() -> int:
     parser.add_argument("--config", default="configs/one_region.yaml")
     parser.add_argument("--out", default="results/mvp")
     parser.add_argument("--seed", type=int, default=20261106)
-    parser.add_argument("--shots", type=int, default=1024)
-    parser.add_argument("--dqa-p", type=int, default=3)
-    parser.add_argument("--dqa-time", type=float, default=3.0)
+    parser.add_argument("--shots", type=int, default=4096)
+    parser.add_argument("--dqa-p", type=int, default=40)
+    parser.add_argument("--dqa-time", type=float, default=20.0)
     parser.add_argument("--quantum-nodes", type=int, default=20)
     return run(parser.parse_args())
 
