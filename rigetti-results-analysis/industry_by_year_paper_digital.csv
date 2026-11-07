@@ -1,0 +1,21 @@
+industry,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040
+Technology,paper,digital,digital,paper,paper,digital,digital,digital,digital,paper,digital,digital,digital,digital,digital
+Media,paper,paper,paper,paper,paper,ambiguous,digital,digital,digital,digital,digital,digital,digital,digital,digital
+Telecom,paper,paper,digital,paper,paper,ambiguous,digital,digital,digital,digital,digital,digital,digital,paper,digital
+Retail,paper,paper,paper,paper,digital,paper,paper,paper,digital,digital,digital,digital,paper,digital,digital
+Hospitality,paper,paper,paper,paper,paper,paper,paper,digital,digital,digital,digital,paper,digital,digital,digital
+Logistics,paper,paper,paper,paper,paper,ambiguous,paper,paper,digital,digital,digital,digital,digital,digital,digital
+Banking,paper,paper,paper,paper,paper,ambiguous,paper,paper,paper,paper,digital,digital,digital,digital,digital
+Accounting,paper,paper,paper,paper,paper,paper,paper,paper,paper,digital,digital,paper,digital,digital,digital
+Manufacturing,paper,digital,paper,paper,paper,digital,paper,paper,digital,digital,paper,digital,digital,digital,digital
+Insurance,paper,paper,paper,paper,paper,paper,paper,paper,paper,paper,digital,digital,digital,digital,digital
+Energy,paper,digital,paper,digital,paper,ambiguous,paper,digital,paper,digital,paper,digital,paper,digital,paper
+Pharma,paper,paper,paper,paper,paper,paper,digital,paper,digital,digital,paper,paper,paper,digital,digital
+Education,paper,paper,paper,paper,paper,ambiguous,paper,digital,digital,digital,paper,digital,digital,digital,digital
+Nonprofit,paper,paper,paper,paper,paper,paper,paper,paper,paper,digital,digital,digital,paper,digital,digital
+Real Estate,paper,paper,digital,paper,paper,paper,paper,paper,paper,digital,digital,digital,digital,paper,paper
+Construction,paper,paper,paper,paper,paper,paper,paper,paper,paper,paper,paper,digital,paper,digital,paper
+Agriculture,digital,paper,paper,paper,paper,paper,paper,paper,paper,paper,digital,paper,digital,paper,digital
+Healthcare,paper,paper,paper,paper,paper,paper,paper,paper,digital,paper,paper,paper,digital,digital,digital
+Government,paper,paper,paper,paper,paper,paper,paper,paper,paper,paper,paper,digital,digital,paper,paper
+Legal,paper,paper,paper,paper,paper,paper,paper,paper,paper,paper,paper,digital,digital,paper,paper
