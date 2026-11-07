@@ -93,3 +93,11 @@ p=2 MAP-plan selections. Target selection spans five regions, so neither its
 markers nor its bit convention are adoption probabilities. All target markers
 are placed at the planning year; 2035–2040 are explicitly no-eligible-target
 columns.
+
+For the primary comparison, the script also creates two non-blended
+foreground heatmaps: exact target `x_i` (classical) and p=2 target
+`P(x_i=1)` (quantum). Their cell palettes and colorbars are intentionally
+different; the saved Pacific NW adoption flip markers are white context
+annotations only. The same black × exact-reference mask appears on both
+panels. It is not evidence that p=2 produces the exact feasible plan; the
+separate p=2 MAP plan remains in the recommendation CSV.

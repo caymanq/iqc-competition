@@ -15,6 +15,7 @@ import time
 
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+import matplotlib.patheffects as path_effects
 import numpy as np
 
 from run_constrained_target_qaoa import (
@@ -173,6 +174,29 @@ def draw_adoption(ax: plt.Axes, probability: np.ndarray, industries: list[str], 
     return image
 
 
+def draw_adoption_flip_context(ax: plt.Axes, flip_markers: list[dict]) -> None:
+    """Draw saved adoption flip annotations without plotting adoption probability."""
+    white_outline = [path_effects.Stroke(linewidth=2.4, foreground="black"), path_effects.Normal()]
+    for index, marker in enumerate(flip_markers):
+        early, late = marker["earliest_digital_year"], marker["latest_digital_year"]
+        if marker["has_exact_degeneracy"]:
+            left, right = YEARS.index(marker["degenerate_years"][0]), YEARS.index(marker["degenerate_years"][-1])
+            line = ax.hlines(index, left, right, color="white", linewidth=1.5, zorder=4)
+            line.set_path_effects(white_outline)
+        if marker["never_digital_through_window"]:
+            ax.scatter([len(YEARS) - 1], [index], marker=">", s=55, facecolors="none",
+                       edgecolors="white", linewidths=1.4, zorder=5, path_effects=white_outline)
+        elif marker["already_digital_at_window_start"]:
+            ax.scatter([0], [index], marker="<", s=55, color="white", linewidths=1.4,
+                       zorder=5, path_effects=white_outline)
+        elif marker["degenerate_tipping_interval"]:
+            ax.scatter([YEARS.index(early), YEARS.index(late)], [index, index], marker="|", s=85,
+                       color="white", linewidths=1.5, zorder=5, path_effects=white_outline)
+        else:
+            ax.scatter([YEARS.index(early)], [index], marker="x", s=32, color="white", linewidths=1.4,
+                       zorder=5, path_effects=white_outline)
+
+
 def overlay_target_markers(
     ax: plt.Axes, results: list[dict], adoption_industries: list[str], *, p2_circles: bool,
 ) -> None:
@@ -278,6 +302,141 @@ def plot_main_overlay(results: list[dict]) -> None:
     plt.close(fig)
 
 
+def target_values_on_adoption_axes(results: list[dict]) -> tuple[np.ndarray, np.ndarray, list[str], list[dict]]:
+    """Return exact and p=2 target values aligned to the saved adoption rows."""
+    _, adoption_industries, flips = _adoption_background()
+    index = {name: row for row, name in enumerate(adoption_industries)}
+    exact_values = np.full((len(adoption_industries), len(YEARS)), np.nan)
+    quantum_values = np.full_like(exact_values, np.nan)
+    for column, result in enumerate(results):
+        if result["status"] != "completed":
+            continue
+        for position, item in enumerate(result["items"]):
+            row = index[item["industry"]]
+            exact_values[row, column] = result["exact_representative_selection"][position]
+            quantum_values[row, column] = result["p2"]["marginals"][position]
+    return exact_values, quantum_values, adoption_industries, flips
+
+
+def _draw_target_foreground(
+    ax: plt.Axes, values: np.ndarray, industries: list[str], flips: list[dict],
+    *, title: str, cmap_name: str, colorbar_label: str, discrete: bool,
+) -> tuple[object, np.ndarray]:
+    cmap = plt.get_cmap(cmap_name).copy()
+    cmap.set_bad("#d9d9d9")
+    image = ax.imshow(values, aspect="auto", cmap=cmap, vmin=0, vmax=1,
+                      interpolation="nearest")
+    _style_axis(ax, industries)
+    ax.set_title(title, color="black")
+    # White adoption markers are context only. A black outline keeps their
+    # white center visible on either target foreground palette.
+    draw_adoption_flip_context(ax, flips)
+    exact_mask = np.isclose(values, 1.0) if discrete else None
+    return image, exact_mask
+
+
+def plot_distinct_target_heatmaps(results: list[dict]) -> None:
+    """Render classical and p=2 values without blending them with adoption P."""
+    exact_values, quantum_values, industries, flips = target_values_on_adoption_axes(results)
+    shared_black_mask = np.isclose(exact_values, 1.0)
+    # The exact selection mask is intentionally the same reference layer in
+    # both plots, not an assertion that p=2 returns the same feasible plan.
+    classical_mask = np.isclose(exact_values, 1.0)
+    quantum_reference_mask = np.isclose(exact_values, 1.0)
+    assert np.array_equal(classical_mask, quantum_reference_mask)
+    assert not np.allclose(exact_values[~np.isnan(exact_values)], quantum_values[~np.isnan(quantum_values)])
+
+    def draw_shared_crosses(ax: plt.Axes) -> None:
+        rows, columns = np.where(shared_black_mask)
+        ax.scatter(columns, rows, marker="x", s=82, color="black", linewidths=2.0, zorder=8)
+
+    specs = [
+        (exact_values, "Exact classical target selection over adoption flip context",
+         "target_classical_over_adoption_context", "YlGnBu",
+         "Exact target selection xᵢ (bit 1); representative tied optimum"),
+        (quantum_values, "p=2 QAOA target marginal over adoption flip context",
+         "target_p2_over_adoption_context", "magma",
+         "Ideal p=2 QAOA P(target selected = bit 1)"),
+    ]
+    for values, title, filename, cmap, label in specs:
+        fig = plt.figure(figsize=(17, 8), facecolor="white")
+        grid = fig.add_gridspec(1, 2, width_ratios=(1, .42), wspace=.22)
+        ax = fig.add_subplot(grid[0, 0])
+        legend_axis = fig.add_subplot(grid[0, 1])
+        legend_axis.axis("off")
+        fig.patch.set_facecolor("white")
+        image, _ = _draw_target_foreground(ax, values, industries, flips, title=title, cmap_name=cmap,
+                                             colorbar_label=label, discrete=values is exact_values)
+        draw_shared_crosses(ax)
+        cbar = fig.colorbar(image, ax=ax, label=label)
+        cbar.ax.tick_params(colors="black"); cbar.ax.yaxis.label.set_color("black")
+        legend_axis.legend(handles=[
+            Line2D([0], [0], marker="x", color="white", markeredgewidth=1.5, markeredgecolor="black",
+                   linestyle="None", label="saved Pacific NW adoption exact flip"),
+            Line2D([0], [0], marker="x", color="black", linestyle="None",
+                   label="shared exact target recommendation"),
+        ], loc="upper left", fontsize=10, framealpha=.95)
+        legend_axis.text(.02, .52,
+                         "The black × positions are intentionally\nidentical in both heatmaps: they are\n"
+                         "the exact reference, not a claim that\np=2 returns the same MAP plan.\n\n"
+                         "Tied industry sets and tied-best\nregional alternatives are in the CSV.",
+                         color="black", fontsize=10, va="top", transform=legend_axis.transAxes)
+        fig.text(.01, .01,
+                 "Cell color is target selection only: classical left value is exact xᵢ; quantum value is p=2 "
+                 "P(xᵢ=1). White markers are saved Pacific NW adoption flip context, not cell values. "
+                 "Black × is the same exact feasible target recommendation in both plots; ties are in CSV.",
+                 color="black", fontsize=8)
+        fig.tight_layout(rect=(0, .04, 1, 1))
+        for suffix in ("png", "svg"):
+            fig.savefig(OUT / f"{filename}.{suffix}", dpi=220, bbox_inches="tight", facecolor="white")
+        plt.close(fig)
+
+    # The requested aligned comparison: intentionally separate colorbars and
+    # palettes, because one panel is a binary exact selection and the other is
+    # a quantum marginal probability.
+    fig = plt.figure(figsize=(25, 8), facecolor="white")
+    grid = fig.add_gridspec(1, 3, width_ratios=(1, 1, .38), wspace=.17)
+    left = fig.add_subplot(grid[0, 0])
+    right = fig.add_subplot(grid[0, 1], sharey=left)
+    legend_axis = fig.add_subplot(grid[0, 2])
+    legend_axis.axis("off")
+    axes = (left, right)
+    fig.patch.set_facecolor("white")
+    first, _ = _draw_target_foreground(
+        axes[0], exact_values, industries, flips,
+        title="Classical: exact target selection", cmap_name="YlGnBu",
+        colorbar_label="Exact xᵢ (bit 1)", discrete=True,
+    )
+    second, _ = _draw_target_foreground(
+        axes[1], quantum_values, industries, flips,
+        title="Quantum: p=2 target-selection marginal", cmap_name="magma",
+        colorbar_label="p=2 P(xᵢ=1)", discrete=False,
+    )
+    draw_shared_crosses(axes[0]); draw_shared_crosses(axes[1])
+    for image, axis, label in [(first, axes[0], "Exact xᵢ (bit 1)"), (second, axes[1], "p=2 P(xᵢ=1)")]:
+        cbar = fig.colorbar(image, ax=axis, fraction=.046, pad=.04, label=label)
+        cbar.ax.tick_params(colors="black"); cbar.ax.yaxis.label.set_color("black")
+    legend_axis.legend(handles=[
+        Line2D([0], [0], marker="x", color="white", markeredgewidth=1.5, markeredgecolor="black",
+               linestyle="None", label="saved Pacific NW adoption exact flip"),
+        Line2D([0], [0], marker="x", color="black", linestyle="None",
+               label="shared exact target recommendation"),
+    ], loc="upper left", fontsize=9, framealpha=.95)
+    legend_axis.text(.02, .52, "Black × positions are identical\nexact-reference targets in both\n"
+                     "panels. They do not claim p=2\nreturns the same MAP plan.\n\n"
+                     "Tied sets and tied-best regions\nare recorded in the CSV.",
+                     color="black", fontsize=10, va="top", transform=legend_axis.transAxes)
+    fig.text(.01, .01,
+             "No adoption and target probabilities are blended. Left foreground is exact target xᵢ; right is p=2 "
+             "target marginal P(xᵢ=1). White flip markers provide saved adoption context. Black × mask is identical.",
+             color="black", fontsize=9)
+    fig.tight_layout(rect=(0, .04, 1, 1))
+    for suffix in ("png", "svg"):
+        fig.savefig(OUT / f"target_classical_vs_p2_over_adoption_context.{suffix}",
+                    dpi=220, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+
+
 def plot_target_heatmaps(results: list[dict], industries: list[str], p1_results: list[dict]) -> None:
     p2 = industry_matrix(results, industries, "p2")
     p1 = np.full_like(p2, np.nan)
@@ -361,6 +520,7 @@ def write_outputs(results: list[dict], industries: list[str]) -> None:
     plot_target_heatmaps(results, industries, p1)
     plot_overlay(results)
     plot_main_overlay(results)
+    plot_distinct_target_heatmaps(results)
 
 
 def tests() -> None:
@@ -389,6 +549,7 @@ def main(argv: list[str] | None = None) -> None:
         saved = json.loads((OUT / "yearly_results.json").read_text())["results"]
         plot_overlay(saved)
         plot_main_overlay(saved)
+        plot_distinct_target_heatmaps(saved)
         print(f"Re-rendered saved overlays in {OUT}; no simulation evaluated")
         return
     rows = load_rows(INPUT / "quantum_flip_years.csv")

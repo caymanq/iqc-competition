@@ -392,7 +392,7 @@
       "bytes": 458292
     },
     "results/target_selection_qaoa_p2_4year/adoption_target_selection_overlay.svg": {
-      "sha256": "89258ac4bf65e2607cc718f5095ffb8996d6a16d45a83120fe72db286a2da7ce",
+      "sha256": "8c6f655643059ee5f40c05bde20d47ebcaa3400363fdc5533bcf5fae7d902a52",
       "bytes": 220431
     },
     "results/target_selection_qaoa_p2_4year/adoption_target_selection_overlay_panels.png": {
@@ -400,7 +400,7 @@
       "bytes": 596218
     },
     "results/target_selection_qaoa_p2_4year/adoption_target_selection_overlay_panels.svg": {
-      "sha256": "9d0b46528b6b40afae5bd86786907d32ebd3704148028b0e5423a3c5356028e9",
+      "sha256": "e12d4cb67667b97999de7a0c8d60fb8d0f82a43a205fea4832ca608787fc6a77",
       "bytes": 284638
     },
     "results/target_selection_qaoa_p2_4year/p2_minus_p1_marginal_heatmap.png": {
@@ -410,6 +410,30 @@
     "results/target_selection_qaoa_p2_4year/p2_selection_marginal_heatmap.png": {
       "sha256": "bf5b3ef1046bc8ca2f65c94456634a389665dbc00cb2e3661817caf059d1fc77",
       "bytes": 170807
+    },
+    "results/target_selection_qaoa_p2_4year/target_classical_over_adoption_context.png": {
+      "sha256": "59a3667c9ea4161f2f0e3e1a8cad835a2f94f46e6b813754f6fb4e5e35dfe49c",
+      "bytes": 305792
+    },
+    "results/target_selection_qaoa_p2_4year/target_classical_over_adoption_context.svg": {
+      "sha256": "85a615cfd946a7e16fde06e48c659f644dc1ede5eb2f5ea1d26e2bba34b462fc",
+      "bytes": 144770
+    },
+    "results/target_selection_qaoa_p2_4year/target_classical_vs_p2_over_adoption_context.png": {
+      "sha256": "3fce878a40f8180745d60ea154d22fe3040d69d082b4177fe5c92a9dbe755289",
+      "bytes": 438057
+    },
+    "results/target_selection_qaoa_p2_4year/target_classical_vs_p2_over_adoption_context.svg": {
+      "sha256": "566859b156c532e0f0f7061445e0109f3703a6e5f892f597bf6b7941dc53ed67",
+      "bytes": 204016
+    },
+    "results/target_selection_qaoa_p2_4year/target_p2_over_adoption_context.png": {
+      "sha256": "b6d1a14da004b429f5586f8a443236ff5029fff2b107ce6a212a3b5a66a1c35b",
+      "bytes": 311612
+    },
+    "results/target_selection_qaoa_p2_4year/target_p2_over_adoption_context.svg": {
+      "sha256": "3731fe1424f99ab779676c10bf4c4093f3d981ca14ce09cb95510093c6cb4f08",
+      "bytes": 144094
     },
     "results/target_selection_qaoa_p2_4year/yearly_metrics.csv": {
       "sha256": "85886ac91a11eca951f588a7d6f1d2a1b50df5e5ce1d22c3acccde134a01e7e0",
@@ -600,8 +624,8 @@
       "bytes": 10
     },
     "target_qaoa/README.md": {
-      "sha256": "887e3f0290504887dc35158ec516213f6111ed7e21d0ab458b9d089c0881e775",
-      "bytes": 4255
+      "sha256": "3439bf0abd08b1d8127a8f31d3685c27ff404f55e57b95e4b33e6292cb3d8bc5",
+      "bytes": 4741
     },
     "target_qaoa/__pycache__/run_constrained_target_qaoa.cpython-312.pyc": {
       "sha256": "ee1e99faeb71456bf7c59cb725d240439089f8f9a443d4715c32a045dcaea3c3",
@@ -612,8 +636,8 @@
       "bytes": 16283
     },
     "target_qaoa/run_p2_target_qaoa_overlay.py": {
-      "sha256": "622377627a0d63ecb50e82827dfe1826782af0573771392caaf4e7d9e2ed4389",
-      "bytes": 22947
+      "sha256": "8c845b67fe35791c28862582579a8dab4386e192f1c0e3529587c7cda328c715",
+      "bytes": 32500
     },
     "tests/__pycache__/test_dashboard.cpython-312-pytest-9.2.0.pyc": {
       "sha256": "eeee1d30906e3fab3893dd0c203d173e95a0f24b8b659ffa03a280b7c5b71dd7",
