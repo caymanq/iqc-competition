@@ -33,6 +33,9 @@ Launch/open `notebooks/paperflip_dashboard.ipynb` in qBraid Lab. Its bootstrap r
 - `artifacts/dashboard_pins/`: fixed 2033 local-Aer DQA raw counts, provenance, and histogram.
 - `artifacts/qaoa_yearly_probability_pacific_nw.*`: fixed 2026–2040 local-statevector p=1 QAOA heatmap and provenance.
 - `lab_saved/`: preserved user-recovered Lab originals, never used to silently replace the reviewed notebook.
+- `results/supplied_user_results_20261107/`: user-supplied planning,
+  annual target-selection, archived comparison, and theoretical/white-plot
+  files, with provenance and scope labels separate from measured CPU results.
 
 ## qBraid account boundary
 

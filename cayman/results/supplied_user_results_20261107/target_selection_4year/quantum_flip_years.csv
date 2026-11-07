@@ -1,0 +1,101 @@
+industry,region,base_resistance,flip_year
+Technology,California,0.1,2029
+Technology,Pacific NW,0.1,2029
+Technology,Texas,0.1,2029
+Technology,Mountain West,0.1,2029
+Technology,Southwest,0.1,2029
+Media,California,0.2,2029
+Media,Pacific NW,0.2,2029
+Media,Texas,0.2,2029
+Media,Mountain West,0.2,2029
+Media,Southwest,0.2,2029
+Telecom,California,0.25,2029
+Telecom,Pacific NW,0.25,2029
+Telecom,Texas,0.25,2029
+Telecom,Mountain West,0.25,2029
+Telecom,Southwest,0.25,2029
+Retail,California,0.3,2031
+Retail,Pacific NW,0.3,2031
+Retail,Texas,0.3,2031
+Retail,Mountain West,0.3,2031
+Retail,Southwest,0.3,2031
+Hospitality,California,0.35,2031
+Hospitality,Pacific NW,0.35,2031
+Hospitality,Texas,0.35,2031
+Hospitality,Mountain West,0.35,2031
+Hospitality,Southwest,0.35,2031
+Logistics,California,0.4,2033
+Logistics,Pacific NW,0.4,2033
+Logistics,Texas,0.4,2033
+Logistics,Mountain West,0.4,2033
+Logistics,Southwest,0.4,2033
+Manufacturing,California,0.5,2033
+Manufacturing,Pacific NW,0.5,2033
+Manufacturing,Texas,0.5,2033
+Manufacturing,Mountain West,0.5,2033
+Manufacturing,Southwest,0.5,2033
+Energy,California,0.55,2033
+Energy,Pacific NW,0.55,2033
+Energy,Texas,0.55,2033
+Energy,Mountain West,0.55,2033
+Energy,Southwest,0.55,2033
+Agriculture,California,0.7,2033
+Agriculture,Pacific NW,0.7,2034
+Agriculture,Texas,0.7,2035
+Agriculture,Mountain West,0.7,2035
+Agriculture,Southwest,0.7,2035
+Banking,California,0.45,2034
+Banking,Pacific NW,0.45,2034
+Banking,Texas,0.45,2035
+Banking,Mountain West,0.45,2035
+Banking,Southwest,0.45,2035
+Accounting,California,0.5,2034
+Accounting,Pacific NW,0.5,2034
+Accounting,Texas,0.5,2035
+Accounting,Mountain West,0.5,2035
+Accounting,Southwest,0.5,2035
+Insurance,California,0.55,2034
+Insurance,Pacific NW,0.55,2034
+Insurance,Texas,0.55,2035
+Insurance,Mountain West,0.55,2035
+Insurance,Southwest,0.55,2035
+Pharma,California,0.6,2034
+Pharma,Pacific NW,0.6,2034
+Pharma,Texas,0.6,2035
+Pharma,Mountain West,0.6,2035
+Pharma,Southwest,0.6,2035
+Education,California,0.6,2034
+Education,Pacific NW,0.6,2034
+Education,Texas,0.6,2035
+Education,Mountain West,0.6,2035
+Education,Southwest,0.6,2035
+Nonprofit,California,0.65,2034
+Nonprofit,Pacific NW,0.65,2034
+Nonprofit,Texas,0.65,2035
+Nonprofit,Mountain West,0.65,2035
+Nonprofit,Southwest,0.65,2035
+Real Estate,California,0.65,2034
+Real Estate,Pacific NW,0.65,2034
+Real Estate,Texas,0.65,2035
+Real Estate,Mountain West,0.65,2035
+Real Estate,Southwest,0.65,2035
+Construction,California,0.7,2034
+Construction,Pacific NW,0.7,2034
+Construction,Texas,0.7,2035
+Construction,Mountain West,0.7,2035
+Construction,Southwest,0.7,2035
+Healthcare,California,0.75,2034
+Healthcare,Pacific NW,0.75,2034
+Healthcare,Texas,0.75,2035
+Healthcare,Mountain West,0.75,2035
+Healthcare,Southwest,0.75,2035
+Government,California,0.85,2034
+Government,Pacific NW,0.85,2034
+Government,Texas,0.85,2035
+Government,Mountain West,0.85,2035
+Government,Southwest,0.85,2035
+Legal,California,0.9,2034
+Legal,Pacific NW,0.9,2034
+Legal,Texas,0.9,2035
+Legal,Mountain West,0.9,2035
+Legal,Southwest,0.9,2035

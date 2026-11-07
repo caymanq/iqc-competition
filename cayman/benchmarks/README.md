@@ -54,3 +54,9 @@ exponentially for this simulator; max-flow has a different scaling regime.
 All completed rows are marked `completed`; no timeout/censored row was needed
 on the recorded VM run. `results/RUN_NOTES.md` records the n=26 memory
 ceiling and why n=28 was intentionally not attempted.
+
+`extend_classical.py` then uses a 90-second timeout and 3.5 GiB address-space
+cap per fresh process. It records completed n=4000/6000/8000 rows and the
+n=10000 memory-cap stop in `results/classical_extension.csv`; those classical
+rows are included in the primary plot without pretending QAOA was simulated
+there.

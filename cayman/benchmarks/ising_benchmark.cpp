@@ -174,6 +174,20 @@ bool tests() {
 int main(int argc,char** argv) {
   std::string mode=argc>1?argv[1]:"run", output=argc>2?argv[2]:"results/raw.csv";
   if(mode=="--test") { bool ok=tests(); std::cout<<(ok?"PASS\n":"FAIL\n"); return ok?0:1; }
+  if(mode=="--classical-one") {
+    if(argc<3) { std::cerr<<"usage: --classical-one N\n"; return 2; }
+    try {
+      int n=std::stoi(argv[2]); uint64_t seed=20261107ULL+1000*n;
+      auto start=Clock::now(); Instance x=make_dense(n,seed); double build=seconds(start);
+      start=Clock::now(); Exact exact=mincut(x); double cut=seconds(start);
+      std::cout<<std::setprecision(17)
+               <<"{\"n\":"<<n<<",\"seed\":"<<seed<<",\"graph_build_s\":"<<build
+               <<",\"mincut_s\":"<<cut<<",\"exact_energy\":"<<exact.energy<<"}\n";
+      return 0;
+    } catch(const std::bad_alloc&) {
+      std::cerr<<"memory_cap_or_allocation_failure\n"; return 3;
+    }
+  }
   std::ofstream out(output); if(!out) { std::cerr<<"cannot open "<<output<<"\n"; return 2; } csv_header(out);
   const std::vector<int> common={4,6,8,10,12,14,16,18,20,22,24,26};
   const std::vector<int> classical={20,40,80,120,160,200,240,500,1000,2000};

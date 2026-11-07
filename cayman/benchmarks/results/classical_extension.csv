@@ -1,0 +1,5 @@
+family,n,repeat,seed,graph_build_s,energy_precompute_s,mincut_s,qaoa_one_eval_s,qaoa_optimizer_s,qaoa_eval_count,exact_energy,qaoa_expected_energy,qaoa_ground_probability,qaoa_norm,status,peak_rss_kb,timeout_s,memory_cap_bytes,stderr
+classical_extension,4000,0,24261107,0.115865896,0,2.412499854,0,0,0,-2204.2168591389795,0,0,0,completed,642444,90,3758096384,
+classical_extension,6000,0,26261107,0.25434034,0,5.111075154,0,0,0,-3286.7851530251028,0,0,0,completed,1571340,90,3758096384,
+classical_extension,8000,0,28261107,0.538415706,0,11.637610251,0,0,0,-4373.71447516228,0,0,0,completed,2535428,90,3758096384,
+classical_extension,10000,0,30261107,3.3646753870016255,0,,0,0,0,,0,0,0,memory_cap,2968552,90,3758096384,memory_cap_or_allocation_failure | 
