@@ -359,6 +359,34 @@
       "sha256": "86251443b193cdb53e32dc4aaeeedee6d2baf71b04b9b18a637477e08f66f4e1",
       "bytes": 160029
     },
+    "results/target_selection_qaoa_4year/exact_selection_heatmap.png": {
+      "sha256": "cd94a91a6a0d5640876a6d1677257068d14e7f3b32a11a9dbd26a907f29cb698",
+      "bytes": 138670
+    },
+    "results/target_selection_qaoa_4year/industry_region_mapping.csv": {
+      "sha256": "d36e4a63c5fc898705f1ec07bca0ec172bc49c95fa8b125add82f81b06020fe8",
+      "bytes": 9101
+    },
+    "results/target_selection_qaoa_4year/qaoa_minus_uniform_heatmap.png": {
+      "sha256": "580f4d476e271b13d2213632abafe5d9e6f4881afa16fab5a235f5546845dd4c",
+      "bytes": 141818
+    },
+    "results/target_selection_qaoa_4year/qaoa_selection_marginal_heatmap.png": {
+      "sha256": "049c5f9eecb4d27f11dc95c9c16508f472bcea456fcde909c8f4a5519b9634c6",
+      "bytes": 140998
+    },
+    "results/target_selection_qaoa_4year/uniform_feasible_marginal_heatmap.png": {
+      "sha256": "7c71bc0b72af9824b13e28d95f9cb7d076ea30a240b2730890686c352c4294cc",
+      "bytes": 134138
+    },
+    "results/target_selection_qaoa_4year/yearly_metrics.csv": {
+      "sha256": "d7836b4afcf40eb14e7e442d44e95a8c0d54321fd62c2f3295ada25816937aee",
+      "bytes": 3206
+    },
+    "results/target_selection_qaoa_4year/yearly_results.json": {
+      "sha256": "9b0eb9226cd2371ad243d238e22c41e984ce9277c22db0b8b69e106c8bbaf954",
+      "bytes": 35527
+    },
     "scripts/build_dashboard_bundle.py": {
       "sha256": "f923f96a2335ea4e39e841019baa10d05f95e82c7bc65b6580e64ef8e6d898c3",
       "bytes": 1670
@@ -534,6 +562,14 @@
     "src/paperflip.egg-info/top_level.txt": {
       "sha256": "4e0d40284e07bc67dcb89364105d29378519e3d940e20628a15353b2d529780f",
       "bytes": 10
+    },
+    "target_qaoa/README.md": {
+      "sha256": "c7b648904ced243729ed18d8099354b6147c0cc637609a781ecd0b59b8173132",
+      "bytes": 2868
+    },
+    "target_qaoa/run_constrained_target_qaoa.py": {
+      "sha256": "977b4c1bfea908f4e8009add89b40ff09d5619753b17f97b36c3d2ea9deeac11",
+      "bytes": 16283
     },
     "tests/__pycache__/test_dashboard.cpython-312-pytest-9.2.0.pyc": {
       "sha256": "eeee1d30906e3fab3893dd0c203d173e95a0f24b8b659ffa03a280b7c5b71dd7",
