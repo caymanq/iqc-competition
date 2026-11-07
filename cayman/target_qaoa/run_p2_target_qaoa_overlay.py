@@ -200,30 +200,42 @@ def overlay_target_markers(
 
 def plot_overlay(results: list[dict]) -> None:
     probability, adoption_industries, flips = _adoption_background()
-    fig, axes = plt.subplots(1, 2, figsize=(22, 8), facecolor="white", sharey=True)
+    # Reserve a dedicated right-hand column for the legend.  In particular,
+    # never attach it to an axes whose colorbar can cover the legend text.
+    fig = plt.figure(figsize=(25, 8), facecolor="white")
+    grid = fig.add_gridspec(1, 3, width_ratios=(1, 1, .43), wspace=.16)
+    left = fig.add_subplot(grid[0, 0])
+    right = fig.add_subplot(grid[0, 1], sharey=left)
+    legend_axis = fig.add_subplot(grid[0, 2])
+    legend_axis.axis("off")
     fig.patch.set_facecolor("white")
-    image = draw_adoption(axes[0], probability, adoption_industries, flips)
-    overlay_target_markers(axes[0], results, adoption_industries, p2_circles=False)
-    axes[0].set_title("Saved Pacific NW adoption background + exact target choices", color="black")
-    image = draw_adoption(axes[1], probability, adoption_industries, flips)
-    overlay_target_markers(axes[1], results, adoption_industries, p2_circles=True)
-    axes[1].set_title("Saved adoption background + p=2 target marginals and feasible MAP plan", color="black")
-    cbar = fig.colorbar(image, ax=axes, shrink=.92, label="Saved Pacific NW QAOA P(industry digital = bit 0)")
+    image = draw_adoption(left, probability, adoption_industries, flips)
+    overlay_target_markers(left, results, adoption_industries, p2_circles=False)
+    left.set_title("Saved Pacific NW adoption + exact target choices", color="black")
+    image = draw_adoption(right, probability, adoption_industries, flips)
+    overlay_target_markers(right, results, adoption_industries, p2_circles=True)
+    right.set_title("Saved adoption + p=2 target marginals and feasible MAP plan", color="black")
+    cbar = fig.colorbar(image, ax=(left, right), fraction=.028, pad=.025,
+                        label="Saved Pacific NW QAOA P(industry digital = bit 0)")
     cbar.ax.yaxis.label.set_color("black"); cbar.ax.tick_params(colors="black")
     legend = [
         Line2D([0], [0], marker="x", color="white", linestyle="None", label="adoption exact flip year"),
-        Line2D([0], [0], marker="x", color="black", linestyle="None", markersize=8, label="exact target recommendation"),
+        Line2D([0], [0], marker="x", color="black", linestyle="None", markersize=8,
+               label="exact target recommendation (representative; tied alternatives in CSV)"),
         Line2D([0], [0], marker="o", color="#d81b60", fillstyle="none", linestyle="None", markersize=8,
                label="p=2 target P(selected bit 1): circle area"),
         Line2D([0], [0], marker="s", color="black", fillstyle="none", linestyle="None", markersize=8,
                label="p=2 feasible MAP-plan recommendation"),
     ]
-    axes[1].legend(handles=legend, loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8, framealpha=.95)
+    legend_axis.legend(handles=legend, loc="upper left", fontsize=10, framealpha=.95)
+    legend_axis.text(.02, .50, "Exact tied industry sets and tied-best\nregional alternatives are recorded in\n"
+                     "yearly_metrics.csv and yearly_recommendations.csv.", color="black", fontsize=10,
+                     va="top", transform=legend_axis.transAxes)
     fig.text(.01, .01,
              "Background: unchanged independent Pacific NW adoption (digital = bit 0). Markers: five-region "
              "target-selection optimization (selected = bit 1), placed at planning year. 2035–2040 have no eligible targets.",
              color="black", fontsize=9)
-    fig.tight_layout(rect=(0, .04, .91, 1))
+    fig.tight_layout(rect=(0, .04, 1, 1))
     for suffix in ("png", "svg"):
         fig.savefig(OUT / f"adoption_target_selection_overlay_panels.{suffix}", dpi=220, bbox_inches="tight", facecolor="white")
     plt.close(fig)
@@ -232,26 +244,35 @@ def plot_overlay(results: list[dict]) -> None:
 def plot_main_overlay(results: list[dict]) -> None:
     """Produce a readable single-panel attachment in addition to the pair."""
     probability, adoption_industries, flips = _adoption_background()
-    fig, ax = plt.subplots(figsize=(13, 8), facecolor="white")
+    # A distinct legend column prevents the colorbar from obscuring key text.
+    fig = plt.figure(figsize=(17, 8), facecolor="white")
+    grid = fig.add_gridspec(1, 2, width_ratios=(1, .42), wspace=.22)
+    ax = fig.add_subplot(grid[0, 0])
+    legend_axis = fig.add_subplot(grid[0, 1])
+    legend_axis.axis("off")
     fig.patch.set_facecolor("white")
     image = draw_adoption(ax, probability, adoption_industries, flips)
     overlay_target_markers(ax, results, adoption_industries, p2_circles=True)
     ax.set_title("Saved Pacific NW adoption background + p=2 target-selection overlay", color="black")
     cbar = fig.colorbar(image, ax=ax, label="Saved Pacific NW QAOA P(industry digital = bit 0)")
     cbar.ax.yaxis.label.set_color("black"); cbar.ax.tick_params(colors="black")
-    ax.legend(handles=[
+    legend_axis.legend(handles=[
         Line2D([0], [0], marker="x", color="white", linestyle="None", label="adoption exact flip year"),
-        Line2D([0], [0], marker="x", color="black", linestyle="None", markersize=8, label="exact target recommendation"),
+        Line2D([0], [0], marker="x", color="black", linestyle="None", markersize=8,
+               label="exact target recommendation (representative; tied alternatives in CSV)"),
         Line2D([0], [0], marker="o", color="#d81b60", fillstyle="none", linestyle="None", markersize=8,
                label="p=2 target P(selected bit 1): circle area"),
         Line2D([0], [0], marker="s", color="black", fillstyle="none", linestyle="None", markersize=8,
                label="p=2 feasible MAP-plan recommendation"),
-    ], loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8, framealpha=.95)
+    ], loc="upper left", fontsize=10, framealpha=.95)
+    legend_axis.text(.02, .49, "Exact tied industry sets and tied-best\nregional alternatives are recorded in\n"
+                     "yearly_metrics.csv and yearly_recommendations.csv.", color="black", fontsize=10,
+                     va="top", transform=legend_axis.transAxes)
     fig.text(.01, .01,
              "Background: unchanged independent Pacific NW adoption (digital = bit 0). Markers: five-region "
              "target-selection optimization (selected = bit 1), placed at planning year. 2035–2040 have no eligible targets.",
              color="black", fontsize=9)
-    fig.tight_layout(rect=(0, .04, .82, 1))
+    fig.tight_layout(rect=(0, .04, 1, 1))
     for suffix in ("png", "svg"):
         fig.savefig(OUT / f"adoption_target_selection_overlay.{suffix}", dpi=220, bbox_inches="tight", facecolor="white")
     plt.close(fig)
@@ -357,10 +378,18 @@ def tests() -> None:
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--test", action="store_true")
+    parser.add_argument("--render-only", action="store_true",
+                        help="re-render saved p=2 overlays only; never evaluates a circuit")
     args = parser.parse_args(argv)
     tests()
     if args.test:
         print("p=2 constrained-QAOA checks passed")
+        return
+    if args.render_only:
+        saved = json.loads((OUT / "yearly_results.json").read_text())["results"]
+        plot_overlay(saved)
+        plot_main_overlay(saved)
+        print(f"Re-rendered saved overlays in {OUT}; no simulation evaluated")
         return
     rows = load_rows(INPUT / "quantum_flip_years.csv")
     industries = sorted({row["industry"] for row in rows})
