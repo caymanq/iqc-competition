@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paperflip"
+version = "0.1.0"
+description = "Reproducible Ising tipping-point MVP for the IQC Paper Phase Transition challenge"
+requires-python = ">=3.12"
+dependencies = [
+  "networkx==3.7",
+  "numpy==2.5.4",
+  "pandas==3.1.1",
+  "matplotlib==3.11.2",
+  "PyYAML==6.0.3",
+  "tabulate==0.9.0",
+]
+
+[project.optional-dependencies]
+quantum = ["qiskit==2.6.2", "qiskit-aer==0.18.2", "qiskit-qasm3-import==0.6.0"]
+dev = ["pytest==9.2.0"]
+dashboard = ["ipywidgets==8.1.9", "nbformat==5.11.1", "nbclient==0.11.0", "nbconvert==7.17.2", "ipykernel==7.4.0"]
+
+[project.scripts]
+paperflip = "paperflip.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: optional larger checks"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
