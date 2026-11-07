@@ -105,16 +105,13 @@ Lab yet.** It never submits a task, starts a server, or needs a secret.
 The notebook teaches the business → energy → bits → circuit → sampled-versus-
 exact flow with a tangible three-industry lab, a 20-industry exact network
 heatmap, ties/no-ties and resistance-intervention controls, and cached Aer
-evidence. Quantum controls use only the committed
-`notebooks/data/quantum_cache_2033.json`; parameter changes visibly mark the
-cache stale rather than silently resimulating. qBraid-imported results remain
-a separate, manually scored workflow described in `artifacts/README.md`.
-
-The dashboard’s **Run selected year (local CPU)** button makes an explicit new
-Aer DQA run for the selected 2026–2040 year, current ties/resistance model,
-actual shot budget, and seed. It saves raw counts and same-graph exact metrics
-under `results/dashboard_runs/` without overwriting older runs. One-year runs
-do not claim a flip-year error.
+evidence. Section 3 displays one committed, read-only 2033 local-Aer DQA
+baseline (`artifacts/dashboard_pins/`): 8,000 shots, seed 20264139, p=40,
+normalized time 20. Section 4 displays one committed, read-only independent
+Pacific NW 2026–2040 local-statevector QAOA probability sweep. Neither panel
+recomputes or becomes stale when interactive controls change. qBraid-imported
+results remain a separate, manually scored workflow described in
+`artifacts/README.md`.
 
 The independent-regions tab uses
 `notebooks/data/independent_region_views_2033.json`: five nested, stable-seed

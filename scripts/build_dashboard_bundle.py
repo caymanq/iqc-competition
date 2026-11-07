@@ -17,10 +17,13 @@ FILES = (
     "artifacts/qbraid_runs/README.md",
     "artifacts/qbraid_runs/smoke_3q_counts.json",
     "artifacts/qbraid_runs/smoke_3q_verified_metrics.json",
+    "artifacts/dashboard_pins/dqa_2033_aer_8000_seed20264139.json",
+    "artifacts/dashboard_pins/dqa_2033_aer_8000_seed20264139.png",
     "artifacts/qaoa_landscape_pacific_nw_2033.png",
     "artifacts/qaoa_landscape_pacific_nw_2033.json",
     "artifacts/qaoa_yearly_probability_pacific_nw.png",
     "artifacts/qaoa_yearly_probability_pacific_nw.json",
+    "artifacts/qaoa_p1_walkthrough_pacific_nw_2033.png",
     "README.md",
     "QBRAID_START_HERE.md",
 )

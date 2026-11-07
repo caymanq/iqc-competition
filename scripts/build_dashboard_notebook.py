@@ -30,12 +30,32 @@ qBraid Lab.**
 
 Use the tabs in order. **Predict before revealing** each answer. Coefficients
 are challenge-suggested illustrations, not forecasts or causal estimates."""),
-        code("""# qBraid Lab setup (run once in a fresh environment)
-# %pip install -e ".[dashboard,quantum]"
-#
-# Launch locally:
-# jupyter lab notebooks/paperflip_dashboard.ipynb
-# In qBraid Lab, upload/open this repository and run this notebook. No deployment is claimed."""),
+        code("""# Deterministic notebook bootstrap — this cell never installs or downloads packages.
+from pathlib import Path
+import importlib.util, sys
+
+DASHBOARD_SOURCE_VERSION = "pinned-artifacts-v1-2026-11-07"
+ROOT = Path.cwd()
+if not (ROOT / "pyproject.toml").exists():
+    ROOT = ROOT.parent
+SRC = ROOT / "src"
+if not (ROOT / "pyproject.toml").exists() or not SRC.exists():
+    raise RuntimeError("Open this notebook from the repository's notebooks/ directory or repository root.")
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))  # source bootstrap only; no package install/network action
+missing = [name for name in ("numpy", "matplotlib", "networkx", "yaml", "ipywidgets", "qiskit", "qiskit_aer")
+           if importlib.util.find_spec(name) is None]
+if missing:
+    raise RuntimeError(
+        "Missing kernel packages: " + ", ".join(missing) +
+        '. In a separate user-approved cell run: %pip install -e "{ROOT}[dashboard,quantum,dev]" '
+        "then restart the kernel. This notebook never installs packages during Run All."
+    )
+print(f"PaperFlip dashboard source version: {DASHBOARD_SOURCE_VERSION}")
+print(f"Repository root: {ROOT}")
+# In qBraid Lab, explicitly install only when you choose to:
+# %pip install -e "{ROOT}[dashboard,quantum,dev]"
+# Then Kernel → Restart Kernel and Run All Cells. No deployment is claimed."""),
         code("""from __future__ import annotations
 from pathlib import Path
 import itertools, json, threading
@@ -44,28 +64,21 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from matplotlib.patches import Patch
 import ipywidgets as W
-from IPython.display import display, Markdown, HTML, clear_output
+from IPython.display import display, Markdown, HTML, Image, clear_output
 
 from paperflip.model import load_model, IsingModel
 from paperflip.exact import mincut, flip_intervals
-from paperflip.solvers import simulated_annealing, _decode
+from paperflip.solvers import simulated_annealing
 from paperflip.dashboard import (
     tiny_business_model, model_with_pressure, exact_at_pressure,
     energy_breakdown, model_fingerprint,
 )
 from paperflip.region_views import nested_regions, compute_region_view
-from paperflip.dashboard_runs import run_local_dqa_and_persist, latest_matching_run
-from paperflip.qaoa_year_sweep import (
-    DEFAULT_BETA_GRID, DEFAULT_GAMMA_GRID, compute_qaoa_year_sweep,
-    latest_matching_qaoa_year_sweep, persist_qaoa_year_sweep,
-)
-
-ROOT = Path.cwd()
-if not (ROOT / "configs" / "one_region.yaml").exists():
-    ROOT = Path.cwd().parent
 model, YEARS, CONFIG = load_model(ROOT / "configs" / "one_region.yaml")
-CACHE_PATH = ROOT / "notebooks" / "data" / "quantum_cache_2033.json"
-QCACHE = json.loads(CACHE_PATH.read_text())
+PINNED_DQA_PATH = ROOT / "artifacts" / "dashboard_pins" / "dqa_2033_aer_8000_seed20264139.json"
+PINNED_DQA_PNG = ROOT / "artifacts" / "dashboard_pins" / "dqa_2033_aer_8000_seed20264139.png"
+PINNED_QAOA_PATH = ROOT / "artifacts" / "qaoa_yearly_probability_pacific_nw.json"
+PINNED_QAOA_PNG = ROOT / "artifacts" / "qaoa_yearly_probability_pacific_nw.png"
 REGION_CACHE_PATH = ROOT / "notebooks" / "data" / "independent_region_views_2033.json"
 REGION_PRECOMPUTED = json.loads(REGION_CACHE_PATH.read_text())
 
@@ -236,115 +249,36 @@ for widget in [full_pressure,tie_multiplier,target,delta_r]:
 full_reveal.on_click(reveal_full); full_reset.on_click(reset_full)
 sync_full(); render_full()
 full_tab = W.VBox([title("Explore ties, no ties, and a resistance intervention"), W.HBox([full_year,full_pressure,full_sync,full_reset]), W.HBox([tie_multiplier,target,delta_r]), full_predict, full_reveal, full_out])"""),
-        markdown("""## 3. Circuit and sampled evidence
+        markdown("""## 3. Fixed saved local-Aer DQA evidence
 
-The quantum panel uses a **cached baseline Aer DQA result** only. Changing
-model sliders does not silently resimulate it; a visible stale warning appears.
-Imported qBraid counts are a separate workflow and are never labelled Aer."""),
-        code("""quantum_year = W.IntSlider(value=2033, min=2026, max=2040, description="Run year")
-shot_budget = W.IntSlider(value=4096, min=50, max=8000, step=50, description="Run shots")
-run_seed = W.BoundedIntText(value=20264139, min=0, max=2**31-1, description="Run seed")
-run_selected = W.Button(description="Run selected year (local CPU)", button_style="warning")
-run_status = W.HTML("<b style='color:#0b4f78'>Ready. Sliders do not run a simulation.</b>")
-quantum_out = W.Output()
-on_demand_runs = {}
-run_lock = threading.Lock()
+This panel always displays one committed, read-only 2033 baseline: the
+illustrative one-region configuration, 8,000 Aer shots, seed 20264139, 40
+Trotter steps, normalized time 20. It does not respond to model controls and
+never runs a solver in the notebook."""),
+        code("""pinned_dqa_out = W.Output()
 
-def current_quantum_model():
-    ties = np.rint(model.ties * tie_multiplier.value).astype(np.int64)
-    resist = model.resistance.copy()
-    resist[model.names.index(target.value)] -= round(delta_r.value * model.unit)
-    return IsingModel(model.names, resist, ties, model.pressure_step, model.unit)
-
-def quantum_key(candidate):
-    return (model_fingerprint(candidate), quantum_year.value, shot_budget.value, run_seed.value, 40, 20.0)
-
-def display_histogram(hist, exact_energy, unit, title_text):
-    fig, ax = plt.subplots(figsize=(9,3.2))
-    xs=np.array(sorted(hist)); ys=np.array([hist[x] for x in xs])
-    ax.bar(xs, ys, width=max(.01,(xs.max()-xs.min())/45), color="#457b9d")
-    ax.axvline(exact_energy / unit, color="#e63946", ls="--", label="exact minimum")
-    ax.set(title=title_text, xlabel="energy (model units)", ylabel="shots")
-    ax.legend(); plt.show(); plt.close(fig)
-
-def render_local_record(record, path):
-    raw, exact = record["raw_result"], record["exact_same_graph"]
-    candidate = current_quantum_model()
-    histogram = {}
-    for bitstring, count in raw["counts"].items():
-        energy = candidate.energy(_decode(bitstring, candidate.n), quantum_year.value) / candidate.unit
-        histogram[energy] = histogram.get(energy, 0) + count
-    display_histogram(histogram, exact["energy_int"], candidate.unit, "New local Aer DQA raw samples (same graph/year exact reference)")
-    print(f"NEW persisted local result: {path.name}")
-    print(f"Expected energy={raw['expected_energy_model_units']:.3f}; mode error={raw['modal_energy_error_int']/candidate.unit:.3f}; "
-          f"best measured error={raw['best_measured_energy_error_int']/candidate.unit:.3f}; exact optimum probability={raw['ground_shot_probability']:.3%}.")
-    print(f"Actual sampling: {record['algorithm']['shots']} shots, seed={record['algorithm']['seed']}, CPU={raw['cpu_seconds']:.2f}s. "
-          "Single-year runs do not imply flip-year error.")
-
-def render_quantum(change=None):
-    candidate = current_quantum_model()
-    key = quantum_key(candidate)
-    matching = on_demand_runs.get(key) or latest_matching_run(
-        ROOT / "results" / "dashboard_runs", candidate, quantum_year.value, shot_budget.value,
-        run_seed.value, 40, 20.0)
-    baseline_controls = (
-        quantum_year.value == QCACHE["year"] and tie_multiplier.value == 1. and delta_r.value == 0.
-        and model_fingerprint(candidate) == QCACHE["model_fingerprint"] and shot_budget.value == QCACHE["shots"]
-        and run_seed.value == QCACHE["seed"]
-    )
-    with quantum_out:
+def render_pinned_dqa():
+    with pinned_dqa_out:
         clear_output(wait=True)
-        if matching:
-            display(caveat("Source: NEW local Aer DQA run saved with full counts/provenance. It is not qBraid or hardware."))
-            render_local_record(*matching)
+        if not PINNED_DQA_PATH.exists() or not PINNED_DQA_PNG.exists():
+            display(caveat("Pinned DQA artifact is missing. This notebook will not regenerate it. "
+                           "From a clean repository checkout run: .venv/bin/python scripts/build_pinned_dashboard_artifacts.py"))
             return
-        if baseline_controls:
-            display(caveat(f"Source: CACHED local Aer baseline; p={QCACHE['p']}, T={QCACHE['total_time']}, shots={QCACHE['shots']}. "
-                           "This is precomputed evidence, not a new run."))
-            hist = {float(k): v for k,v in QCACHE["energy_histogram"].items()}
-            display_histogram(hist, QCACHE["exact_energy_int"], model.unit, "Cached raw Aer samples by absolute energy")
-            pground=QCACHE["ground_shot_probability"]
-            print(f"Expected energy: {QCACHE['expected_sampled_energy_model_units']:.3f}; mode error: {QCACHE['modal_energy_error_model_units']:.3f}; "
-                  f"best measured error: {QCACHE['best_energy_error_model_units']:.3f}; optimum probability: {pground:.3%}.")
-            print("This is a complete baseline sweep cache, so its separate flip-year comparison is shown below.")
-            comparison=QCACHE["sweep_comparison"]
-            fig, ax = plt.subplots(figsize=(5.5,3.2))
-            for label, values in comparison.items():
-                ax.scatter(values["mean_energy_error_model_units"], values["flip_year_mismatch_count"], s=80, label=label)
-                ax.annotate(label, (values["mean_energy_error_model_units"], values["flip_year_mismatch_count"]), xytext=(4,4), textcoords="offset points")
-            ax.set(title="Complete-sweep energy vs flip-year mismatch", xlabel="mean energy error", ylabel="# flip-year mismatches")
-            ax.legend(); plt.show(); plt.close(fig)
-            return
-        display(caveat("STALE / no matching local result. Changing year, ties, resistance, shots, seed, or algorithm parameters invalidates cache reuse. "
-                       "Click Run selected year to create and save a new local CPU/Aer result."))
-        print(f"The run uses A({quantum_year.value})={pressure_from_year(quantum_year.value)/model.unit:.2f} from the repository schedule and the current ties/resistance scenario.")
-        print("DQA has no QAOA β control. Run shots are actual samples, not a what-if display. No flip-year metric is shown for a single-year run.")
+        record = json.loads(PINNED_DQA_PATH.read_text())
+        raw, exact, algorithm = record["raw_result"], record["exact_same_graph"], record["algorithm"]
+        display(caveat("Source: fixed saved local CPU/Qiskit Aer DQA artifact—not a new run, not qBraid, and not hardware. "
+                       "Interactive model controls elsewhere do not alter this pinned baseline."))
+        display(Image(filename=str(PINNED_DQA_PNG)))
+        print(f"Generated {record['created_at_utc']} | baseline year={record['model']['year']} | model={record['model']['fingerprint']}")
+        print(f"{algorithm['shots']} shots | seed={algorithm['seed']} | p={algorithm['p']} | T={algorithm['normalized_total_time']} | CPU={raw['cpu_seconds']:.2f}s")
+        print(f"Expected energy={raw['expected_energy_model_units']:.3f}; mode error={raw['modal_energy_error_int']/model.unit:.3f}; "
+              f"best measured error={raw['best_measured_energy_error_int']/model.unit:.3f}; exact optimum probability={raw['ground_shot_probability']:.3%}.")
+        print("Raw counts, exact same-graph reference, and provenance are committed beside this static panel.")
 
-def do_run(_):
-    if run_lock.locked():
-        return
-    candidate = current_quantum_model()
-    key = quantum_key(candidate)
-    run_status.value = "<b style='color:#92400e'>Running local CPU/Aer DQA… controls are unchanged; no qBraid/provider task is being submitted.</b>"
-    def worker():
-        try:
-            with run_lock:
-                record, path = run_local_dqa_and_persist(candidate, quantum_year.value, shot_budget.value, run_seed.value,
-                                                          ROOT / "results" / "dashboard_runs", p=40, total_time=20.0)
-                on_demand_runs[key] = (record, path)
-            run_status.value = f"<b style='color:#166534'>Saved new local run: {path.name}</b>"
-        except Exception as exc:
-            run_status.value = f"<b style='color:#b91c1c'>Run failed: {type(exc).__name__}: {exc}</b>"
-        render_quantum()
-    threading.Thread(target=worker, daemon=True).start()
-
-for widget in [quantum_year,shot_budget,run_seed,full_year,full_pressure,tie_multiplier,target,delta_r]:
-    widget.observe(render_quantum, "value")
-run_selected.on_click(do_run)
-render_quantum()
-quantum_tab=W.VBox([title("Exact vs SA vs local Aer DQA results"), W.HBox([quantum_year,shot_budget,run_seed,run_selected]), run_status, quantum_out,
-                    caveat("Cached Aer, new local Aer, imported qBraid counts, and hardware must remain distinct sources. "
-                           "Reported baseline: 12/15 DQA modal matches and 15/15 best-of-4096 Aer samples; this is simulator evidence, not speedup.")])"""),
+render_pinned_dqa()
+quantum_tab=W.VBox([title("Fixed 2033 local Aer DQA baseline"), pinned_dqa_out,
+                    caveat("This is fixed saved simulator evidence, not a forecast, hardware result, speedup claim, or interactive what-if. "
+                           "The other teaching panels remain interactive.")])"""),
         markdown("""## 4. qBraid results handoff
 
 The dashboard does not call a provider. To score a submitted qBraid result,
@@ -365,7 +299,42 @@ These are **separate 20-node simulations** of the same industry topology,
 never a 40- or 100-node circuit. Synthetic region shifts/noise are nested from
 one stable seed; no cross-region ties exist in this quantum scenario. The
 exact min-cut shown uses the same independent graph as the selected circuit."""),
-        code("""region_count = W.ToggleButtons(options=[1,2,5], value=1, description="Regions shown")
+        markdown(r"""### p=1 QAOA: physics and notation
+
+For the selected independent region, \(x_i=0\) means **digital** and
+\(s_i=+1\); \(x_i=1\) means paper and \(s_i=-1\), so
+\(s_i=1-2x_i\). With \(h_i(t)=A(t)-r_i\),
+
+\[
+H_C=-\sum_{(i,j)}J_{ij}Z_iZ_j-\sum_i h_i(t)Z_i,\qquad H_M=+\sum_iX_i.
+\]
+
+The general \(p\)-layer recurrence is
+\[
+|\psi_0\rangle=H^{\otimes n}|0\ldots0\rangle,\qquad
+|\psi_\ell\rangle=e^{-i\beta_\ell H_M}e^{-i\gamma_\ell H_C}|\psi_{\ell-1}\rangle.
+\]
+This dashboard's current regional calculation is explicitly **p=1**—one cost
+block and one \(+\sum X\) mixer block—not the multi-layer architecture drawn
+in the generic diagram. It begins in the equal-amplitude superposition:
+each 20-qubit basis state has \(P(z)=2^{-20}\).
+
+For a computational-basis configuration \(z\), the cost block changes
+\(a_z\mapsto e^{-i\gamma E(z)}a_z\): it changes phase but not
+\(|a_z|^2\). The mixer applies \(R_x(2\beta)\) on each qubit, so final
+amplitudes are interference sums over transitions—not a greedy energy rule.
+Measurement gives \(P(z)=|a_z|^2\), while the bounded classical angle search
+minimizes \(\sum_zP(z)E(z)\). Exact ferromagnetic min-cut remains an
+independent benchmark; optimum probability and industry marginals are
+different quantities.
+
+With model-energy units used here, the cost gates are
+\(R_z(-2\gamma h_i)\) and \(R_{ZZ}(-2\gamma J_{ij})\); a standard
+\(R_{ZZ}\) decomposition is CX–\(R_z\)–CX. \(\gamma\) is therefore in
+radians per the normalized model-energy scale used by the circuit. This is
+not DQA: the saved DQA histogram uses annealing driver \(-\sum_iX_i\), whereas
+standard QAOA here uses mixer \(+\sum_iX_i\)."""),
+        code(r"""region_count = W.ToggleButtons(options=[1,2,5], value=1, description="Regions shown")
 region_select = W.Dropdown(description="Selected region")
 region_year = W.IntSlider(value=2033, min=2026, max=2040, description="Year")
 region_scenario = W.Dropdown(options=["Independent same-20", "Independent no-ties"], description="Scenario")
@@ -413,14 +382,14 @@ def render_region(change=None):
             print("STALE / not precomputed for these selectors. Click ‘Compute selected 20-node view’ for an explicit local CPU recompute; sliders never auto-run it.")
             return
         records = view["fixed_configurations"]
-        labels = [item["bitstring_c_n_minus_1_to_c_0"][-8:] + "…" for item in records]
+        labels = [f"C{index+1:02d}" for index in range(len(records))]
         exact_mask = np.array([item["is_exact_minimum"] for item in records])
         fig, axes = plt.subplots(2, 2, figsize=(12,7))
         for stage, axis, color in [("initial",axes[0,0],"#8ecae6"),("cost_only",axes[0,1],"#8ecae6"),("post_mixer",axes[1,0],"#457b9d")]:
             values=np.array([item[f"{stage}_probability"] for item in records])
             axis.bar(range(len(records)), values, color=color)
             axis.scatter(np.where(exact_mask)[0], values[exact_mask], color="#e63946", marker="*", s=80, label="exact minimum")
-            axis.set(title=f"{stage.replace('_',' ')} P=|amplitude|²; included={view['stages'][stage]['included_mass']:.3f}, omitted={view['stages'][stage]['omitted_mass']:.3f}",
+            axis.set(title=f"{stage.replace('_',' ')} P=|amplitude|²; included={view['stages'][stage]['included_mass']:.3e}, omitted={view['stages'][stage]['omitted_mass']:.3e}",
                      xticks=range(len(records)), xticklabels=labels, ylabel="probability")
             axis.tick_params(axis="x", rotation=65); axis.legend(loc="upper right")
         phases=np.ma.masked_invalid(np.array([[item["cost_only_phase_relative_radians"] if item["cost_only_phase_relative_radians"] is not None else np.nan for item in records]]))
@@ -438,113 +407,129 @@ def render_region(change=None):
         print(f"{view['region']} | year {view['year']} | objective grid chose γ={view['optimization']['gamma']}, β={view['optimization']['beta']}.")
         print(f"CPU simulator time={view['cpu_seconds']:.2f}s. Exact optimum probability={view['exact_optimum_probability_post_mixer']:.3e}; "
               f"mode energy={mode['energy_model_units']:.3f}. Best sample: not computed (this is an exact statevector distribution, not sampled shots).")
-        print("Post-cost probability invariance is expected: cost-only phases change amplitudes’ phase, not computational-basis probabilities.")
+        print("Bars show one fixed selected configuration subset only; included/omitted mass is relative to all 2²⁰ configurations and bars are never renormalized.")
+        print("Post-cost probability invariance is expected: cost-only phases change amplitudes’ phase, not computational-basis probabilities. Phase colors are cyclic relative phases, not probabilities.")
+        table_rows = "".join(
+            f"<tr><td>{label}</td><td><code>{item['bitstring_c_n_minus_1_to_c_0']}</code></td><td>{item['energy_model_units']:.3f}</td>"
+            f"<td>{'yes' if item['is_exact_minimum'] else 'no'}</td></tr>"
+            for label, item in zip(labels, records)
+        )
+        display(HTML("<details><summary>Selected configuration IDs (same set in all three stage plots)</summary>"
+                     "<table><tr><th>ID</th><th>full c[n−1]…c[0] bitstring</th><th>energy</th><th>exact minimum</th></tr>"
+                     f"{table_rows}</table></details>"))
 
 def compute_region(_):
     view, _ = lookup_region_view(compute=True)
     render_region()
+    render_qaoa_walkthrough()
 
 def reset_region(_):
     region_count.value=1; set_region_options(); region_select.value="Pacific NW"; region_year.value=2033; region_scenario.value="Independent same-20"; render_region()
 
+walkthrough_stage = W.ToggleButtons(
+    options=["Hadamards: uniform start", "Cost phase", "Mixer interference", "Measurement and objective"],
+    value="Hadamards: uniform start", description="p=1 stage"
+)
+walkthrough_out = W.Output()
+
+def draw_p1_circuit(highlight):
+    blocks = [
+        ("Hadamards", .12, "#bfc7cf"), ("Cost $e^{-iγH_C}$", .34, "#b28af0"),
+        ("Mixer $e^{-iβH_M}$", .57, "#d1b5f7"), ("Measure", .82, "#76a5ea"),
+    ]
+    fig, ax = plt.subplots(figsize=(11, 2.9))
+    for y in np.linspace(.18, .82, 6):
+        ax.plot([.02,.95], [y,y], color="#4e5660", lw=1)
+    for name, x, color in blocks:
+        active = name.startswith(highlight)
+        rect = plt.Rectangle((x,.1), .14, .8, facecolor=color, edgecolor="#17212b",
+                             linewidth=3 if active else 1.2, alpha=1 if active else .55)
+        ax.add_patch(rect)
+        ax.text(x+.07, .5, name, ha="center", va="center", fontsize=10)
+    ax.text(.02, .96, "20 logical wires abstracted (not a 20-wire gate-level drawing)", fontsize=9)
+    ax.text(.41, .02, "p=1: exactly one cost block and one mixer block", ha="center", fontsize=9)
+    ax.set(xlim=(0,1), ylim=(0,1)); ax.axis("off")
+    plt.show(); plt.close(fig)
+
+def render_qaoa_walkthrough(change=None):
+    view, stale = lookup_region_view(compute=False)
+    with walkthrough_out:
+        clear_output(wait=True)
+        display(caveat("This walkthrough only reads the cached/explicitly computed selected-region statevector view. "
+                       "Changing the stage selector never invokes a solver, submits a job, or changes the fixed saved DQA/QAOA evidence above."))
+        if stale:
+            print("No matching selected-region stage data is cached. Use the separate ‘Compute selected 20-node view’ button; this stage selector does not compute.")
+            return
+        selected = walkthrough_stage.value
+        if selected.startswith("Hadamards"):
+            stage, block = "initial", "Hadamards"
+            explanation = (r"**Initial state:** \(H^{\otimes20}|0\ldots0\rangle=|+\rangle^{\otimes20}\). "
+                           r"Every basis amplitude is \(1/\sqrt{2^{20}}\), so every configuration has \(P=2^{-20}\).")
+        elif selected.startswith("Cost"):
+            stage, block = "cost_only", "Cost"
+            explanation = (r"**Cost phase:** \(a_z\rightarrow e^{-i\gamma E(z)}a_z\). "
+                           r"This changes relative phase (shown separately, relative to a fixed reference) but preserves each computational-basis probability.")
+        elif selected.startswith("Mixer"):
+            stage, block = "post_mixer", "Mixer"
+            explanation = (r"**Mixer:** \(R_x(2\beta)=e^{-i\beta X}\) on each qubit implements \(H_M=+\sum_iX_i\). "
+                           r"Amplitudes interfere as sums over bit-flip transition paths; this is not a greedy local energy update.")
+        else:
+            stage, block = "post_mixer", "Measure"
+            explanation = (r"**Measurement/objective:** \(P(z)=|a_z|^2\); the bounded 3×3 classical grid selected angles by minimizing "
+                           r"\(\langle H_C\rangle=\sum_zP(z)E(z)\). Exact min-cut is an independent benchmark, not injected into the statevector.")
+        draw_p1_circuit(block)
+        display(Markdown(explanation))
+        records = view["fixed_configurations"]
+        labels = [f"C{index+1:02d}" for index in range(len(records))]
+        values = np.array([item[f"{stage}_probability"] for item in records])
+        exact_mask = np.array([item["is_exact_minimum"] for item in records])
+        fig, ax = plt.subplots(figsize=(10,3.3))
+        ax.bar(range(len(records)), values, color="#457b9d")
+        ax.scatter(np.where(exact_mask)[0], values[exact_mask], color="#e63946", marker="*", s=80, label="exact minimum")
+        mass = view["stages"][stage]
+        ax.set(title=f"Actual selected {stage.replace('_',' ')} probabilities; included={mass['included_mass']:.3e}, omitted={mass['omitted_mass']:.3e}",
+               xticks=range(len(records)), xticklabels=labels, ylabel="P(configuration)")
+        ax.tick_params(axis="x", rotation=0); ax.legend(); plt.tight_layout(); plt.show(); plt.close(fig)
+        if stage == "cost_only":
+            phases = [item["cost_only_phase_relative_radians"] for item in records]
+            print("Relative phases (radians; fixed reference; None means numerically zero amplitude):", phases)
+        print(f"Actual view: {view['region']}, year {view['year']}, p=1; bounded objective chose γ={view['optimization']['gamma']}, β={view['optimization']['beta']}.")
+        print("The selected C01… subset is fixed across stages and not renormalized; omitted probability belongs to the other configurations in the full 2²⁰ state space.")
+
 region_count.observe(set_region_options,"value")
 for widget in [region_select,region_year,region_scenario]:
     widget.observe(render_region,"value")
+    widget.observe(render_qaoa_walkthrough,"value")
+walkthrough_stage.observe(render_qaoa_walkthrough, "value")
 region_compute.on_click(compute_region); region_reset.on_click(reset_region)
-year_sweep_compute = W.Button(description="Compute yearly probability heatmap (local CPU)", button_style="warning")
-year_sweep_status = W.HTML("<b style='color:#0b4f78'>Yearly QAOA heatmap is not computed until requested.</b>")
-year_sweep_out = W.Output()
-year_sweep_memory, year_sweep_lock = {}, threading.Lock()
+pinned_qaoa_out = W.Output()
 
-def year_sweep_key(selected):
-    return (model_fingerprint(selected.model), selected.name, 20261106, tuple(YEARS),
-            tuple(DEFAULT_GAMMA_GRID), tuple(DEFAULT_BETA_GRID))
-
-def render_year_sweep(change=None):
-    selected = selected_region_scenario()
-    key = year_sweep_key(selected)
-    result = year_sweep_memory.get(key)
-    persisted = None
-    if result is None:
-        persisted = latest_matching_qaoa_year_sweep(
-            ROOT / "results" / "qaoa_year_sweeps", selected.model, YEARS, region=selected.name,
-            region_seed=20261106, gamma_grid=DEFAULT_GAMMA_GRID, beta_grid=DEFAULT_BETA_GRID,
-        )
-        if persisted:
-            result, path = persisted
-            year_sweep_memory[key] = result
-    with year_sweep_out:
+def render_pinned_qaoa():
+    with pinned_qaoa_out:
         clear_output(wait=True)
-        display(caveat("Each cell is an exact local-statevector marginal P(bit_i=0): **digital**, because this notebook uses "
-                       "x_i=0, s_i=+1 for digital. It is not a measured-shot estimate, empirical forecast, remote qBraid run, or hardware result. "
-                       "Each of the 15 years independently optimizes a bounded 3×3 standard-p1-QAOA expected-energy grid on this one selected 20-node region."))
-        if result is None:
-            print("STALE / absent. Click ‘Compute yearly probability heatmap (local CPU)’ for the selected independent region/scenario. "
-                  "Selectors never launch this 15-year calculation; only one selected region is computed.")
+        if not PINNED_QAOA_PATH.exists() or not PINNED_QAOA_PNG.exists():
+            display(caveat("Pinned yearly QAOA artifact is missing. This notebook will not regenerate it. "
+                           "From a clean repository checkout run: .venv/bin/python scripts/render_qaoa_year_heatmap_preview.py"))
             return
-        years = result["years"]
-        probabilities = np.array([row["digital_probability_by_industry"] for row in result["rows"]]).T
-        fig, ax = plt.subplots(figsize=(12, 7))
-        image = ax.imshow(probabilities, vmin=0, vmax=1, cmap="viridis", aspect="auto")
-        ax.set(title="QAOA digital probability by year — P(bit 0), not bit 1",
-               xlabel="year", ylabel="industry", xticks=range(len(years)), xticklabels=years,
-               yticks=range(selected.model.n), yticklabels=selected.model.names)
-        for index, marker in enumerate(result["exact_flip_markers"]):
-            early, late = marker["earliest_digital_year"], marker["latest_digital_year"]
-            if marker["has_exact_degeneracy"]:
-                left, right = years.index(marker["degenerate_years"][0]), years.index(marker["degenerate_years"][-1])
-                ax.hlines(index, left, right, color="white", linewidth=1.5)
-            if marker["never_digital_through_window"]:
-                ax.scatter([len(years)-1], [index], marker=">", s=55, facecolors="none", edgecolors="white", linewidths=1.4)
-            elif marker["already_digital_at_window_start"]:
-                ax.scatter([0], [index], marker="<", s=55, color="white", linewidths=1.4)
-            elif marker["degenerate_tipping_interval"]:
-                left, right = years.index(early), years.index(late)
-                ax.scatter([left, right], [index, index], marker="|", s=85, color="white", linewidths=1.5)
-            else:
-                ax.scatter([years.index(early)], [index], marker="x", s=32, color="white", linewidths=1.4)
-        from matplotlib.lines import Line2D
-        ax.legend(handles=[
-            Line2D([0], [0], marker="x", color="white", linestyle="None", label="exact classical flip"),
-            Line2D([0], [0], color="white", linewidth=1.5, label="exact degeneracy / flip-uncertainty range"),
-            Line2D([0], [0], marker="<", color="white", linestyle="None", label="already digital at 2026"),
-            Line2D([0], [0], marker=">", markerfacecolor="none", color="white", linestyle="None", label="never digital through 2040"),
-        ], loc="upper right", fontsize=8, framealpha=.8)
-        fig.colorbar(image, ax=ax, label="QAOA statevector P(industry is digital = bit 0)")
-        plt.tight_layout(); plt.show(); plt.close(fig)
-        angles = [(row["year"], row["selected_gamma"], row["selected_beta"]) for row in result["rows"]]
-        print(f"{result['region']} | 15 independent same-20-node QAOA circuits | CPU={result['cpu_seconds']:.2f}s.")
-        if persisted:
-            print(f"Loaded matching persisted local result: {path.name}")
-        print("Per-year selected (year, γ, β):", angles)
-        print("Exact min-cut markers use extremal ground states: lines are legitimate degeneracy intervals; < and > denote left/right censoring.")
-        print("Expected QAOA energy and exact reference are retained in persisted provenance; no probability is forced to match the exact solution.")
+        result = json.loads(PINNED_QAOA_PATH.read_text())
+        display(caveat("Source: fixed saved local CPU statevector standard-p1-QAOA baseline—not a new run, not qBraid, and not hardware. "
+                       "It is the Pacific NW independent 20-node illustrative scenario, anchored at 2033 and swept across 2026–2040. "
+                       "Each cell is P(bit 0 = digital), not a measured-shot or empirical adoption probability."))
+        display(Image(filename=str(PINNED_QAOA_PNG)))
+        algorithm = result["algorithm"]
+        print(f"{result['region']} | model={result['model_fingerprint']} | region seed={result['region_seed']} | CPU={result['cpu_seconds']:.2f}s")
+        print(f"15 years; bounded expected-energy grid γ={algorithm['gamma_grid']}, β={algorithm['beta_grid']}; "
+              "per-year angles, expected energies, exact references, and runtimes are committed in the JSON.")
+        print("This pinned heatmap deliberately remains unchanged when the independent-region stage controls below change.")
 
-def do_year_sweep(_):
-    if year_sweep_lock.locked():
-        return
-    selected = selected_region_scenario()
-    key = year_sweep_key(selected)
-    year_sweep_status.value = "<b style='color:#92400e'>Computing 15 × bounded 3×3 local CPU QAOA objectives… no provider job is being submitted.</b>"
-    def worker():
-        try:
-            with year_sweep_lock:
-                result = compute_qaoa_year_sweep(selected.model, YEARS, region=selected.name, region_seed=20261106)
-                path = persist_qaoa_year_sweep(result, ROOT / "results" / "qaoa_year_sweeps")
-                year_sweep_memory[key] = result
-            year_sweep_status.value = f"<b style='color:#166534'>Saved local yearly heatmap provenance: {path.name}</b>"
-        except Exception as exc:
-            year_sweep_status.value = f"<b style='color:#b91c1c'>Yearly heatmap failed: {type(exc).__name__}: {exc}</b>"
-        render_year_sweep()
-    threading.Thread(target=worker, daemon=True).start()
-
-for widget in [region_count,region_select,region_scenario]:
-    widget.observe(render_year_sweep, "value")
-year_sweep_compute.on_click(do_year_sweep)
+render_pinned_qaoa()
 set_region_options()  # defer plotting until the Tab is attached and visible
+render_qaoa_walkthrough()
 region_tab=W.VBox([title("Compare one, two and five regions without pretending they are one large quantum circuit"),
-                   W.HBox([region_count,region_select,region_year,region_scenario,region_compute,region_reset]),region_out,
-                   title("Primary QAOA teaching view: industry-by-year digital probability"), year_sweep_compute,year_sweep_status,year_sweep_out])"""),
+                   title("Fixed saved QAOA yearly probability baseline"), pinned_qaoa_out,
+                   caveat("The static baseline above is deliberately detached from the controls below. These controls only affect the separate interactive, selected-region stage demonstration."),
+                   title("Interactive p=1 QAOA circuit and statevector walk-through"), walkthrough_stage, walkthrough_out,
+                   W.HBox([region_count,region_select,region_year,region_scenario,region_compute,region_reset]),region_out])"""),
         code("""# Headless callback smoke: this exercises real widget observers without any remote call.
 import os
 dashboard_tabs = W.Tab(children=[tiny_tab, full_tab, quantum_tab, region_tab])
@@ -555,6 +540,7 @@ display(dashboard_tabs)
 def activate_region_on_first_display(change=None):
     if dashboard_tabs.selected_index == 3:
         render_region()
+        render_qaoa_walkthrough()
 dashboard_tabs.observe(activate_region_on_first_display, "selected_index")
 activate_region_on_first_display()
 if os.environ.get("PAPERFLIP_DASHBOARD_SMOKE") == "1":
@@ -578,20 +564,30 @@ if os.environ.get("PAPERFLIP_DASHBOARD_SMOKE") == "1":
     original_tie = tie_multiplier.value
     tie_multiplier.value = .75
     tie_multiplier.value = original_tie
-    quantum_year.value = 2034  # intentionally renders the stale-cache warning
-    quantum_year.value = 2033  # returns to the cached baseline
+    pinned_dqa_before = tuple(pinned_dqa_out.outputs)
+    pinned_qaoa_before = tuple(pinned_qaoa_out.outputs)
+    # These model changes drive the interactive panels only, never a solver or
+    # stale state for either pinned artifact.
+    full_pressure.value = round(full_pressure.value + .01, 2)
+    full_pressure.value = round(full_pressure.value - .01, 2)
+    assert tuple(pinned_dqa_out.outputs) == pinned_dqa_before
+    assert tuple(pinned_qaoa_out.outputs) == pinned_qaoa_before
     region_count.value = 2
     region_select.value = "California"
     region_count.value = 1
     dashboard_tabs.selected_index = 3
+    walkthrough_stage.value = "Cost phase"
+    walkthrough_stage.value = "Mixer interference"
+    walkthrough_stage.value = "Measurement and objective"
+    walkthrough_stage.value = "Hadamards: uniform start"
     dashboard_tabs.selected_index = 0
     for label, output in [
-        ("tiny", tiny_out), ("full-network", full_out), ("quantum", quantum_out),
-        ("regions", region_out), ("yearly probability heatmap", year_sweep_out),
+        ("tiny", tiny_out), ("full-network", full_out), ("pinned DQA", pinned_dqa_out),
+        ("regions", region_out), ("pinned yearly QAOA", pinned_qaoa_out), ("QAOA walkthrough", walkthrough_out),
     ]:
         assert_output_clean(label, output)
-    assert "cache" in QCACHE["source_label"].lower()
-    print("Widget callbacks and all tab first activations passed without Output-captured rendering errors.")"""),
+    assert PINNED_DQA_PATH.exists() and PINNED_QAOA_PATH.exists()
+    print("Widget callbacks, pinned-artifact invariance, and all tab first activations passed without Output-captured rendering errors.")"""),
     ]
     OUT.parent.mkdir(parents=True, exist_ok=True)
     nbf.write(nb, OUT)

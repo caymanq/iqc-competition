@@ -53,25 +53,21 @@ the Lab notebook.
 
 ## Dashboard controls
 
-- Tabs 1–3 teach the tiny model, 20-industry exact scenarios, and a cached
-  Aer distribution. Changes mark cache-backed evidence stale rather than
-  silently launching a simulator.
-- Tab 3 **Run selected year (local CPU)** creates a new persisted result under
-  `results/dashboard_runs/` for the selected 2026–2040 year, current
-  ties/resistance scenario, actual shot count, and seed. It never runs
-  automatically on slider changes. Each record retains raw counts, model
-  fingerprint, exact same-graph reference, algorithm parameters and CPU
-  timing. Single-year results deliberately do not show flip-year errors.
+- Tabs 1–3 teach the tiny model, 20-industry exact scenarios, and a fixed
+  saved Aer distribution. Tab 3 always shows the committed 2033 baseline in
+  `artifacts/dashboard_pins/`: 8,000 shots, seed 20264139, p=40, normalized
+  time 20, raw counts, same-graph exact metrics, and a rendered histogram.
+  It never reruns, becomes stale, or changes with other controls.
 - Tab 4 compares one, two, and five nested synthetic regions. Every displayed
   quantum model is an independent 20-node circuit, with no cross-region ties.
   The yellow **Compute selected 20-node view** button is the only action that
   may run a new local CPU statevector calculation; it does not contact qBraid.
-- Tab 4's **Compute yearly probability heatmap (local CPU)** is separately
-  explicit. It runs one selected independent 20-node region for 2026–2040:
-  each year uses a bounded 3×3 standard-p1-QAOA expected-energy grid, then
-  displays exact-statevector `P(bit_i=0)` marginals, where bit 0 is digital.
-  It persists provenance under `results/qaoa_year_sweeps/`, never submits a
-  provider job, and does not imply empirical adoption probabilities.
+- Tab 4's yearly QAOA heatmap is likewise fixed saved evidence:
+  `artifacts/qaoa_yearly_probability_pacific_nw.*`. It covers the independent
+  Pacific NW 20-node illustrative scenario for 2026–2040, with each cell an
+  exact-statevector `P(bit_i=0)` marginal (bit 0 is digital), and records its
+  bounded 3×3 angle-grid provenance. It never reruns, becomes stale, submits
+  a provider job, or implies empirical adoption probabilities.
 - Save with **File → Save Notebook** or Ctrl/Cmd+S. When finished, use
   **Kernel → Shut Down Kernel** and stop the Lab session in the qBraid UI.
 
