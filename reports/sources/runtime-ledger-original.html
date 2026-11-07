@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>All Runs — Runtime and Results Comparison</title>
+<style>/* Single source for the app font import, shared by the app stylesheet, Storybook and the
+   standalone analysis-report document. The design-system stylesheet requests no font,
+   because the login screens build on it and load Geist instead. */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vega@6/build/vega.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@6/build/vega-lite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@7/build/vega-embed.min.js"></script>
+<style>
+  :root {
+    color-scheme: light dark;
+
+    --classiq-background: oklch(14.5% 0 0);
+    --classiq-foreground: oklch(98.5% 0 0);
+    --classiq-card: oklch(20.5% 0 0);
+    --classiq-card-foreground: oklch(98.5% 0 0);
+    --classiq-muted: oklch(26.9% 0 0);
+    --classiq-muted-foreground: oklch(70.8% 0 0);
+    --classiq-border: oklch(100% 0 0/.1);
+    --classiq-primary: #d7f75b;
+    --classiq-primary-foreground: oklch(20.5% 0 0);
+    --classiq-accent: oklch(26.9% 0 0);
+    --classiq-brand: #d7f75b;
+    --classiq-radius: .625rem;
+    --classiq-font-sans: "Noto Sans", sans-serif;
+    --classiq-chart-1: #d7f75b;
+    --classiq-chart-2: oklch(55.6% 0 0);
+    --classiq-chart-3: oklch(43.9% 0 0);
+    --classiq-chart-4: oklch(37.1% 0 0);
+    --classiq-chart-5: oklch(26.9% 0 0);
+
+  }
+/* Base styles for the report iframe document (see reportDocument.ts). The
+   report renders in the artifact panel, which is narrow and user-resizable,
+   so these keep any layout the model writes inside the available width
+   rather than letting it force a horizontal scrollbar. Theme colors are
+   consumed through the --classiq-* custom properties reportDocument.ts sets
+   on :root, not hardcoded here. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 4px 2px 8px;
+  max-width: 100%;
+  background: transparent;
+  color: var(--classiq-foreground);
+  font-family: var(--classiq-font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  overflow-wrap: break-word;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 1.25em 0 0.5em;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+:is(h1, h2, h3, h4, h5, h6):first-child {
+  margin-top: 0;
+}
+
+p {
+  margin: 0.7em 0;
+}
+
+a {
+  color: var(--classiq-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+  font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+  border: 1px solid var(--classiq-border);
+  padding: 6px 10px;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+th {
+  background: var(--classiq-muted);
+  font-weight: 600;
+}
+
+caption,
+figcaption {
+  color: var(--classiq-muted-foreground);
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+figure {
+  margin: 1em 0;
+  max-width: 100%;
+}
+
+code,
+pre {
+  /* biome-ignore lint/nursery/useBaseline: ui-monospace is a deliberate fallback stack entry, not a baseline requirement */
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+}
+
+code {
+  background: var(--classiq-muted);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+pre {
+  background: var(--classiq-muted);
+  border: 1px solid var(--classiq-border);
+  border-radius: var(--classiq-radius);
+  padding: 12px;
+  overflow-x: auto;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--classiq-border);
+  margin: 1.5em 0;
+}
+
+small,
+.muted {
+  color: var(--classiq-muted-foreground);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+  gap: 12px;
+  margin: 1em 0;
+}
+
+.card,
+.panel {
+  background: var(--classiq-card);
+  border: 1px solid var(--classiq-border);
+  border-radius: var(--classiq-radius);
+  padding: 14px 16px;
+  min-width: 0;
+}
+
+.panel {
+  margin: 1em 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--classiq-muted-foreground);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.value.accent {
+  color: var(--classiq-brand);
+}
+
+.chart {
+  min-height: 220px;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.vega-embed {
+  width: 100%;
+  max-width: 100%;
+}
+
+.vega-embed summary {
+  display: none;
+}
+
+.vega-embed svg {
+  max-width: 100%;
+}
+
+tr.hl td {
+  color: var(--classiq-brand);
+  font-weight: 600;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
+  gap: 12px;
+  margin: 1em 0;
+}
+
+.cols > * {
+  min-width: 0;
+}
+
+.callout {
+  border-left: 3px solid var(--classiq-brand);
+  background: var(--classiq-card);
+  border-radius: 0 var(--classiq-radius) var(--classiq-radius) 0;
+  padding: 10px 14px;
+  margin: 1em 0;
+}
+
+.callout-tone {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--classiq-muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+</style>
+<script>
+  window.classiqTheme = {"background":"oklch(14.5% 0 0)","foreground":"oklch(98.5% 0 0)","card":"oklch(20.5% 0 0)","cardForeground":"oklch(98.5% 0 0)","muted":"oklch(26.9% 0 0)","mutedForeground":"oklch(70.8% 0 0)","border":"oklch(100% 0 0/.1)","primary":"#d7f75b","primaryForeground":"oklch(20.5% 0 0)","accent":"oklch(26.9% 0 0)","brand":"#d7f75b","radius":".625rem","fontSans":"\"Noto Sans\", sans-serif","chartColors":["#d7f75b","oklch(55.6% 0 0)","oklch(43.9% 0 0)","oklch(37.1% 0 0)","oklch(26.9% 0 0)"],"chartAxisLine":"oklch(26.9% 0 0)","chartAxisLabel":"oklch(71.5% 0 0)"};
+  window.classiqVegaConfig = {"background":"transparent","range":{"category":["#d7f75b","oklch(55.6% 0 0)","oklch(43.9% 0 0)","oklch(37.1% 0 0)","oklch(26.9% 0 0)"]},"mark":{"color":"#d7f75b"},"axis":{"domainColor":"oklch(26.9% 0 0)","tickColor":"oklch(26.9% 0 0)","gridColor":"oklch(26.9% 0 0)","labelColor":"oklch(71.5% 0 0)","titleColor":"oklch(71.5% 0 0)","titleFontWeight":"normal"},"legend":{"labelColor":"oklch(70.8% 0 0)","titleColor":"oklch(98.5% 0 0)"},"title":{"color":"oklch(98.5% 0 0)","subtitleColor":"oklch(70.8% 0 0)"},"view":{"stroke":"transparent"},"font":"\"Noto Sans\", sans-serif"};
+  window.classiqChart = function (target, spec, options) {
+    var draw = function () {
+      var element = typeof target === 'string' ? document.querySelector(target) : target;
+      if (!element) {
+        console.error('[classiqChart] target not found:', target);
+        return;
+      }
+      if (typeof window.vegaEmbed !== 'function') {
+        console.error('[classiqChart] vegaEmbed did not load');
+        return;
+      }
+      var merged = Object.assign(
+        { actions: false, renderer: 'svg', config: window.classiqVegaConfig },
+        options || {}
+      );
+      window
+        .vegaEmbed(element, Object.assign({ width: 'container' }, spec), merged)
+        .catch(function (error) {
+          console.error('[classiqChart] failed to render:', error);
+        });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', draw);
+    } else {
+      draw();
+    }
+  };
+</script>
+</head>
+<body>
+<h1>All Runs — Runtime and Results Comparison</h1>
+<p class="muted">Every quantum and classical run across the full Paper Phase Transition project, with backend, problem size, year, method, best expectation value, SA ground state, approximation ratio, flip prediction accuracy, and runtime. 18 successful QAOA runs on the Classiq simulator, 1 failed hardware attempt (Rigetti, budget), 2 classical SA sweeps as reference.</p>
+<div class="panel"><div class="table-scroll"><table><thead><tr><th>Run</th><th>Backend</th><th>Problem</th><th>Year(s)</th><th>Method</th><th>Iterations</th><th>Best EV</th><th>SA Ground State</th><th>Approx Ratio</th><th>Flip Prediction</th><th>Status</th><th>Runtime / Queue</th></tr></thead><tbody><tr><td>1</td><td>Classiq simulator</td><td>20-node single region</td><td>2033 only</td><td>QAOA p=2, warm-start from 2032</td><td>46</td><td>-2.643</td><td>-5.110</td><td>52%</td><td>Tech, Media, Telecom, Retail, Hospitality</td><td>Succeeded</td><td>~10 min</td></tr><tr><td>2</td><td>Classiq simulator</td><td>20-node single region</td><td>2026</td><td>QAOA p=2, cold start</td><td>40</td><td>-1.500</td><td>-12.65</td><td>12%</td><td>All paper (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>3</td><td>Classiq simulator</td><td>20-node single region</td><td>2027</td><td>QAOA p=2, warm-start</td><td>40</td><td>-1.652</td><td>-11.25</td><td>15%</td><td>All paper (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>4</td><td>Classiq simulator</td><td>20-node single region</td><td>2028</td><td>QAOA p=2, warm-start</td><td>40</td><td>-1.838</td><td>-9.85</td><td>19%</td><td>All paper (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>5</td><td>Classiq simulator</td><td>20-node single region</td><td>2029</td><td>QAOA p=2, warm-start</td><td>40</td><td>-2.002</td><td>-8.52</td><td>24%</td><td>Tech, Media, Telecom (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>6</td><td>Classiq simulator</td><td>20-node single region</td><td>2030</td><td>QAOA p=2, warm-start</td><td>40</td><td>-2.113</td><td>-7.54</td><td>28%</td><td>Tech, Media, Telecom (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr class="hl"><td>7</td><td>Classiq simulator</td><td>20-node single region</td><td>2031</td><td>QAOA p=2, warm-start</td><td>40</td><td>-2.194</td><td>-6.56</td><td>33%</td><td>Tech, Media, Telecom (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>8</td><td>Classiq simulator</td><td>20-node single region</td><td>2032</td><td>QAOA p=2, warm-start</td><td>40</td><td>-2.311</td><td>-5.81</td><td>40%</td><td>Tech, Media, Telecom, Retail, Hospitality (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>9</td><td>Classiq simulator</td><td>20-node single region</td><td>2033</td><td>QAOA p=2, warm-start from 2032</td><td>40</td><td>-2.926</td><td>-5.11</td><td>57%</td><td>Tech, Media, Telecom, Retail, Hospitality (correct)</td><td>Succeeded</td><td>~8 min</td></tr><tr><td>10</td><td>Classiq simulator</td><td>20-node single region</td><td>2034</td><td>QAOA p=2, warm-start</td><td>40</td><td>-2.895</td><td>-4.81</td><td>60%</td><td>Tech, Media, Telecom, Retail, Hospitality, Logistics, Mfg, Energy (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>11</td><td>Classiq simulator</td><td>20-node single region</td><td>2035</td><td>QAOA p=2, warm-start</td><td>40</td><td>-3.498</td><td>-4.57</td><td>77%</td><td>All above + Agriculture (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>12</td><td>Classiq simulator</td><td>20-node single region</td><td>2036</td><td>QAOA p=2, warm-start</td><td>40</td><td>-3.694</td><td>-5.55</td><td>67%</td><td>All 20 industries (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>13</td><td>Classiq simulator</td><td>20-node single region</td><td>2037</td><td>QAOA p=2, warm-start</td><td>40</td><td>-4.051</td><td>-6.95</td><td>58%</td><td>All 20 industries (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>14</td><td>Classiq simulator</td><td>20-node single region</td><td>2038</td><td>QAOA p=2, warm-start</td><td>40</td><td>-4.042</td><td>-8.35</td><td>48%</td><td>All 20 industries (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>15</td><td>Classiq simulator</td><td>20-node single region</td><td>2039</td><td>QAOA p=2, warm-start</td><td>40</td><td>-4.603</td><td>-9.75</td><td>47%</td><td>All 20 industries (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>16</td><td>Classiq simulator</td><td>20-node single region</td><td>2040</td><td>QAOA p=2, warm-start</td><td>40</td><td>-4.892</td><td>-11.15</td><td>44%</td><td>All 20 industries (correct)</td><td>Succeeded</td><td>~5 min</td></tr><tr><td>17</td><td>Rigetti Cepheus-1 (Amazon Braket)</td><td>20-node single region</td><td>2033</td><td>QAOA p=2, warm-start from 2032</td><td>N/A</td><td>N/A</td><td>-5.11</td><td>N/A</td><td>N/A</td><td>FAILED — insufficient budget</td><td>Instant fail</td></tr><tr><td>18</td><td>Classiq simulator</td><td>20-node single region</td><td>2033</td><td>QAOA p=2, cold start (comparison run)</td><td>40</td><td>-2.673</td><td>-5.11</td><td>52%</td><td>Tech, Media, Telecom, Retail, Hospitality (correct)</td><td>Succeeded</td><td>~8 min</td></tr><tr><td>19</td><td>Classical SA (laptop)</td><td>20-node single region</td><td>2026–2040 (all)</td><td>Simulated annealing, 100k steps</td><td>100k/year</td><td>N/A</td><td>Reference</td><td>100%</td><td>Full tipping-point map (reference)</td><td>Succeeded</td><td>&lt; 1 second total</td></tr><tr><td>20</td><td>Classical SA (laptop)</td><td>100-node multi-region</td><td>2026–2040 (all)</td><td>Simulated annealing, 200k steps</td><td>200k/year</td><td>N/A</td><td>Reference</td><td>100%</td><td>Full heatmap, 5 regions (reference)</td><td>Succeeded</td><td>~5 seconds total</td></tr></tbody></table></div></div>
+
+</body>
+</html>

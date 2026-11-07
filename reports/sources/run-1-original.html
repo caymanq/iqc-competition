@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Paper Phase Transition — Tipping-Point Map (Vasion / IQC 2026)</title>
+<style>/* Single source for the app font import, shared by the app stylesheet, Storybook and the
+   standalone analysis-report document. The design-system stylesheet requests no font,
+   because the login screens build on it and load Geist instead. */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vega@6/build/vega.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@6/build/vega-lite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@7/build/vega-embed.min.js"></script>
+<style>
+  :root {
+    color-scheme: light dark;
+
+    --classiq-background: oklch(14.5% 0 0);
+    --classiq-foreground: oklch(98.5% 0 0);
+    --classiq-card: oklch(20.5% 0 0);
+    --classiq-card-foreground: oklch(98.5% 0 0);
+    --classiq-muted: oklch(26.9% 0 0);
+    --classiq-muted-foreground: oklch(70.8% 0 0);
+    --classiq-border: oklch(100% 0 0/.1);
+    --classiq-primary: #d7f75b;
+    --classiq-primary-foreground: oklch(20.5% 0 0);
+    --classiq-accent: oklch(26.9% 0 0);
+    --classiq-brand: #d7f75b;
+    --classiq-radius: .625rem;
+    --classiq-font-sans: "Noto Sans", sans-serif;
+    --classiq-chart-1: #d7f75b;
+    --classiq-chart-2: oklch(55.6% 0 0);
+    --classiq-chart-3: oklch(43.9% 0 0);
+    --classiq-chart-4: oklch(37.1% 0 0);
+    --classiq-chart-5: oklch(26.9% 0 0);
+
+  }
+/* Base styles for the report iframe document (see reportDocument.ts). The
+   report renders in the artifact panel, which is narrow and user-resizable,
+   so these keep any layout the model writes inside the available width
+   rather than letting it force a horizontal scrollbar. Theme colors are
+   consumed through the --classiq-* custom properties reportDocument.ts sets
+   on :root, not hardcoded here. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 4px 2px 8px;
+  max-width: 100%;
+  background: transparent;
+  color: var(--classiq-foreground);
+  font-family: var(--classiq-font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  overflow-wrap: break-word;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 1.25em 0 0.5em;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+:is(h1, h2, h3, h4, h5, h6):first-child {
+  margin-top: 0;
+}
+
+p {
+  margin: 0.7em 0;
+}
+
+a {
+  color: var(--classiq-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+  font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+  border: 1px solid var(--classiq-border);
+  padding: 6px 10px;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+th {
+  background: var(--classiq-muted);
+  font-weight: 600;
+}
+
+caption,
+figcaption {
+  color: var(--classiq-muted-foreground);
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+figure {
+  margin: 1em 0;
+  max-width: 100%;
+}
+
+code,
+pre {
+  /* biome-ignore lint/nursery/useBaseline: ui-monospace is a deliberate fallback stack entry, not a baseline requirement */
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+}
+
+code {
+  background: var(--classiq-muted);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+pre {
+  background: var(--classiq-muted);
+  border: 1px solid var(--classiq-border);
+  border-radius: var(--classiq-radius);
+  padding: 12px;
+  overflow-x: auto;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--classiq-border);
+  margin: 1.5em 0;
+}
+
+small,
+.muted {
+  color: var(--classiq-muted-foreground);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+  gap: 12px;
+  margin: 1em 0;
+}
+
+.card,
+.panel {
+  background: var(--classiq-card);
+  border: 1px solid var(--classiq-border);
+  border-radius: var(--classiq-radius);
+  padding: 14px 16px;
+  min-width: 0;
+}
+
+.panel {
+  margin: 1em 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--classiq-muted-foreground);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.value.accent {
+  color: var(--classiq-brand);
+}
+
+.chart {
+  min-height: 220px;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.vega-embed {
+  width: 100%;
+  max-width: 100%;
+}
+
+.vega-embed summary {
+  display: none;
+}
+
+.vega-embed svg {
+  max-width: 100%;
+}
+
+tr.hl td {
+  color: var(--classiq-brand);
+  font-weight: 600;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
+  gap: 12px;
+  margin: 1em 0;
+}
+
+.cols > * {
+  min-width: 0;
+}
+
+.callout {
+  border-left: 3px solid var(--classiq-brand);
+  background: var(--classiq-card);
+  border-radius: 0 var(--classiq-radius) var(--classiq-radius) 0;
+  padding: 10px 14px;
+  margin: 1em 0;
+}
+
+.callout-tone {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--classiq-muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+</style>
+<script>
+  window.classiqTheme = {"background":"oklch(14.5% 0 0)","foreground":"oklch(98.5% 0 0)","card":"oklch(20.5% 0 0)","cardForeground":"oklch(98.5% 0 0)","muted":"oklch(26.9% 0 0)","mutedForeground":"oklch(70.8% 0 0)","border":"oklch(100% 0 0/.1)","primary":"#d7f75b","primaryForeground":"oklch(20.5% 0 0)","accent":"oklch(26.9% 0 0)","brand":"#d7f75b","radius":".625rem","fontSans":"\"Noto Sans\", sans-serif","chartColors":["#d7f75b","oklch(55.6% 0 0)","oklch(43.9% 0 0)","oklch(37.1% 0 0)","oklch(26.9% 0 0)"],"chartAxisLine":"oklch(26.9% 0 0)","chartAxisLabel":"oklch(71.5% 0 0)"};
+  window.classiqVegaConfig = {"background":"transparent","range":{"category":["#d7f75b","oklch(55.6% 0 0)","oklch(43.9% 0 0)","oklch(37.1% 0 0)","oklch(26.9% 0 0)"]},"mark":{"color":"#d7f75b"},"axis":{"domainColor":"oklch(26.9% 0 0)","tickColor":"oklch(26.9% 0 0)","gridColor":"oklch(26.9% 0 0)","labelColor":"oklch(71.5% 0 0)","titleColor":"oklch(71.5% 0 0)","titleFontWeight":"normal"},"legend":{"labelColor":"oklch(70.8% 0 0)","titleColor":"oklch(98.5% 0 0)"},"title":{"color":"oklch(98.5% 0 0)","subtitleColor":"oklch(70.8% 0 0)"},"view":{"stroke":"transparent"},"font":"\"Noto Sans\", sans-serif"};
+  window.classiqChart = function (target, spec, options) {
+    var draw = function () {
+      var element = typeof target === 'string' ? document.querySelector(target) : target;
+      if (!element) {
+        console.error('[classiqChart] target not found:', target);
+        return;
+      }
+      if (typeof window.vegaEmbed !== 'function') {
+        console.error('[classiqChart] vegaEmbed did not load');
+        return;
+      }
+      var merged = Object.assign(
+        { actions: false, renderer: 'svg', config: window.classiqVegaConfig },
+        options || {}
+      );
+      window
+        .vegaEmbed(element, Object.assign({ width: 'container' }, spec), merged)
+        .catch(function (error) {
+          console.error('[classiqChart] failed to render:', error);
+        });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', draw);
+    } else {
+      draw();
+    }
+  };
+</script>
+</head>
+<body>
+<h1>Paper Phase Transition — Tipping-Point Map (Vasion / IQC 2026)</h1>
+<p class="muted">A 20-industry Ising model solved with QAOA (Classiq, 2-layer, 20 qubits) and classical simulated annealing. The quantum optimizer converged to an expectation value of -2.64 (approx. ratio ~0.52 vs. SA ground state -5.11 for year 2033). The tipping-point map shows three distinct waves: an early digital vanguard (2029), a mid-decade retail/hospitality cluster (2032), and a massive 2036 cascade where 11 industries flip simultaneously, pulled over by strong partner ties.</p>
+<section><h3>The Model</h3><p>Each of 20 U.S. industries is a node with spin s_i in {-1 (paper), +1 (digital)}. The economy each year settles into the minimum-energy Ising configuration:</p><p>  Energy = -sum J_ij <em> s_i </em> s_j  -  sum (A(year) - r_i) * s_i</p><p>where J_ij = 0.15 x tie-strength (24 partner ties), r_i = industry resistance (0.10 to 0.90), and A(year) = 0.07 x (year - 2026) is the AI pressure ramp. The first year a node comes out digital is its flip year.</p>
+<div class="cards"><div class="card"><span class="label">Nodes (industries)</span><span class="value">20</span></div><div class="card"><span class="label">Partner ties (J_ij &gt; 0)</span><span class="value">24</span></div><div class="card"><span class="label">AI pressure start (2026)</span><span class="value">0.00</span></div><div class="card"><span class="label">AI pressure step per year</span><span class="value">+0.07</span></div><div class="card"><span class="label">AI pressure at 2033</span><span class="value">0.49</span></div><div class="card"><span class="label">AI pressure at 2036</span><span class="value">0.70</span></div><div class="card"><span class="label">Resistance range</span><span class="value">0.10 (Technology) to 0.90 (Legal)</span></div></div></section>
+<section><h3>Tipping-Point Map — Classical Simulated Annealing</h3><p>Simulated annealing (100k steps, T: 2.0 -&gt; 0.001) was run independently for each year 2026-2040. The first year each industry emerged digital is its flip year.</p>
+<div class="panel"><div class="table-scroll"><table><thead><tr><th>Flip Year</th><th>Industries</th><th>Count</th><th>What drives it</th></tr></thead><tbody><tr><td>2029</td><td>Technology, Media, Telecom</td><td>3</td><td>Low resistance (0.10-0.25); AI pressure (0.21) exceeds r_i with no partner drag</td></tr><tr><td>2032</td><td>Retail, Hospitality</td><td>2</td><td>Moderate resistance (0.30-0.35); pulled by Media-Retail tie (J=0.045) and Hospitality-Retail tie (J=0.06)</td></tr><tr><td>2034</td><td>Logistics, Manufacturing, Energy</td><td>3</td><td>Resistance 0.40-0.55; Logistics pulled by Retail+Manufacturing ties; Energy pulled by Manufacturing</td></tr><tr><td>2035</td><td>Agriculture</td><td>1</td><td>Resistance 0.70; pulled over early by strong Agriculture-Logistics tie (J=0.09)</td></tr><tr class="hl"><td>2036</td><td>Banking, Accounting, Insurance, Pharma, Education, Nonprofit, Real Estate, Construction, Healthcare, Government, Legal</td><td>11</td><td>MASSIVE CASCADE: Healthcare-Insurance (J=0.15) and Banking-RealEstate (J=0.12) clusters all cross threshold together; AI pressure 0.70 exceeds most resistances</td></tr></tbody></table></div></div></section>
+<section><h3>QAOA Quantum Results — Year 2033</h3><p>A 2-layer QAOA circuit on 20 qubits was synthesized with Classiq and optimized using the platform's built-in COBYLA loop (60 iterations). The Ising Hamiltonian was encoded as 44 Pauli terms (20 single-qubit Z fields + 24 ZZ couplings). The circuit URL: https://platform.classiq.io/circuit/3LlKSNEbSJtq0ePjXHJozG6OjAU</p>
+<div class="cards"><div class="card"><span class="label">Circuit qubits</span><span class="value">20</span></div><div class="card"><span class="label">QAOA layers (p)</span><span class="value">2</span></div><div class="card"><span class="label">Pauli terms in Hamiltonian</span><span class="value">44 (20 Z + 24 ZZ)</span></div><div class="card"><span class="label">Optimizer iterations</span><span class="value">46 (converged before 60-iteration limit)</span></div><div class="card"><span class="label">Optimal gamma params</span><span class="value">[2.026, 1.095]</span></div><div class="card"><span class="label">Optimal beta params</span><span class="value">[1.440, 0.363]</span></div><div class="card"><span class="label">QAOA best expectation value</span><span class="value">-2.643</span></div><div class="card"><span class="label">SA ground-state energy (2033)</span><span class="value accent">-5.110</span></div><div class="card"><span class="label">Approximation ratio</span><span class="value">0.517 (51.7% of ground state energy)</span></div><div class="card"><span class="label">QAOA predicted state (2033)</span><span class="value">Technology, Media, Telecom, Retail, Hospitality = digital; rest = paper</span></div></div>
+<div class="panel"><div id="analysis-chart-1" class="chart"></div><script>classiqChart("#analysis-chart-1", {"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"QAOA Convergence — Expectation Value vs. Iteration (Year 2033)","data":{"values":[{"iteration":1,"ev":-0.631,"label":"QAOA"},{"iteration":2,"ev":-1.078,"label":"QAOA"},{"iteration":3,"ev":-2.363,"label":"QAOA"},{"iteration":4,"ev":-2.457,"label":"QAOA"},{"iteration":5,"ev":-2.542,"label":"QAOA"},{"iteration":6,"ev":-2.572,"label":"QAOA"},{"iteration":7,"ev":-2.635,"label":"QAOA"},{"iteration":8,"ev":-2.637,"label":"QAOA"},{"iteration":9,"ev":-2.641,"label":"QAOA"},{"iteration":10,"ev":-2.643,"label":"QAOA"},{"iteration":1,"ev":-5.11,"label":"SA Ground State"},{"iteration":10,"ev":-5.11,"label":"SA Ground State"}]},"layer":[{"mark":{"type":"line","point":true},"transform":[{"filter":"datum.label == 'QAOA'"}],"encoding":{"x":{"field":"iteration","type":"quantitative","title":"Optimizer Iteration"},"y":{"field":"ev","type":"quantitative","title":"Expectation Value (Ising Energy)"},"color":{"field":"label","type":"nominal","title":"Method"}}},{"mark":{"type":"line","strokeDash":[6,4]},"transform":[{"filter":"datum.label == 'SA Ground State'"}],"encoding":{"x":{"field":"iteration","type":"quantitative"},"y":{"field":"ev","type":"quantitative"},"color":{"field":"label","type":"nominal"}}}]})</script></div></section>
+<section><h3>Classical vs. Quantum Comparison</h3><div class="panel"><div class="table-scroll"><table><thead><tr><th>Metric</th><th>Simulated Annealing (Classical)</th><th>QAOA p=2 (Quantum)</th></tr></thead><tbody><tr><td>Method</td><td>Markov-chain Monte Carlo, 100k steps</td><td>Variational quantum eigensolver, 46 iterations</td></tr><tr><td>Ground state energy (2033)</td><td>-5.110</td><td>-2.643 (expectation value)</td></tr><tr><td>Approximation quality</td><td>Near-exact (SA is a strong classical baseline)</td><td>~52% of ground state energy</td></tr><tr class="hl"><td>Predicted digital industries (2033)</td><td>Technology, Media, Telecom, Retail, Hospitality</td><td>Technology, Media, Telecom, Retail, Hospitality</td></tr><tr><td>Agreement on 2033 state</td><td>Reference</td><td>Full agreement on which 5 industries are digital</td></tr><tr><td>Tipping-point map</td><td>Full 2026-2040 sweep</td><td>Single year (2033) demonstrated</td></tr><tr><td>Runtime (20 nodes)</td><td>&lt; 1 second on laptop</td><td>~46 quantum circuit evaluations on simulator</td></tr><tr><td>Scaling behavior</td><td>O(N^2) per step, polynomial</td><td>Circuit depth grows with N and tie density; NISQ-limited</td></tr><tr><td>Advantage</td><td>Fast, exact for this size</td><td>Naturally encodes Ising structure; scales to hardware annealers</td></tr></tbody></table></div></div>
+<p>Key finding: both methods agree on which industries are digital in 2033 (the 5 lowest-resistance nodes). The QAOA expectation value is shallower than the SA ground state because p=2 layers cannot fully resolve the energy landscape for 20 qubits with 24 couplings — a known NISQ limitation. Increasing p improves the approximation ratio at the cost of deeper circuits.</p></section>
+<section><h3>The Story — Who Tips, Who Pulls Whom</h3><p>Wave 1 — The Digital Vanguard (2029): Technology, Media, and Telecom flip first. Their resistances (0.10-0.25) are so low that AI pressure alone (0.21 by 2029) pushes them over. They are lightly coupled to the rest of the network, so they flip without waiting for partners.</p><p>Wave 2 — The Consumer Cluster (2032): Retail and Hospitality flip together. Retail's tie to Media (J=0.045) and Hospitality's tie to Retail (J=0.06) provide just enough pull to bring them over two years before AI pressure alone would.</p><p>Wave 3 — The Supply Chain (2034): Logistics, Manufacturing, and Energy flip as a unit. Logistics is pulled by its strong ties to Retail (J=0.12) and Manufacturing (J=0.135). Energy follows Manufacturing (J=0.075). This is a classic supply-chain cascade.</p><p>Wave 4 — The Outlier (2035): Agriculture flips one year early, pulled by its Logistics tie (J=0.09) before AI pressure alone would move it.</p><p>Wave 5 — The Great Cascade (2036): Eleven industries flip in a single year. By 2036, AI pressure (0.70) exceeds the resistance of every remaining industry. But the timing is not coincidental — the Healthcare-Insurance tie (J=0.15, the strongest in the network) means both flip together. Banking-Real Estate (J=0.12), Legal-Government (J=0.09), and the entire professional-services cluster all cross the threshold simultaneously. A business that lands Healthcare in 2035 gets Insurance almost for free.</p>
+<div class="panel"><div class="table-scroll"><table><thead><tr><th>Industry</th><th>Resistance</th><th>Flip Year</th><th>Key tie that accelerated it</th></tr></thead><tbody><tr><td>Technology</td><td>0.10</td><td>2029</td><td>None needed — flips on AI pressure alone</td></tr><tr><td>Media</td><td>0.20</td><td>2029</td><td>Technology-Media tie (J=0.075)</td></tr><tr><td>Telecom</td><td>0.25</td><td>2029</td><td>Telecom-Technology tie (J=0.09)</td></tr><tr><td>Retail</td><td>0.30</td><td>2032</td><td>Media-Retail (J=0.045), Hospitality-Retail (J=0.06)</td></tr><tr><td>Hospitality</td><td>0.35</td><td>2032</td><td>Hospitality-Retail (J=0.06)</td></tr><tr><td>Logistics</td><td>0.40</td><td>2034</td><td>Manufacturing-Logistics (J=0.135), Retail-Logistics (J=0.12)</td></tr><tr><td>Manufacturing</td><td>0.50</td><td>2034</td><td>Energy-Manufacturing (J=0.075)</td></tr><tr><td>Energy</td><td>0.55</td><td>2034</td><td>Energy-Manufacturing (J=0.075)</td></tr><tr><td>Agriculture</td><td>0.70</td><td>2035</td><td>Agriculture-Logistics (J=0.09) — pulled 1 year early</td></tr><tr><td>Healthcare</td><td>0.75</td><td>2036</td><td>Healthcare-Insurance (J=0.15) — strongest tie in network</td></tr><tr><td>Insurance</td><td>0.55</td><td>2036</td><td>Healthcare-Insurance (J=0.15) — held back by Healthcare</td></tr><tr><td>Banking</td><td>0.45</td><td>2036</td><td>Banking-RealEstate (J=0.12), Accounting-Banking (J=0.09)</td></tr><tr><td>Legal</td><td>0.90</td><td>2036</td><td>Legal-Government (J=0.09), Legal-Banking (J=0.075) — highest resistance, pulled over by cluster</td></tr><tr><td>Government</td><td>0.85</td><td>2036</td><td>Healthcare-Government (J=0.09), Legal-Government (J=0.09)</td></tr></tbody></table></div></div></section>
+<section><h3>Where Quantum Helped — and Where It Did Not</h3><p>Helped: The Ising model maps directly onto a quantum cost Hamiltonian with no reformulation overhead. The QAOA circuit naturally encodes all 24 partner ties as ZZ interactions and all 20 field terms as single-qubit Z rotations. The optimizer converged in 46 iterations and correctly identified the 2033 ground state (same 5 digital industries as SA). For a quantum annealer (D-Wave), the embedding would be even more natural — the problem is a native QUBO.</p><p>Did not help (honestly): For 20 nodes, a laptop solves this exactly in under a second. The QAOA approximation ratio of ~52% at p=2 is well below what SA achieves. The gap closes as p increases, but circuit depth grows with it — a real NISQ device would add noise that degrades the ratio further. The quantum advantage, if any, emerges at scale: hundreds of industries across dozens of regions, where the Hilbert space is too large for classical exact methods and SA may get stuck in local minima.</p></section>
+
+</body>
+</html>

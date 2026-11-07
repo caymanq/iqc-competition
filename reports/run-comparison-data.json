@@ -1,0 +1,2187 @@
+{
+  "description": "Transcribed report evidence, not independently rerun results",
+  "runs": [
+    {
+      "id": "run-1",
+      "source": "sources/run-1-original.html",
+      "scope": "QAOA 2033; classical 2026\u20132040 sweep",
+      "p": 2,
+      "qubits": 20,
+      "iterations_reported": 46,
+      "qaoa_ev_2033": -2.643,
+      "seed": null
+    },
+    {
+      "id": "run-2",
+      "source": "sources/run-2-original.html",
+      "scope": "QAOA 2026\u20132040 sweep",
+      "p": 2,
+      "qubits": 20,
+      "warm_started": true,
+      "iterations_reported": "about 40 per year",
+      "seed": null
+    },
+    {
+      "id": "run-3",
+      "source": "sources/run-3-original.html",
+      "scope": "100 nodes, 5 regions, 220 edges; classical SA sweep",
+      "sa_proposals_per_year_reported": 200000,
+      "quantum_execution": "No 100-qubit results supplied",
+      "elapsed_seconds": null,
+      "reference_energies": null
+    },
+    {
+      "id": "run-4",
+      "source": "sources/run-4-original.html",
+      "scope": "2033 repeated 20-qubit Classiq simulator execution",
+      "qaoa_ev_2033_reported": -2.673,
+      "sa_reference_2033": -5.11,
+      "gap_from_reported_ev": 2.437,
+      "budget_reported": 40,
+      "iterations_reported": "about 38",
+      "elapsed_seconds": null,
+      "starting_parameters_reported": [
+        1.868,
+        0.311,
+        1.633,
+        0.049
+      ],
+      "best_chart_ev": -2.676,
+      "status": "Repeat execution; not a controlled warm-versus-cold comparison"
+    }
+  ],
+  "year_results_run_2": [
+    {
+      "year": 2026,
+      "qaoa_ev": -1.5,
+      "sa_reference": -12.65,
+      "absolute_gap": 11.15,
+      "energy_quotient": 0.11857707509881422
+    },
+    {
+      "year": 2027,
+      "qaoa_ev": -1.652,
+      "sa_reference": -11.25,
+      "absolute_gap": 9.598,
+      "energy_quotient": 0.14684444444444444
+    },
+    {
+      "year": 2028,
+      "qaoa_ev": -1.838,
+      "sa_reference": -9.85,
+      "absolute_gap": 8.012,
+      "energy_quotient": 0.1865989847715736
+    },
+    {
+      "year": 2029,
+      "qaoa_ev": -2.002,
+      "sa_reference": -8.52,
+      "absolute_gap": 6.518,
+      "energy_quotient": 0.23497652582159623
+    },
+    {
+      "year": 2030,
+      "qaoa_ev": -2.113,
+      "sa_reference": -7.54,
+      "absolute_gap": 5.427,
+      "energy_quotient": 0.2802387267904509
+    },
+    {
+      "year": 2031,
+      "qaoa_ev": -2.194,
+      "sa_reference": -6.56,
+      "absolute_gap": 4.366,
+      "energy_quotient": 0.33445121951219514
+    },
+    {
+      "year": 2032,
+      "qaoa_ev": -2.311,
+      "sa_reference": -5.81,
+      "absolute_gap": 3.4989999999999997,
+      "energy_quotient": 0.39776247848537005
+    },
+    {
+      "year": 2033,
+      "qaoa_ev": -2.926,
+      "sa_reference": -5.11,
+      "absolute_gap": 2.184,
+      "energy_quotient": 0.5726027397260274
+    },
+    {
+      "year": 2034,
+      "qaoa_ev": -2.895,
+      "sa_reference": -4.81,
+      "absolute_gap": 1.9149999999999996,
+      "energy_quotient": 0.6018711018711019
+    },
+    {
+      "year": 2035,
+      "qaoa_ev": -3.498,
+      "sa_reference": -4.57,
+      "absolute_gap": 1.072,
+      "energy_quotient": 0.7654266958424508
+    },
+    {
+      "year": 2036,
+      "qaoa_ev": -3.694,
+      "sa_reference": -5.55,
+      "absolute_gap": 1.8559999999999999,
+      "energy_quotient": 0.6655855855855856
+    },
+    {
+      "year": 2037,
+      "qaoa_ev": -4.051,
+      "sa_reference": -6.95,
+      "absolute_gap": 2.899,
+      "energy_quotient": 0.5828776978417266
+    },
+    {
+      "year": 2038,
+      "qaoa_ev": -4.042,
+      "sa_reference": -8.35,
+      "absolute_gap": 4.308,
+      "energy_quotient": 0.48407185628742516
+    },
+    {
+      "year": 2039,
+      "qaoa_ev": -4.603,
+      "sa_reference": -9.75,
+      "absolute_gap": 5.147,
+      "energy_quotient": 0.47210256410256407
+    },
+    {
+      "year": 2040,
+      "qaoa_ev": -4.892,
+      "sa_reference": -11.15,
+      "absolute_gap": 6.258,
+      "energy_quotient": 0.4387443946188341
+    }
+  ],
+  "original_chart_specs": [
+    [
+      {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "title": "QAOA Convergence \u2014 Expectation Value vs. Iteration (Year 2033)",
+        "data": {
+          "values": [
+            {
+              "iteration": 1,
+              "ev": -0.631,
+              "label": "QAOA"
+            },
+            {
+              "iteration": 2,
+              "ev": -1.078,
+              "label": "QAOA"
+            },
+            {
+              "iteration": 3,
+              "ev": -2.363,
+              "label": "QAOA"
+            },
+            {
+              "iteration": 4,
+              "ev": -2.457,
+              "label": "QAOA"
+            },
+            {
+              "iteration": 5,
+              "ev": -2.542,
+              "label": "QAOA"
+            },
+            {
+              "iteration": 6,
+              "ev": -2.572,
+              "label": "QAOA"
+            },
+            {
+              "iteration": 7,
+              "ev": -2.635,
+              "label": "QAOA"
+            },
+            {
+              "iteration": 8,
+              "ev": -2.637,
+              "label": "QAOA"
+            },
+            {
+              "iteration": 9,
+              "ev": -2.641,
+              "label": "QAOA"
+            },
+            {
+              "iteration": 10,
+              "ev": -2.643,
+              "label": "QAOA"
+            },
+            {
+              "iteration": 1,
+              "ev": -5.11,
+              "label": "SA Ground State"
+            },
+            {
+              "iteration": 10,
+              "ev": -5.11,
+              "label": "SA Ground State"
+            }
+          ]
+        },
+        "layer": [
+          {
+            "mark": {
+              "type": "line",
+              "point": true
+            },
+            "transform": [
+              {
+                "filter": "datum.label == 'QAOA'"
+              }
+            ],
+            "encoding": {
+              "x": {
+                "field": "iteration",
+                "type": "quantitative",
+                "title": "Optimizer Iteration"
+              },
+              "y": {
+                "field": "ev",
+                "type": "quantitative",
+                "title": "Expectation Value (Ising Energy)"
+              },
+              "color": {
+                "field": "label",
+                "type": "nominal",
+                "title": "Method"
+              }
+            }
+          },
+          {
+            "mark": {
+              "type": "line",
+              "strokeDash": [
+                6,
+                4
+              ]
+            },
+            "transform": [
+              {
+                "filter": "datum.label == 'SA Ground State'"
+              }
+            ],
+            "encoding": {
+              "x": {
+                "field": "iteration",
+                "type": "quantitative"
+              },
+              "y": {
+                "field": "ev",
+                "type": "quantitative"
+              },
+              "color": {
+                "field": "label",
+                "type": "nominal"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "title": "QAOA Expectation Value vs Year (lower = more digital)",
+        "data": {
+          "values": [
+            {
+              "year": 2026,
+              "ev": -1.5,
+              "method": "QAOA"
+            },
+            {
+              "year": 2027,
+              "ev": -1.652,
+              "method": "QAOA"
+            },
+            {
+              "year": 2028,
+              "ev": -1.838,
+              "method": "QAOA"
+            },
+            {
+              "year": 2029,
+              "ev": -2.002,
+              "method": "QAOA"
+            },
+            {
+              "year": 2030,
+              "ev": -2.113,
+              "method": "QAOA"
+            },
+            {
+              "year": 2031,
+              "ev": -2.194,
+              "method": "QAOA"
+            },
+            {
+              "year": 2032,
+              "ev": -2.311,
+              "method": "QAOA"
+            },
+            {
+              "year": 2033,
+              "ev": -2.926,
+              "method": "QAOA"
+            },
+            {
+              "year": 2034,
+              "ev": -2.895,
+              "method": "QAOA"
+            },
+            {
+              "year": 2035,
+              "ev": -3.498,
+              "method": "QAOA"
+            },
+            {
+              "year": 2036,
+              "ev": -3.694,
+              "method": "QAOA"
+            },
+            {
+              "year": 2037,
+              "ev": -4.051,
+              "method": "QAOA"
+            },
+            {
+              "year": 2038,
+              "ev": -4.042,
+              "method": "QAOA"
+            },
+            {
+              "year": 2039,
+              "ev": -4.603,
+              "method": "QAOA"
+            },
+            {
+              "year": 2040,
+              "ev": -4.892,
+              "method": "QAOA"
+            },
+            {
+              "year": 2026,
+              "ev": -12.65,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2027,
+              "ev": -11.25,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2028,
+              "ev": -9.85,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2029,
+              "ev": -8.52,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2030,
+              "ev": -7.54,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2031,
+              "ev": -6.56,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2032,
+              "ev": -5.81,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2033,
+              "ev": -5.11,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2034,
+              "ev": -4.81,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2035,
+              "ev": -4.57,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2036,
+              "ev": -5.55,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2037,
+              "ev": -6.95,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2038,
+              "ev": -8.35,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2039,
+              "ev": -9.75,
+              "method": "SA Ground State"
+            },
+            {
+              "year": 2040,
+              "ev": -11.15,
+              "method": "SA Ground State"
+            }
+          ]
+        },
+        "mark": {
+          "type": "line",
+          "point": true
+        },
+        "encoding": {
+          "x": {
+            "field": "year",
+            "type": "ordinal",
+            "title": "Year"
+          },
+          "y": {
+            "field": "ev",
+            "type": "quantitative",
+            "title": "Ising Energy (Expectation Value)"
+          },
+          "color": {
+            "field": "method",
+            "type": "nominal",
+            "title": "Method"
+          },
+          "strokeDash": {
+            "condition": {
+              "test": "datum.method === 'SA Ground State'",
+              "value": [
+                6,
+                4
+              ]
+            },
+            "value": [
+              1,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "title": "QAOA Approximation Ratio by Year (higher = closer to ground state)",
+        "data": {
+          "values": [
+            {
+              "year": 2026,
+              "ratio": 0.119
+            },
+            {
+              "year": 2027,
+              "ratio": 0.147
+            },
+            {
+              "year": 2028,
+              "ratio": 0.187
+            },
+            {
+              "year": 2029,
+              "ratio": 0.235
+            },
+            {
+              "year": 2030,
+              "ratio": 0.28
+            },
+            {
+              "year": 2031,
+              "ratio": 0.334
+            },
+            {
+              "year": 2032,
+              "ratio": 0.398
+            },
+            {
+              "year": 2033,
+              "ratio": 0.573
+            },
+            {
+              "year": 2034,
+              "ratio": 0.602
+            },
+            {
+              "year": 2035,
+              "ratio": 0.765
+            },
+            {
+              "year": 2036,
+              "ratio": 0.666
+            },
+            {
+              "year": 2037,
+              "ratio": 0.583
+            },
+            {
+              "year": 2038,
+              "ratio": 0.484
+            },
+            {
+              "year": 2039,
+              "ratio": 0.472
+            },
+            {
+              "year": 2040,
+              "ratio": 0.439
+            }
+          ]
+        },
+        "mark": {
+          "type": "bar"
+        },
+        "encoding": {
+          "x": {
+            "field": "year",
+            "type": "ordinal",
+            "title": "Year"
+          },
+          "y": {
+            "field": "ratio",
+            "type": "quantitative",
+            "title": "Approximation Ratio",
+            "scale": {
+              "domain": [
+                0,
+                1
+              ]
+            }
+          },
+          "tooltip": [
+            {
+              "field": "year"
+            },
+            {
+              "field": "ratio",
+              "format": ".1%"
+            }
+          ]
+        }
+      }
+    ],
+    [
+      {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "data": {
+          "values": [
+            {
+              "flip_year": 2029,
+              "industry": "Technology",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Technology",
+              "region": "California"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Technology",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Technology",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Technology",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Media",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Media",
+              "region": "California"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Media",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Media",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Media",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Telecom",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Telecom",
+              "region": "California"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Telecom",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Telecom",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2029,
+              "industry": "Telecom",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2031,
+              "industry": "Retail",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2031,
+              "industry": "Retail",
+              "region": "California"
+            },
+            {
+              "flip_year": 2031,
+              "industry": "Retail",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2031,
+              "industry": "Retail",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2031,
+              "industry": "Retail",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2031,
+              "industry": "Hospitality",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2031,
+              "industry": "Hospitality",
+              "region": "California"
+            },
+            {
+              "flip_year": 2031,
+              "industry": "Hospitality",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2031,
+              "industry": "Hospitality",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2031,
+              "industry": "Hospitality",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Logistics",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Logistics",
+              "region": "California"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Logistics",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Logistics",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Logistics",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Manufacturing",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Manufacturing",
+              "region": "California"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Manufacturing",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Manufacturing",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Manufacturing",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Energy",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Energy",
+              "region": "California"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Energy",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Energy",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Energy",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2033,
+              "industry": "Agriculture",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Agriculture",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Agriculture",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Agriculture",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Agriculture",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Banking",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Banking",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Banking",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Banking",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Banking",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Accounting",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Accounting",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Accounting",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Accounting",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Accounting",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Insurance",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Insurance",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Insurance",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Insurance",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Insurance",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Pharma",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Pharma",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Pharma",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Pharma",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Pharma",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Education",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Education",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Education",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Education",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Education",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Nonprofit",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Nonprofit",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Nonprofit",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Nonprofit",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Nonprofit",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Real Estate",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Real Estate",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Real Estate",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Real Estate",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Real Estate",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Construction",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Construction",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Construction",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Construction",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Construction",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Healthcare",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Healthcare",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Healthcare",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Healthcare",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Healthcare",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Government",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Government",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Government",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Government",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Government",
+              "region": "Mountain West"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Legal",
+              "region": "California"
+            },
+            {
+              "flip_year": 2034,
+              "industry": "Legal",
+              "region": "Pacific NW"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Legal",
+              "region": "Texas"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Legal",
+              "region": "Southwest"
+            },
+            {
+              "flip_year": 2035,
+              "industry": "Legal",
+              "region": "Mountain West"
+            }
+          ]
+        },
+        "encoding": {
+          "color": {
+            "field": "flip_year",
+            "legend": {
+              "title": "Flip Year"
+            },
+            "scale": {
+              "domain": [
+                2029,
+                2035
+              ],
+              "scheme": "blues"
+            },
+            "type": "quantitative"
+          },
+          "x": {
+            "field": "region",
+            "sort": [
+              "California",
+              "Pacific NW",
+              "Texas",
+              "Mountain West",
+              "Southwest"
+            ],
+            "title": "Region",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "industry",
+            "sort": [
+              "Technology",
+              "Media",
+              "Telecom",
+              "Retail",
+              "Hospitality",
+              "Logistics",
+              "Manufacturing",
+              "Energy",
+              "Agriculture",
+              "Banking",
+              "Accounting",
+              "Insurance",
+              "Pharma",
+              "Education",
+              "Nonprofit",
+              "Real Estate",
+              "Construction",
+              "Healthcare",
+              "Government",
+              "Legal"
+            ],
+            "title": "Industry",
+            "type": "nominal"
+          }
+        },
+        "height": 420,
+        "mark": "rect",
+        "title": "Tipping-Point Heatmap \u2014 Industry \u00d7 Region (darker = earlier flip)",
+        "width": 300
+      },
+      {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "data": {
+          "values": [
+            {
+              "count": 15,
+              "year": "2029"
+            },
+            {
+              "count": 0,
+              "year": "2030"
+            },
+            {
+              "count": 10,
+              "year": "2031"
+            },
+            {
+              "count": 0,
+              "year": "2032"
+            },
+            {
+              "count": 16,
+              "year": "2033"
+            },
+            {
+              "count": 18,
+              "year": "2034"
+            },
+            {
+              "count": 41,
+              "year": "2035"
+            }
+          ]
+        },
+        "encoding": {
+          "x": {
+            "field": "year",
+            "title": "Year",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "count",
+            "title": "Nodes Flipping Digital",
+            "type": "quantitative"
+          }
+        },
+        "mark": {
+          "type": "bar"
+        },
+        "title": "Nodes Flipping Per Year (100-node network)"
+      }
+    ],
+    [
+      {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "data": {
+          "values": [
+            {
+              "ev": -2.404,
+              "iteration": 1,
+              "run": "Run 2 (fresh)"
+            },
+            {
+              "ev": -2.449,
+              "iteration": 2,
+              "run": "Run 2 (fresh)"
+            },
+            {
+              "ev": -2.562,
+              "iteration": 3,
+              "run": "Run 2 (fresh)"
+            },
+            {
+              "ev": -2.599,
+              "iteration": 4,
+              "run": "Run 2 (fresh)"
+            },
+            {
+              "ev": -2.676,
+              "iteration": 5,
+              "run": "Run 2 (fresh)"
+            },
+            {
+              "ev": -2.676,
+              "iteration": 6,
+              "run": "Run 2 (fresh)"
+            },
+            {
+              "ev": -2.676,
+              "iteration": 7,
+              "run": "Run 2 (fresh)"
+            },
+            {
+              "ev": -2.66,
+              "iteration": 8,
+              "run": "Run 2 (fresh)"
+            },
+            {
+              "ev": -2.664,
+              "iteration": 9,
+              "run": "Run 2 (fresh)"
+            },
+            {
+              "ev": -2.664,
+              "iteration": 10,
+              "run": "Run 2 (fresh)"
+            },
+            {
+              "ev": -2.673,
+              "iteration": 11,
+              "run": "Run 2 (fresh)"
+            },
+            {
+              "ev": -2.631,
+              "iteration": 1,
+              "run": "Run 1 (warm-started)"
+            },
+            {
+              "ev": -1.078,
+              "iteration": 2,
+              "run": "Run 1 (warm-started)"
+            },
+            {
+              "ev": -2.363,
+              "iteration": 3,
+              "run": "Run 1 (warm-started)"
+            },
+            {
+              "ev": -2.457,
+              "iteration": 4,
+              "run": "Run 1 (warm-started)"
+            },
+            {
+              "ev": -2.542,
+              "iteration": 5,
+              "run": "Run 1 (warm-started)"
+            },
+            {
+              "ev": -2.572,
+              "iteration": 6,
+              "run": "Run 1 (warm-started)"
+            },
+            {
+              "ev": -2.635,
+              "iteration": 7,
+              "run": "Run 1 (warm-started)"
+            },
+            {
+              "ev": -2.641,
+              "iteration": 8,
+              "run": "Run 1 (warm-started)"
+            },
+            {
+              "ev": -2.643,
+              "iteration": 9,
+              "run": "Run 1 (warm-started)"
+            },
+            {
+              "ev": -2.926,
+              "iteration": 10,
+              "run": "Run 1 (warm-started)"
+            }
+          ]
+        },
+        "encoding": {
+          "color": {
+            "field": "run",
+            "title": "Run",
+            "type": "nominal"
+          },
+          "x": {
+            "field": "iteration",
+            "title": "Optimizer Iteration",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "ev",
+            "title": "Expectation Value",
+            "type": "quantitative"
+          }
+        },
+        "layer": [
+          {
+            "mark": {
+              "point": true,
+              "type": "line"
+            }
+          }
+        ],
+        "title": "QAOA Convergence Comparison \u2014 Year 2033"
+      }
+    ]
+  ],
+  "verification_status": "Report-level comparison; no raw job logs, sampled bitstrings, or per-year optimizer records supplied.",
+  "run_4_discrepancies": [
+    {
+      "issue": "Starting conditions",
+      "details": "Both columns list identical initial parameters, despite warm-start versus fresh labels. No isolated initialization treatment is demonstrated."
+    },
+    {
+      "issue": "Best versus final energy",
+      "details": "Summary calls -2.673 the best EV, while its trace reaches -2.676. Summary value retained for headline comparison."
+    },
+    {
+      "issue": "Reconstructed earlier trace",
+      "details": "Earlier-run trace differs from Report 1 and ends at Report 2 value. Keep as a report-supplied comparison, not a verified optimizer log."
+    }
+  ],
+  "run_3_node_flip_years": [
+    {
+      "flip_year": 2029,
+      "industry": "Technology",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Technology",
+      "region": "California"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Technology",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Technology",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Technology",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Media",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Media",
+      "region": "California"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Media",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Media",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Media",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Telecom",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Telecom",
+      "region": "California"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Telecom",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Telecom",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2029,
+      "industry": "Telecom",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2031,
+      "industry": "Retail",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2031,
+      "industry": "Retail",
+      "region": "California"
+    },
+    {
+      "flip_year": 2031,
+      "industry": "Retail",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2031,
+      "industry": "Retail",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2031,
+      "industry": "Retail",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2031,
+      "industry": "Hospitality",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2031,
+      "industry": "Hospitality",
+      "region": "California"
+    },
+    {
+      "flip_year": 2031,
+      "industry": "Hospitality",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2031,
+      "industry": "Hospitality",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2031,
+      "industry": "Hospitality",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Logistics",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Logistics",
+      "region": "California"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Logistics",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Logistics",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Logistics",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Manufacturing",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Manufacturing",
+      "region": "California"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Manufacturing",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Manufacturing",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Manufacturing",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Energy",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Energy",
+      "region": "California"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Energy",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Energy",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Energy",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2033,
+      "industry": "Agriculture",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Agriculture",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Agriculture",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Agriculture",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Agriculture",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Banking",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Banking",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Banking",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Banking",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Banking",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Accounting",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Accounting",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Accounting",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Accounting",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Accounting",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Insurance",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Insurance",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Insurance",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Insurance",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Insurance",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Pharma",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Pharma",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Pharma",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Pharma",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Pharma",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Education",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Education",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Education",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Education",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Education",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Nonprofit",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Nonprofit",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Nonprofit",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Nonprofit",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Nonprofit",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Real Estate",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Real Estate",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Real Estate",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Real Estate",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Real Estate",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Construction",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Construction",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Construction",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Construction",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Construction",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Healthcare",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Healthcare",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Healthcare",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Healthcare",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Healthcare",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Government",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Government",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Government",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Government",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Government",
+      "region": "Mountain West"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Legal",
+      "region": "California"
+    },
+    {
+      "flip_year": 2034,
+      "industry": "Legal",
+      "region": "Pacific NW"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Legal",
+      "region": "Texas"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Legal",
+      "region": "Southwest"
+    },
+    {
+      "flip_year": 2035,
+      "industry": "Legal",
+      "region": "Mountain West"
+    }
+  ],
+  "run_3_counts_derived_from_heatmap": {
+    "2029": 15,
+    "2031": 10,
+    "2033": 16,
+    "2034": 23,
+    "2035": 36
+  },
+  "run_3_source_bar_counts": {
+    "2029": 15,
+    "2030": 0,
+    "2031": 10,
+    "2032": 0,
+    "2033": 16,
+    "2034": 18,
+    "2035": 41
+  },
+  "unresolved_source_discrepancies": [
+    {
+      "year": 2034,
+      "heatmap_count": 23,
+      "source_bar_count": 18
+    },
+    {
+      "year": 2035,
+      "heatmap_count": 36,
+      "source_bar_count": 41
+    }
+  ],
+  "runtime_supplement": {
+    "source": "sources/runtime-ledger-original.html",
+    "records": [
+      {
+        "Run": "1",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2033 only",
+        "Method": "QAOA p=2, warm-start from 2032",
+        "Iterations": "46",
+        "Best EV": "-2.643",
+        "SA Ground State": "-5.110",
+        "Approx Ratio": "52%",
+        "Flip Prediction": "Tech, Media, Telecom, Retail, Hospitality",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~10 min"
+      },
+      {
+        "Run": "2",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2026",
+        "Method": "QAOA p=2, cold start",
+        "Iterations": "40",
+        "Best EV": "-1.500",
+        "SA Ground State": "-12.65",
+        "Approx Ratio": "12%",
+        "Flip Prediction": "All paper (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "3",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2027",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-1.652",
+        "SA Ground State": "-11.25",
+        "Approx Ratio": "15%",
+        "Flip Prediction": "All paper (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "4",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2028",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-1.838",
+        "SA Ground State": "-9.85",
+        "Approx Ratio": "19%",
+        "Flip Prediction": "All paper (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "5",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2029",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-2.002",
+        "SA Ground State": "-8.52",
+        "Approx Ratio": "24%",
+        "Flip Prediction": "Tech, Media, Telecom (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "6",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2030",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-2.113",
+        "SA Ground State": "-7.54",
+        "Approx Ratio": "28%",
+        "Flip Prediction": "Tech, Media, Telecom (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "7",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2031",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-2.194",
+        "SA Ground State": "-6.56",
+        "Approx Ratio": "33%",
+        "Flip Prediction": "Tech, Media, Telecom (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "8",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2032",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-2.311",
+        "SA Ground State": "-5.81",
+        "Approx Ratio": "40%",
+        "Flip Prediction": "Tech, Media, Telecom, Retail, Hospitality (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "9",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2033",
+        "Method": "QAOA p=2, warm-start from 2032",
+        "Iterations": "40",
+        "Best EV": "-2.926",
+        "SA Ground State": "-5.11",
+        "Approx Ratio": "57%",
+        "Flip Prediction": "Tech, Media, Telecom, Retail, Hospitality (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~8 min"
+      },
+      {
+        "Run": "10",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2034",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-2.895",
+        "SA Ground State": "-4.81",
+        "Approx Ratio": "60%",
+        "Flip Prediction": "Tech, Media, Telecom, Retail, Hospitality, Logistics, Mfg, Energy (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "11",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2035",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-3.498",
+        "SA Ground State": "-4.57",
+        "Approx Ratio": "77%",
+        "Flip Prediction": "All above + Agriculture (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "12",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2036",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-3.694",
+        "SA Ground State": "-5.55",
+        "Approx Ratio": "67%",
+        "Flip Prediction": "All 20 industries (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "13",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2037",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-4.051",
+        "SA Ground State": "-6.95",
+        "Approx Ratio": "58%",
+        "Flip Prediction": "All 20 industries (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "14",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2038",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-4.042",
+        "SA Ground State": "-8.35",
+        "Approx Ratio": "48%",
+        "Flip Prediction": "All 20 industries (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "15",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2039",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-4.603",
+        "SA Ground State": "-9.75",
+        "Approx Ratio": "47%",
+        "Flip Prediction": "All 20 industries (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "16",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2040",
+        "Method": "QAOA p=2, warm-start",
+        "Iterations": "40",
+        "Best EV": "-4.892",
+        "SA Ground State": "-11.15",
+        "Approx Ratio": "44%",
+        "Flip Prediction": "All 20 industries (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 min"
+      },
+      {
+        "Run": "17",
+        "Backend": "Rigetti Cepheus-1 (Amazon Braket)",
+        "Problem": "20-node single region",
+        "Year(s)": "2033",
+        "Method": "QAOA p=2, warm-start from 2032",
+        "Iterations": "N/A",
+        "Best EV": "N/A",
+        "SA Ground State": "-5.11",
+        "Approx Ratio": "N/A",
+        "Flip Prediction": "N/A",
+        "Status": "FAILED \u2014 insufficient budget",
+        "Runtime / Queue": "Instant fail"
+      },
+      {
+        "Run": "18",
+        "Backend": "Classiq simulator",
+        "Problem": "20-node single region",
+        "Year(s)": "2033",
+        "Method": "QAOA p=2, cold start (comparison run)",
+        "Iterations": "40",
+        "Best EV": "-2.673",
+        "SA Ground State": "-5.11",
+        "Approx Ratio": "52%",
+        "Flip Prediction": "Tech, Media, Telecom, Retail, Hospitality (correct)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~8 min"
+      },
+      {
+        "Run": "19",
+        "Backend": "Classical SA (laptop)",
+        "Problem": "20-node single region",
+        "Year(s)": "2026\u20132040 (all)",
+        "Method": "Simulated annealing, 100k steps",
+        "Iterations": "100k/year",
+        "Best EV": "N/A",
+        "SA Ground State": "Reference",
+        "Approx Ratio": "100%",
+        "Flip Prediction": "Full tipping-point map (reference)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "< 1 second total"
+      },
+      {
+        "Run": "20",
+        "Backend": "Classical SA (laptop)",
+        "Problem": "100-node multi-region",
+        "Year(s)": "2026\u20132040 (all)",
+        "Method": "Simulated annealing, 200k steps",
+        "Iterations": "200k/year",
+        "Best EV": "N/A",
+        "SA Ground State": "Reference",
+        "Approx Ratio": "100%",
+        "Flip Prediction": "Full heatmap, 5 regions (reference)",
+        "Status": "Succeeded",
+        "Runtime / Queue": "~5 seconds total"
+      }
+    ],
+    "successful_simulator_jobs_counted": 17,
+    "failed_hardware_attempts": 1,
+    "classical_sweeps": 2,
+    "runtime_definition": "Approximate reported Runtime / Queue; compute and queue not separated",
+    "table_to_report_mapping": {
+      "1": "Report 1",
+      "2\u201316": "Report 2 yearly jobs",
+      "17": "Failed hardware attempt, separate from successful runs",
+      "18": "Report 4",
+      "19": "Original classical reference",
+      "20": "Report 3 classical sweep"
+    },
+    "discrepancies": [
+      "Introduction says 18 successful QAOA jobs; table lists 17.",
+      "Cold-start label for final simulator job conflicts with identical starting parameters listed in Report 4."
+    ]
+  }
+}
