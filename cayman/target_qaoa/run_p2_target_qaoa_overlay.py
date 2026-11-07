@@ -15,6 +15,7 @@ import time
 
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
 import matplotlib.patheffects as path_effects
 import numpy as np
 
@@ -29,6 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 P1 = ROOT / "results" / "target_selection_qaoa_4year" / "yearly_results.json"
 ADOPTION = ROOT / "artifacts" / "qaoa_yearly_probability_pacific_nw.json"
 OUT = ROOT / "results" / "target_selection_qaoa_p2_4year"
+NO_ELIGIBLE_BLUE = "#b9d9ee"
 
 
 def plan_arrays(values: np.ndarray, masks: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
@@ -322,8 +324,10 @@ def _draw_target_foreground(
     ax: plt.Axes, values: np.ndarray, industries: list[str], flips: list[dict],
     *, title: str, cmap_name: str, colorbar_label: str, discrete: bool,
 ) -> tuple[object, np.ndarray]:
-    cmap = plt.get_cmap(cmap_name).copy()
-    cmap.set_bad("#d9d9d9")
+    # Both primary panels use exactly the same sequential 0--1 blue scale.
+    # Masked pale blue is a categorical no-eligible/ineligible state, not P=0.
+    cmap = plt.get_cmap("Blues").copy()
+    cmap.set_bad(NO_ELIGIBLE_BLUE)
     image = ax.imshow(values, aspect="auto", cmap=cmap, vmin=0, vmax=1,
                       interpolation="nearest")
     _style_axis(ax, industries)
@@ -348,14 +352,16 @@ def plot_distinct_target_heatmaps(results: list[dict]) -> None:
 
     def draw_shared_crosses(ax: plt.Axes) -> None:
         rows, columns = np.where(shared_black_mask)
-        ax.scatter(columns, rows, marker="x", s=82, color="black", linewidths=2.0, zorder=8)
+        ax.scatter(columns, rows, marker="x", s=82, color="black", linewidths=2.0, zorder=8,
+                   path_effects=[path_effects.Stroke(linewidth=3.2, foreground="#e8f6ff"),
+                                 path_effects.Normal()])
 
     specs = [
         (exact_values, "Exact classical target selection over adoption flip context",
-         "target_classical_over_adoption_context", "YlGnBu",
+         "target_classical_over_adoption_context", "Blues",
          "Exact target selection xᵢ (bit 1); representative tied optimum"),
         (quantum_values, "p=2 QAOA target marginal over adoption flip context",
-         "target_p2_over_adoption_context", "magma",
+         "target_p2_over_adoption_context", "Blues",
          "Ideal p=2 QAOA P(target selected = bit 1)"),
     ]
     for values, title, filename, cmap, label in specs:
@@ -371,6 +377,8 @@ def plot_distinct_target_heatmaps(results: list[dict]) -> None:
         cbar = fig.colorbar(image, ax=ax, label=label)
         cbar.ax.tick_params(colors="black"); cbar.ax.yaxis.label.set_color("black")
         legend_axis.legend(handles=[
+            Patch(facecolor=NO_ELIGIBLE_BLUE, edgecolor="black",
+                  label="no eligible target / ineligible (not P=0)"),
             Line2D([0], [0], marker="x", color="white", markeredgewidth=1.5, markeredgecolor="black",
                    linestyle="None", label="saved Pacific NW adoption exact flip"),
             Line2D([0], [0], marker="x", color="black", linestyle="None",
@@ -383,7 +391,8 @@ def plot_distinct_target_heatmaps(results: list[dict]) -> None:
                          color="black", fontsize=10, va="top", transform=legend_axis.transAxes)
         fig.text(.01, .01,
                  "Cell color is target selection only: classical left value is exact xᵢ; quantum value is p=2 "
-                 "P(xᵢ=1). White markers are saved Pacific NW adoption flip context, not cell values. "
+                 "P(xᵢ=1). Both use the same blue 0–1 scale; pale blue means no eligible target/ineligible, not P=0. "
+                 "White markers are saved Pacific NW adoption flip context, not cell values. "
                  "Black × is the same exact feasible target recommendation in both plots; ties are in CSV.",
                  color="black", fontsize=8)
         fig.tight_layout(rect=(0, .04, 1, 1))
@@ -404,12 +413,12 @@ def plot_distinct_target_heatmaps(results: list[dict]) -> None:
     fig.patch.set_facecolor("white")
     first, _ = _draw_target_foreground(
         axes[0], exact_values, industries, flips,
-        title="Classical: exact target selection", cmap_name="YlGnBu",
+        title="Classical: exact target selection", cmap_name="Blues",
         colorbar_label="Exact xᵢ (bit 1)", discrete=True,
     )
     second, _ = _draw_target_foreground(
         axes[1], quantum_values, industries, flips,
-        title="Quantum: p=2 target-selection marginal", cmap_name="magma",
+        title="Quantum: p=2 target-selection marginal", cmap_name="Blues",
         colorbar_label="p=2 P(xᵢ=1)", discrete=False,
     )
     draw_shared_crosses(axes[0]); draw_shared_crosses(axes[1])
@@ -417,6 +426,8 @@ def plot_distinct_target_heatmaps(results: list[dict]) -> None:
         cbar = fig.colorbar(image, ax=axis, fraction=.046, pad=.04, label=label)
         cbar.ax.tick_params(colors="black"); cbar.ax.yaxis.label.set_color("black")
     legend_axis.legend(handles=[
+        Patch(facecolor=NO_ELIGIBLE_BLUE, edgecolor="black",
+              label="no eligible target / ineligible (not P=0)"),
         Line2D([0], [0], marker="x", color="white", markeredgewidth=1.5, markeredgecolor="black",
                linestyle="None", label="saved Pacific NW adoption exact flip"),
         Line2D([0], [0], marker="x", color="black", linestyle="None",
@@ -427,8 +438,8 @@ def plot_distinct_target_heatmaps(results: list[dict]) -> None:
                      "Tied sets and tied-best regions\nare recorded in the CSV.",
                      color="black", fontsize=10, va="top", transform=legend_axis.transAxes)
     fig.text(.01, .01,
-             "No adoption and target probabilities are blended. Left foreground is exact target xᵢ; right is p=2 "
-             "target marginal P(xᵢ=1). White flip markers provide saved adoption context. Black × mask is identical.",
+             "No adoption and target probabilities are blended. Both panels use the same blue 0–1 scale; pale blue "
+             "means no eligible target/ineligible, not P=0. Left is exact xᵢ; right is p=2 P(xᵢ=1). Black × mask is identical.",
              color="black", fontsize=9)
     fig.tight_layout(rect=(0, .04, 1, 1))
     for suffix in ("png", "svg"):

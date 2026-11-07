@@ -96,8 +96,9 @@ columns.
 
 For the primary comparison, the script also creates two non-blended
 foreground heatmaps: exact target `x_i` (classical) and p=2 target
-`P(x_i=1)` (quantum). Their cell palettes and colorbars are intentionally
-different; the saved Pacific NW adoption flip markers are white context
-annotations only. The same black × exact-reference mask appears on both
+`P(x_i=1)` (quantum). Both use the same fixed 0–1 sequential blue scale; pale
+blue explicitly means no eligible target/ineligible, not zero probability.
+The saved Pacific NW adoption flip markers are white context annotations only.
+The same black × exact-reference mask appears on both
 panels. It is not evidence that p=2 produces the exact feasible plan; the
 separate p=2 MAP plan remains in the recommendation CSV.
