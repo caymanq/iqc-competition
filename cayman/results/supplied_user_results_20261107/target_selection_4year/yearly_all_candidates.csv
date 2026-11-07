@@ -1,0 +1,386 @@
+year,selected,id,industry,region,flip_year,cost,value
+2026,1,Technology|California,Technology,California,2029,1,3.6
+2026,0,Technology|Pacific NW,Technology,Pacific NW,2029,1,3.6
+2026,0,Technology|Texas,Technology,Texas,2029,1,3.6
+2026,0,Technology|Mountain West,Technology,Mountain West,2029,1,3.6
+2026,0,Technology|Southwest,Technology,Southwest,2029,1,3.6
+2026,1,Media|California,Media,California,2029,1,3.2
+2026,0,Media|Pacific NW,Media,Pacific NW,2029,1,3.2
+2026,0,Media|Texas,Media,Texas,2029,1,3.2
+2026,0,Media|Mountain West,Media,Mountain West,2029,1,3.2
+2026,0,Media|Southwest,Media,Southwest,2029,1,3.2
+2026,1,Telecom|California,Telecom,California,2029,1,3.0
+2026,0,Telecom|Pacific NW,Telecom,Pacific NW,2029,1,3.0
+2026,0,Telecom|Texas,Telecom,Texas,2029,1,3.0
+2026,0,Telecom|Mountain West,Telecom,Mountain West,2029,1,3.0
+2026,0,Telecom|Southwest,Telecom,Southwest,2029,1,3.0
+2027,1,Technology|California,Technology,California,2029,1,5.4
+2027,0,Technology|Pacific NW,Technology,Pacific NW,2029,1,5.4
+2027,0,Technology|Texas,Technology,Texas,2029,1,5.4
+2027,0,Technology|Mountain West,Technology,Mountain West,2029,1,5.4
+2027,0,Technology|Southwest,Technology,Southwest,2029,1,5.4
+2027,1,Media|California,Media,California,2029,1,4.800000000000001
+2027,0,Media|Pacific NW,Media,Pacific NW,2029,1,4.800000000000001
+2027,0,Media|Texas,Media,Texas,2029,1,4.800000000000001
+2027,0,Media|Mountain West,Media,Mountain West,2029,1,4.800000000000001
+2027,0,Media|Southwest,Media,Southwest,2029,1,4.800000000000001
+2027,1,Telecom|California,Telecom,California,2029,1,4.5
+2027,0,Telecom|Pacific NW,Telecom,Pacific NW,2029,1,4.5
+2027,0,Telecom|Texas,Telecom,Texas,2029,1,4.5
+2027,0,Telecom|Mountain West,Telecom,Mountain West,2029,1,4.5
+2027,0,Telecom|Southwest,Telecom,Southwest,2029,1,4.5
+2027,1,Retail|California,Retail,California,2031,1,1.4
+2027,0,Retail|Pacific NW,Retail,Pacific NW,2031,1,1.4
+2027,0,Retail|Texas,Retail,Texas,2031,1,1.4
+2027,0,Retail|Mountain West,Retail,Mountain West,2031,1,1.4
+2027,0,Retail|Southwest,Retail,Southwest,2031,1,1.4
+2027,1,Hospitality|California,Hospitality,California,2031,1,1.3
+2027,0,Hospitality|Pacific NW,Hospitality,Pacific NW,2031,1,1.3
+2027,0,Hospitality|Texas,Hospitality,Texas,2031,1,1.3
+2027,0,Hospitality|Mountain West,Hospitality,Mountain West,2031,1,1.3
+2027,0,Hospitality|Southwest,Hospitality,Southwest,2031,1,1.3
+2028,1,Technology|California,Technology,California,2029,1,7.2
+2028,0,Technology|Pacific NW,Technology,Pacific NW,2029,1,7.2
+2028,0,Technology|Texas,Technology,Texas,2029,1,7.2
+2028,0,Technology|Mountain West,Technology,Mountain West,2029,1,7.2
+2028,0,Technology|Southwest,Technology,Southwest,2029,1,7.2
+2028,1,Media|California,Media,California,2029,1,6.4
+2028,0,Media|Pacific NW,Media,Pacific NW,2029,1,6.4
+2028,0,Media|Texas,Media,Texas,2029,1,6.4
+2028,0,Media|Mountain West,Media,Mountain West,2029,1,6.4
+2028,0,Media|Southwest,Media,Southwest,2029,1,6.4
+2028,1,Telecom|California,Telecom,California,2029,1,6.0
+2028,0,Telecom|Pacific NW,Telecom,Pacific NW,2029,1,6.0
+2028,0,Telecom|Texas,Telecom,Texas,2029,1,6.0
+2028,0,Telecom|Mountain West,Telecom,Mountain West,2029,1,6.0
+2028,0,Telecom|Southwest,Telecom,Southwest,2029,1,6.0
+2028,1,Retail|California,Retail,California,2031,1,2.8
+2028,0,Retail|Pacific NW,Retail,Pacific NW,2031,1,2.8
+2028,0,Retail|Texas,Retail,Texas,2031,1,2.8
+2028,0,Retail|Mountain West,Retail,Mountain West,2031,1,2.8
+2028,0,Retail|Southwest,Retail,Southwest,2031,1,2.8
+2028,1,Hospitality|California,Hospitality,California,2031,1,2.6
+2028,0,Hospitality|Pacific NW,Hospitality,Pacific NW,2031,1,2.6
+2028,0,Hospitality|Texas,Hospitality,Texas,2031,1,2.6
+2028,0,Hospitality|Mountain West,Hospitality,Mountain West,2031,1,2.6
+2028,0,Hospitality|Southwest,Hospitality,Southwest,2031,1,2.6
+2029,1,Retail|California,Retail,California,2031,1,4.199999999999999
+2029,0,Retail|Pacific NW,Retail,Pacific NW,2031,1,4.199999999999999
+2029,0,Retail|Texas,Retail,Texas,2031,1,4.199999999999999
+2029,0,Retail|Mountain West,Retail,Mountain West,2031,1,4.199999999999999
+2029,0,Retail|Southwest,Retail,Southwest,2031,1,4.199999999999999
+2029,1,Hospitality|California,Hospitality,California,2031,1,3.9000000000000004
+2029,0,Hospitality|Pacific NW,Hospitality,Pacific NW,2031,1,3.9000000000000004
+2029,0,Hospitality|Texas,Hospitality,Texas,2031,1,3.9000000000000004
+2029,0,Hospitality|Mountain West,Hospitality,Mountain West,2031,1,3.9000000000000004
+2029,0,Hospitality|Southwest,Hospitality,Southwest,2031,1,3.9000000000000004
+2029,1,Logistics|California,Logistics,California,2033,1,1.2
+2029,0,Logistics|Pacific NW,Logistics,Pacific NW,2033,1,1.2
+2029,0,Logistics|Texas,Logistics,Texas,2033,1,1.2
+2029,0,Logistics|Mountain West,Logistics,Mountain West,2033,1,1.2
+2029,0,Logistics|Southwest,Logistics,Southwest,2033,1,1.2
+2029,1,Manufacturing|California,Manufacturing,California,2033,1,1.0
+2029,0,Manufacturing|Pacific NW,Manufacturing,Pacific NW,2033,1,1.0
+2029,0,Manufacturing|Texas,Manufacturing,Texas,2033,1,1.0
+2029,0,Manufacturing|Mountain West,Manufacturing,Mountain West,2033,1,1.0
+2029,0,Manufacturing|Southwest,Manufacturing,Southwest,2033,1,1.0
+2029,1,Energy|California,Energy,California,2033,1,0.8999999999999999
+2029,0,Energy|Pacific NW,Energy,Pacific NW,2033,1,0.8999999999999999
+2029,0,Energy|Texas,Energy,Texas,2033,1,0.8999999999999999
+2029,0,Energy|Mountain West,Energy,Mountain West,2033,1,0.8999999999999999
+2029,0,Energy|Southwest,Energy,Southwest,2033,1,0.8999999999999999
+2029,0,Agriculture|California,Agriculture,California,2033,1,0.6000000000000001
+2030,1,Retail|California,Retail,California,2031,1,5.6
+2030,0,Retail|Pacific NW,Retail,Pacific NW,2031,1,5.6
+2030,0,Retail|Texas,Retail,Texas,2031,1,5.6
+2030,0,Retail|Mountain West,Retail,Mountain West,2031,1,5.6
+2030,0,Retail|Southwest,Retail,Southwest,2031,1,5.6
+2030,1,Hospitality|California,Hospitality,California,2031,1,5.2
+2030,0,Hospitality|Pacific NW,Hospitality,Pacific NW,2031,1,5.2
+2030,0,Hospitality|Texas,Hospitality,Texas,2031,1,5.2
+2030,0,Hospitality|Mountain West,Hospitality,Mountain West,2031,1,5.2
+2030,0,Hospitality|Southwest,Hospitality,Southwest,2031,1,5.2
+2030,1,Logistics|California,Logistics,California,2033,1,2.4
+2030,0,Logistics|Pacific NW,Logistics,Pacific NW,2033,1,2.4
+2030,0,Logistics|Texas,Logistics,Texas,2033,1,2.4
+2030,0,Logistics|Mountain West,Logistics,Mountain West,2033,1,2.4
+2030,0,Logistics|Southwest,Logistics,Southwest,2033,1,2.4
+2030,1,Manufacturing|California,Manufacturing,California,2033,1,2.0
+2030,0,Manufacturing|Pacific NW,Manufacturing,Pacific NW,2033,1,2.0
+2030,0,Manufacturing|Texas,Manufacturing,Texas,2033,1,2.0
+2030,0,Manufacturing|Mountain West,Manufacturing,Mountain West,2033,1,2.0
+2030,0,Manufacturing|Southwest,Manufacturing,Southwest,2033,1,2.0
+2030,1,Energy|California,Energy,California,2033,1,1.7999999999999998
+2030,0,Energy|Pacific NW,Energy,Pacific NW,2033,1,1.7999999999999998
+2030,0,Energy|Texas,Energy,Texas,2033,1,1.7999999999999998
+2030,0,Energy|Mountain West,Energy,Mountain West,2033,1,1.7999999999999998
+2030,0,Energy|Southwest,Energy,Southwest,2033,1,1.7999999999999998
+2030,0,Agriculture|California,Agriculture,California,2033,1,1.2000000000000002
+2030,0,Agriculture|Pacific NW,Agriculture,Pacific NW,2034,1,0.6000000000000001
+2030,0,Banking|California,Banking,California,2034,1,1.1
+2030,0,Banking|Pacific NW,Banking,Pacific NW,2034,1,1.1
+2030,0,Accounting|California,Accounting,California,2034,1,1.0
+2030,0,Accounting|Pacific NW,Accounting,Pacific NW,2034,1,1.0
+2030,0,Insurance|California,Insurance,California,2034,1,0.8999999999999999
+2030,0,Insurance|Pacific NW,Insurance,Pacific NW,2034,1,0.8999999999999999
+2030,0,Pharma|California,Pharma,California,2034,1,0.8
+2030,0,Pharma|Pacific NW,Pharma,Pacific NW,2034,1,0.8
+2030,0,Education|California,Education,California,2034,1,0.8
+2030,0,Education|Pacific NW,Education,Pacific NW,2034,1,0.8
+2030,0,Nonprofit|California,Nonprofit,California,2034,1,0.7
+2030,0,Nonprofit|Pacific NW,Nonprofit,Pacific NW,2034,1,0.7
+2030,0,Real Estate|California,Real Estate,California,2034,1,0.7
+2030,0,Real Estate|Pacific NW,Real Estate,Pacific NW,2034,1,0.7
+2030,0,Construction|California,Construction,California,2034,1,0.6000000000000001
+2030,0,Construction|Pacific NW,Construction,Pacific NW,2034,1,0.6000000000000001
+2030,0,Healthcare|California,Healthcare,California,2034,1,0.5
+2030,0,Healthcare|Pacific NW,Healthcare,Pacific NW,2034,1,0.5
+2030,0,Government|California,Government,California,2034,1,0.30000000000000004
+2030,0,Government|Pacific NW,Government,Pacific NW,2034,1,0.30000000000000004
+2030,0,Legal|California,Legal,California,2034,1,0.19999999999999996
+2030,0,Legal|Pacific NW,Legal,Pacific NW,2034,1,0.19999999999999996
+2031,1,Logistics|California,Logistics,California,2033,1,3.5999999999999996
+2031,0,Logistics|Pacific NW,Logistics,Pacific NW,2033,1,3.5999999999999996
+2031,0,Logistics|Texas,Logistics,Texas,2033,1,3.5999999999999996
+2031,0,Logistics|Mountain West,Logistics,Mountain West,2033,1,3.5999999999999996
+2031,0,Logistics|Southwest,Logistics,Southwest,2033,1,3.5999999999999996
+2031,1,Manufacturing|California,Manufacturing,California,2033,1,3.0
+2031,0,Manufacturing|Pacific NW,Manufacturing,Pacific NW,2033,1,3.0
+2031,0,Manufacturing|Texas,Manufacturing,Texas,2033,1,3.0
+2031,0,Manufacturing|Mountain West,Manufacturing,Mountain West,2033,1,3.0
+2031,0,Manufacturing|Southwest,Manufacturing,Southwest,2033,1,3.0
+2031,1,Energy|California,Energy,California,2033,1,2.6999999999999997
+2031,0,Energy|Pacific NW,Energy,Pacific NW,2033,1,2.6999999999999997
+2031,0,Energy|Texas,Energy,Texas,2033,1,2.6999999999999997
+2031,0,Energy|Mountain West,Energy,Mountain West,2033,1,2.6999999999999997
+2031,0,Energy|Southwest,Energy,Southwest,2033,1,2.6999999999999997
+2031,0,Agriculture|California,Agriculture,California,2033,1,1.8000000000000003
+2031,0,Agriculture|Pacific NW,Agriculture,Pacific NW,2034,1,1.2000000000000002
+2031,0,Agriculture|Texas,Agriculture,Texas,2035,1,0.6000000000000001
+2031,0,Agriculture|Mountain West,Agriculture,Mountain West,2035,1,0.6000000000000001
+2031,0,Agriculture|Southwest,Agriculture,Southwest,2035,1,0.6000000000000001
+2031,1,Banking|California,Banking,California,2034,1,2.2
+2031,0,Banking|Pacific NW,Banking,Pacific NW,2034,1,2.2
+2031,0,Banking|Texas,Banking,Texas,2035,1,1.1
+2031,0,Banking|Mountain West,Banking,Mountain West,2035,1,1.1
+2031,0,Banking|Southwest,Banking,Southwest,2035,1,1.1
+2031,1,Accounting|California,Accounting,California,2034,1,2.0
+2031,0,Accounting|Pacific NW,Accounting,Pacific NW,2034,1,2.0
+2031,0,Accounting|Texas,Accounting,Texas,2035,1,1.0
+2031,0,Accounting|Mountain West,Accounting,Mountain West,2035,1,1.0
+2031,0,Accounting|Southwest,Accounting,Southwest,2035,1,1.0
+2031,0,Insurance|California,Insurance,California,2034,1,1.7999999999999998
+2031,0,Insurance|Pacific NW,Insurance,Pacific NW,2034,1,1.7999999999999998
+2031,0,Insurance|Texas,Insurance,Texas,2035,1,0.8999999999999999
+2031,0,Insurance|Mountain West,Insurance,Mountain West,2035,1,0.8999999999999999
+2031,0,Insurance|Southwest,Insurance,Southwest,2035,1,0.8999999999999999
+2031,0,Pharma|California,Pharma,California,2034,1,1.6
+2031,0,Pharma|Pacific NW,Pharma,Pacific NW,2034,1,1.6
+2031,0,Pharma|Texas,Pharma,Texas,2035,1,0.8
+2031,0,Pharma|Mountain West,Pharma,Mountain West,2035,1,0.8
+2031,0,Pharma|Southwest,Pharma,Southwest,2035,1,0.8
+2031,0,Education|California,Education,California,2034,1,1.6
+2031,0,Education|Pacific NW,Education,Pacific NW,2034,1,1.6
+2031,0,Education|Texas,Education,Texas,2035,1,0.8
+2031,0,Education|Mountain West,Education,Mountain West,2035,1,0.8
+2031,0,Education|Southwest,Education,Southwest,2035,1,0.8
+2031,0,Nonprofit|California,Nonprofit,California,2034,1,1.4
+2031,0,Nonprofit|Pacific NW,Nonprofit,Pacific NW,2034,1,1.4
+2031,0,Nonprofit|Texas,Nonprofit,Texas,2035,1,0.7
+2031,0,Nonprofit|Mountain West,Nonprofit,Mountain West,2035,1,0.7
+2031,0,Nonprofit|Southwest,Nonprofit,Southwest,2035,1,0.7
+2031,0,Real Estate|California,Real Estate,California,2034,1,1.4
+2031,0,Real Estate|Pacific NW,Real Estate,Pacific NW,2034,1,1.4
+2031,0,Real Estate|Texas,Real Estate,Texas,2035,1,0.7
+2031,0,Real Estate|Mountain West,Real Estate,Mountain West,2035,1,0.7
+2031,0,Real Estate|Southwest,Real Estate,Southwest,2035,1,0.7
+2031,0,Construction|California,Construction,California,2034,1,1.2000000000000002
+2031,0,Construction|Pacific NW,Construction,Pacific NW,2034,1,1.2000000000000002
+2031,0,Construction|Texas,Construction,Texas,2035,1,0.6000000000000001
+2031,0,Construction|Mountain West,Construction,Mountain West,2035,1,0.6000000000000001
+2031,0,Construction|Southwest,Construction,Southwest,2035,1,0.6000000000000001
+2031,0,Healthcare|California,Healthcare,California,2034,1,1.0
+2031,0,Healthcare|Pacific NW,Healthcare,Pacific NW,2034,1,1.0
+2031,0,Healthcare|Texas,Healthcare,Texas,2035,1,0.5
+2031,0,Healthcare|Mountain West,Healthcare,Mountain West,2035,1,0.5
+2031,0,Healthcare|Southwest,Healthcare,Southwest,2035,1,0.5
+2031,0,Government|California,Government,California,2034,1,0.6000000000000001
+2031,0,Government|Pacific NW,Government,Pacific NW,2034,1,0.6000000000000001
+2031,0,Government|Texas,Government,Texas,2035,1,0.30000000000000004
+2031,0,Government|Mountain West,Government,Mountain West,2035,1,0.30000000000000004
+2031,0,Government|Southwest,Government,Southwest,2035,1,0.30000000000000004
+2031,0,Legal|California,Legal,California,2034,1,0.3999999999999999
+2031,0,Legal|Pacific NW,Legal,Pacific NW,2034,1,0.3999999999999999
+2031,0,Legal|Texas,Legal,Texas,2035,1,0.19999999999999996
+2031,0,Legal|Mountain West,Legal,Mountain West,2035,1,0.19999999999999996
+2031,0,Legal|Southwest,Legal,Southwest,2035,1,0.19999999999999996
+2032,1,Logistics|California,Logistics,California,2033,1,4.8
+2032,0,Logistics|Pacific NW,Logistics,Pacific NW,2033,1,4.8
+2032,0,Logistics|Texas,Logistics,Texas,2033,1,4.8
+2032,0,Logistics|Mountain West,Logistics,Mountain West,2033,1,4.8
+2032,0,Logistics|Southwest,Logistics,Southwest,2033,1,4.8
+2032,1,Manufacturing|California,Manufacturing,California,2033,1,4.0
+2032,0,Manufacturing|Pacific NW,Manufacturing,Pacific NW,2033,1,4.0
+2032,0,Manufacturing|Texas,Manufacturing,Texas,2033,1,4.0
+2032,0,Manufacturing|Mountain West,Manufacturing,Mountain West,2033,1,4.0
+2032,0,Manufacturing|Southwest,Manufacturing,Southwest,2033,1,4.0
+2032,1,Energy|California,Energy,California,2033,1,3.5999999999999996
+2032,0,Energy|Pacific NW,Energy,Pacific NW,2033,1,3.5999999999999996
+2032,0,Energy|Texas,Energy,Texas,2033,1,3.5999999999999996
+2032,0,Energy|Mountain West,Energy,Mountain West,2033,1,3.5999999999999996
+2032,0,Energy|Southwest,Energy,Southwest,2033,1,3.5999999999999996
+2032,0,Agriculture|California,Agriculture,California,2033,1,2.4000000000000004
+2032,0,Agriculture|Pacific NW,Agriculture,Pacific NW,2034,1,1.8000000000000003
+2032,0,Agriculture|Texas,Agriculture,Texas,2035,1,1.2000000000000002
+2032,0,Agriculture|Mountain West,Agriculture,Mountain West,2035,1,1.2000000000000002
+2032,0,Agriculture|Southwest,Agriculture,Southwest,2035,1,1.2000000000000002
+2032,1,Banking|California,Banking,California,2034,1,3.3000000000000003
+2032,0,Banking|Pacific NW,Banking,Pacific NW,2034,1,3.3000000000000003
+2032,0,Banking|Texas,Banking,Texas,2035,1,2.2
+2032,0,Banking|Mountain West,Banking,Mountain West,2035,1,2.2
+2032,0,Banking|Southwest,Banking,Southwest,2035,1,2.2
+2032,1,Accounting|California,Accounting,California,2034,1,3.0
+2032,0,Accounting|Pacific NW,Accounting,Pacific NW,2034,1,3.0
+2032,0,Accounting|Texas,Accounting,Texas,2035,1,2.0
+2032,0,Accounting|Mountain West,Accounting,Mountain West,2035,1,2.0
+2032,0,Accounting|Southwest,Accounting,Southwest,2035,1,2.0
+2032,0,Insurance|California,Insurance,California,2034,1,2.6999999999999997
+2032,0,Insurance|Pacific NW,Insurance,Pacific NW,2034,1,2.6999999999999997
+2032,0,Insurance|Texas,Insurance,Texas,2035,1,1.7999999999999998
+2032,0,Insurance|Mountain West,Insurance,Mountain West,2035,1,1.7999999999999998
+2032,0,Insurance|Southwest,Insurance,Southwest,2035,1,1.7999999999999998
+2032,0,Pharma|California,Pharma,California,2034,1,2.4000000000000004
+2032,0,Pharma|Pacific NW,Pharma,Pacific NW,2034,1,2.4000000000000004
+2032,0,Pharma|Texas,Pharma,Texas,2035,1,1.6
+2032,0,Pharma|Mountain West,Pharma,Mountain West,2035,1,1.6
+2032,0,Pharma|Southwest,Pharma,Southwest,2035,1,1.6
+2032,0,Education|California,Education,California,2034,1,2.4000000000000004
+2032,0,Education|Pacific NW,Education,Pacific NW,2034,1,2.4000000000000004
+2032,0,Education|Texas,Education,Texas,2035,1,1.6
+2032,0,Education|Mountain West,Education,Mountain West,2035,1,1.6
+2032,0,Education|Southwest,Education,Southwest,2035,1,1.6
+2032,0,Nonprofit|California,Nonprofit,California,2034,1,2.0999999999999996
+2032,0,Nonprofit|Pacific NW,Nonprofit,Pacific NW,2034,1,2.0999999999999996
+2032,0,Nonprofit|Texas,Nonprofit,Texas,2035,1,1.4
+2032,0,Nonprofit|Mountain West,Nonprofit,Mountain West,2035,1,1.4
+2032,0,Nonprofit|Southwest,Nonprofit,Southwest,2035,1,1.4
+2032,0,Real Estate|California,Real Estate,California,2034,1,2.0999999999999996
+2032,0,Real Estate|Pacific NW,Real Estate,Pacific NW,2034,1,2.0999999999999996
+2032,0,Real Estate|Texas,Real Estate,Texas,2035,1,1.4
+2032,0,Real Estate|Mountain West,Real Estate,Mountain West,2035,1,1.4
+2032,0,Real Estate|Southwest,Real Estate,Southwest,2035,1,1.4
+2032,0,Construction|California,Construction,California,2034,1,1.8000000000000003
+2032,0,Construction|Pacific NW,Construction,Pacific NW,2034,1,1.8000000000000003
+2032,0,Construction|Texas,Construction,Texas,2035,1,1.2000000000000002
+2032,0,Construction|Mountain West,Construction,Mountain West,2035,1,1.2000000000000002
+2032,0,Construction|Southwest,Construction,Southwest,2035,1,1.2000000000000002
+2032,0,Healthcare|California,Healthcare,California,2034,1,1.5
+2032,0,Healthcare|Pacific NW,Healthcare,Pacific NW,2034,1,1.5
+2032,0,Healthcare|Texas,Healthcare,Texas,2035,1,1.0
+2032,0,Healthcare|Mountain West,Healthcare,Mountain West,2035,1,1.0
+2032,0,Healthcare|Southwest,Healthcare,Southwest,2035,1,1.0
+2032,0,Government|California,Government,California,2034,1,0.9000000000000001
+2032,0,Government|Pacific NW,Government,Pacific NW,2034,1,0.9000000000000001
+2032,0,Government|Texas,Government,Texas,2035,1,0.6000000000000001
+2032,0,Government|Mountain West,Government,Mountain West,2035,1,0.6000000000000001
+2032,0,Government|Southwest,Government,Southwest,2035,1,0.6000000000000001
+2032,0,Legal|California,Legal,California,2034,1,0.5999999999999999
+2032,0,Legal|Pacific NW,Legal,Pacific NW,2034,1,0.5999999999999999
+2032,0,Legal|Texas,Legal,Texas,2035,1,0.3999999999999999
+2032,0,Legal|Mountain West,Legal,Mountain West,2035,1,0.3999999999999999
+2032,0,Legal|Southwest,Legal,Southwest,2035,1,0.3999999999999999
+2033,0,Agriculture|Pacific NW,Agriculture,Pacific NW,2034,1,2.4000000000000004
+2033,0,Agriculture|Texas,Agriculture,Texas,2035,1,1.8000000000000003
+2033,0,Agriculture|Mountain West,Agriculture,Mountain West,2035,1,1.8000000000000003
+2033,0,Agriculture|Southwest,Agriculture,Southwest,2035,1,1.8000000000000003
+2033,1,Banking|California,Banking,California,2034,1,4.4
+2033,0,Banking|Pacific NW,Banking,Pacific NW,2034,1,4.4
+2033,0,Banking|Texas,Banking,Texas,2035,1,3.3000000000000003
+2033,0,Banking|Mountain West,Banking,Mountain West,2035,1,3.3000000000000003
+2033,0,Banking|Southwest,Banking,Southwest,2035,1,3.3000000000000003
+2033,1,Accounting|California,Accounting,California,2034,1,4.0
+2033,0,Accounting|Pacific NW,Accounting,Pacific NW,2034,1,4.0
+2033,0,Accounting|Texas,Accounting,Texas,2035,1,3.0
+2033,0,Accounting|Mountain West,Accounting,Mountain West,2035,1,3.0
+2033,0,Accounting|Southwest,Accounting,Southwest,2035,1,3.0
+2033,1,Insurance|California,Insurance,California,2034,1,3.5999999999999996
+2033,0,Insurance|Pacific NW,Insurance,Pacific NW,2034,1,3.5999999999999996
+2033,0,Insurance|Texas,Insurance,Texas,2035,1,2.6999999999999997
+2033,0,Insurance|Mountain West,Insurance,Mountain West,2035,1,2.6999999999999997
+2033,0,Insurance|Southwest,Insurance,Southwest,2035,1,2.6999999999999997
+2033,1,Pharma|California,Pharma,California,2034,1,3.2
+2033,0,Pharma|Pacific NW,Pharma,Pacific NW,2034,1,3.2
+2033,0,Pharma|Texas,Pharma,Texas,2035,1,2.4000000000000004
+2033,0,Pharma|Mountain West,Pharma,Mountain West,2035,1,2.4000000000000004
+2033,0,Pharma|Southwest,Pharma,Southwest,2035,1,2.4000000000000004
+2033,1,Education|California,Education,California,2034,1,3.2
+2033,0,Education|Pacific NW,Education,Pacific NW,2034,1,3.2
+2033,0,Education|Texas,Education,Texas,2035,1,2.4000000000000004
+2033,0,Education|Mountain West,Education,Mountain West,2035,1,2.4000000000000004
+2033,0,Education|Southwest,Education,Southwest,2035,1,2.4000000000000004
+2033,0,Nonprofit|California,Nonprofit,California,2034,1,2.8
+2033,0,Nonprofit|Pacific NW,Nonprofit,Pacific NW,2034,1,2.8
+2033,0,Nonprofit|Texas,Nonprofit,Texas,2035,1,2.0999999999999996
+2033,0,Nonprofit|Mountain West,Nonprofit,Mountain West,2035,1,2.0999999999999996
+2033,0,Nonprofit|Southwest,Nonprofit,Southwest,2035,1,2.0999999999999996
+2033,0,Real Estate|California,Real Estate,California,2034,1,2.8
+2033,0,Real Estate|Pacific NW,Real Estate,Pacific NW,2034,1,2.8
+2033,0,Real Estate|Texas,Real Estate,Texas,2035,1,2.0999999999999996
+2033,0,Real Estate|Mountain West,Real Estate,Mountain West,2035,1,2.0999999999999996
+2033,0,Real Estate|Southwest,Real Estate,Southwest,2035,1,2.0999999999999996
+2033,0,Construction|California,Construction,California,2034,1,2.4000000000000004
+2033,0,Construction|Pacific NW,Construction,Pacific NW,2034,1,2.4000000000000004
+2033,0,Construction|Texas,Construction,Texas,2035,1,1.8000000000000003
+2033,0,Construction|Mountain West,Construction,Mountain West,2035,1,1.8000000000000003
+2033,0,Construction|Southwest,Construction,Southwest,2035,1,1.8000000000000003
+2033,0,Healthcare|California,Healthcare,California,2034,1,2.0
+2033,0,Healthcare|Pacific NW,Healthcare,Pacific NW,2034,1,2.0
+2033,0,Healthcare|Texas,Healthcare,Texas,2035,1,1.5
+2033,0,Healthcare|Mountain West,Healthcare,Mountain West,2035,1,1.5
+2033,0,Healthcare|Southwest,Healthcare,Southwest,2035,1,1.5
+2033,0,Government|California,Government,California,2034,1,1.2000000000000002
+2033,0,Government|Pacific NW,Government,Pacific NW,2034,1,1.2000000000000002
+2033,0,Government|Texas,Government,Texas,2035,1,0.9000000000000001
+2033,0,Government|Mountain West,Government,Mountain West,2035,1,0.9000000000000001
+2033,0,Government|Southwest,Government,Southwest,2035,1,0.9000000000000001
+2033,0,Legal|California,Legal,California,2034,1,0.7999999999999998
+2033,0,Legal|Pacific NW,Legal,Pacific NW,2034,1,0.7999999999999998
+2033,0,Legal|Texas,Legal,Texas,2035,1,0.5999999999999999
+2033,0,Legal|Mountain West,Legal,Mountain West,2035,1,0.5999999999999999
+2033,0,Legal|Southwest,Legal,Southwest,2035,1,0.5999999999999999
+2034,0,Agriculture|Texas,Agriculture,Texas,2035,1,2.4000000000000004
+2034,0,Agriculture|Mountain West,Agriculture,Mountain West,2035,1,2.4000000000000004
+2034,0,Agriculture|Southwest,Agriculture,Southwest,2035,1,2.4000000000000004
+2034,1,Banking|Texas,Banking,Texas,2035,1,4.4
+2034,0,Banking|Mountain West,Banking,Mountain West,2035,1,4.4
+2034,0,Banking|Southwest,Banking,Southwest,2035,1,4.4
+2034,1,Accounting|Texas,Accounting,Texas,2035,1,4.0
+2034,0,Accounting|Mountain West,Accounting,Mountain West,2035,1,4.0
+2034,0,Accounting|Southwest,Accounting,Southwest,2035,1,4.0
+2034,1,Insurance|Texas,Insurance,Texas,2035,1,3.5999999999999996
+2034,0,Insurance|Mountain West,Insurance,Mountain West,2035,1,3.5999999999999996
+2034,0,Insurance|Southwest,Insurance,Southwest,2035,1,3.5999999999999996
+2034,1,Pharma|Texas,Pharma,Texas,2035,1,3.2
+2034,0,Pharma|Mountain West,Pharma,Mountain West,2035,1,3.2
+2034,0,Pharma|Southwest,Pharma,Southwest,2035,1,3.2
+2034,1,Education|Texas,Education,Texas,2035,1,3.2
+2034,0,Education|Mountain West,Education,Mountain West,2035,1,3.2
+2034,0,Education|Southwest,Education,Southwest,2035,1,3.2
+2034,0,Nonprofit|Texas,Nonprofit,Texas,2035,1,2.8
+2034,0,Nonprofit|Mountain West,Nonprofit,Mountain West,2035,1,2.8
+2034,0,Nonprofit|Southwest,Nonprofit,Southwest,2035,1,2.8
+2034,0,Real Estate|Texas,Real Estate,Texas,2035,1,2.8
+2034,0,Real Estate|Mountain West,Real Estate,Mountain West,2035,1,2.8
+2034,0,Real Estate|Southwest,Real Estate,Southwest,2035,1,2.8
+2034,0,Construction|Texas,Construction,Texas,2035,1,2.4000000000000004
+2034,0,Construction|Mountain West,Construction,Mountain West,2035,1,2.4000000000000004
+2034,0,Construction|Southwest,Construction,Southwest,2035,1,2.4000000000000004
+2034,0,Healthcare|Texas,Healthcare,Texas,2035,1,2.0
+2034,0,Healthcare|Mountain West,Healthcare,Mountain West,2035,1,2.0
+2034,0,Healthcare|Southwest,Healthcare,Southwest,2035,1,2.0
+2034,0,Government|Texas,Government,Texas,2035,1,1.2000000000000002
+2034,0,Government|Mountain West,Government,Mountain West,2035,1,1.2000000000000002
+2034,0,Government|Southwest,Government,Southwest,2035,1,1.2000000000000002
+2034,0,Legal|Texas,Legal,Texas,2035,1,0.7999999999999998
+2034,0,Legal|Mountain West,Legal,Mountain West,2035,1,0.7999999999999998
+2034,0,Legal|Southwest,Legal,Southwest,2035,1,0.7999999999999998

@@ -1,0 +1,8 @@
+N_nodes,quantum_N_squared_relative_units,classical_N_cubed_relative_units
+20,1,1
+40,4,8
+80,16,64
+120,36,216
+160,64,512
+200,100,1000
+240,144,1728

@@ -1,0 +1,8 @@
+N,QAOA_assumed_linear,mincut_assumed_quadratic
+20,1,1
+40,2,4
+80,4,16
+120,6,36
+160,8,64
+200,10,100
+240,12,144

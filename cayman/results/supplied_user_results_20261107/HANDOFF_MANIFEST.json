@@ -1,0 +1,114 @@
+{
+  "default_lead_time_years": 4,
+  "seven_year_results": "archived comparison only, superseded by user reverting to4",
+  "files": [
+    {
+      "path": "scaling_plots/assumed_linear_qaoa_quadratic_mincut.csv",
+      "sha256": "d064237e006376c1e3820ca4153bad93d8ee3517f5046b1d61120883f410eab1"
+    },
+    {
+      "path": "scaling_plots/assumed_linear_qaoa_quadratic_mincut.png",
+      "sha256": "0df04ec322e00c868ea8a5eecef4708a55ffdb3150ff30bb26e33c1ab7061739"
+    },
+    {
+      "path": "scaling_plots/theoretical_runtime_scaling.png",
+      "sha256": "8454c3098d9c6146c5caaba0688c23fa8cb21e7e1a35e5bdf3ba660c14442f7d"
+    },
+    {
+      "path": "scaling_plots/theoretical_runtime_scaling.svg",
+      "sha256": "401a906c7f948f16dc67f959365dce48ef57c8e70e0a83d0933e29f6fb9bc970"
+    },
+    {
+      "path": "scaling_plots/theoretical_runtime_scaling_clean.png",
+      "sha256": "76029baeb55bb6df234440e9423c8acbce6d54db8271913e536523193c6fce78"
+    },
+    {
+      "path": "scaling_plots/theoretical_scaling_data.csv",
+      "sha256": "2780907156fd79b47e78be9c38bf41cf838ac9a194b2c51fa5fe38220e334403"
+    },
+    {
+      "path": "white_plots/empirical_runtime_white.png",
+      "sha256": "b5dc915920887b0116fe8b54602a5de4b01e051bf6287128ba8ca5e9272b3003"
+    },
+    {
+      "path": "white_plots/illustrative_scaling_white.png",
+      "sha256": "86251443b193cdb53e32dc4aaeeedee6d2baf71b04b9b18a637477e08f66f4e1"
+    },
+    {
+      "path": "target_selection_4year/README.md",
+      "sha256": "a036aba5be013cc9caf1984f9e256e52ec45ac615c15292c220d56e8b4f802e5"
+    },
+    {
+      "path": "target_selection_4year/quantum_flip_years.csv",
+      "sha256": "997ee5ce9f017fc8b28913ce5bc0e76940324df27af10fe8aa1010243b2e4b24"
+    },
+    {
+      "path": "target_selection_4year/run_yearly.py",
+      "sha256": "09f77ecd503c2dc74c31bb797d38f288095b2904ba66a737d512c12c9a62d581"
+    },
+    {
+      "path": "target_selection_4year/target_selection_original.py",
+      "sha256": "2353b7456730a7429ba8aa520b31cd4796195e47b336943903a21401d7e8d690"
+    },
+    {
+      "path": "target_selection_4year/validation.json",
+      "sha256": "9159d22085b64bc059c34ed8a3a7f954815180fc078ca86eaef492eed949a129"
+    },
+    {
+      "path": "target_selection_4year/yearly_all_candidates.csv",
+      "sha256": "460843d975370eddda89133d8af7c3003e124601495fb53d4322ec4830297d22"
+    },
+    {
+      "path": "target_selection_4year/yearly_classical_results.png",
+      "sha256": "d54c25499d408839ea830f62752af437bb6aa8b6226a6d9bb0fefab6b3662cc4"
+    },
+    {
+      "path": "target_selection_4year/yearly_selected_targets.csv",
+      "sha256": "ac5eee4a83f24675c487c1fac509fc7698654ab982a11f7dcdaba43cfe0690fa"
+    },
+    {
+      "path": "target_selection_4year/yearly_summary.csv",
+      "sha256": "ef187192e43e29fbbca33a1f006ca939edfa25c805a2789247b0da62c60b1b17"
+    },
+    {
+      "path": "archived_7year_comparison/README.md",
+      "sha256": "ae73323844a0344dfe3fed16f7244c43938b350973ad61a67a04cffc0a67f305"
+    },
+    {
+      "path": "archived_7year_comparison/four_vs_seven_year_comparison.csv",
+      "sha256": "30a6750f8a999294e75dab76b951965b68e95aead648233e19663d8c0fd83ead"
+    },
+    {
+      "path": "archived_7year_comparison/quantum_flip_years.csv",
+      "sha256": "997ee5ce9f017fc8b28913ce5bc0e76940324df27af10fe8aa1010243b2e4b24"
+    },
+    {
+      "path": "archived_7year_comparison/run_yearly.py",
+      "sha256": "35bd61a1df48db499798798b69437cb68c09181fc9fe8437821641255d0e3102"
+    },
+    {
+      "path": "archived_7year_comparison/seven_year_comparison.png",
+      "sha256": "82d35649d7c8bc57d163e72414c72564fdbafc197e1eda57dfa172fd0095f245"
+    },
+    {
+      "path": "archived_7year_comparison/target_selection_original.py",
+      "sha256": "2353b7456730a7429ba8aa520b31cd4796195e47b336943903a21401d7e8d690"
+    },
+    {
+      "path": "archived_7year_comparison/validation.json",
+      "sha256": "9159d22085b64bc059c34ed8a3a7f954815180fc078ca86eaef492eed949a129"
+    },
+    {
+      "path": "archived_7year_comparison/yearly_all_candidates.csv",
+      "sha256": "ee1520caf960462b46c5d1e72600c23c6f0ebc8b2e2578c1973c6fdc812997c9"
+    },
+    {
+      "path": "archived_7year_comparison/yearly_selected_targets.csv",
+      "sha256": "1f3572196e93d163e169f8d0d3d8def1964ca7ecf9ed0c278a0a603bc8f23ca3"
+    },
+    {
+      "path": "archived_7year_comparison/yearly_summary.csv",
+      "sha256": "67fe338169bcaf2cd5d0defe2e3fc0d15ad909c283c32af4dead8d80f4ba9fbe"
+    }
+  ]
+}
