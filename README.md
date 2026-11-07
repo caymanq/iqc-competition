@@ -85,3 +85,28 @@ compilation can still change depth/counts. Hardware
 follow-on should use shallow small-QAOA circuits; confirm backend entitlement,
 transpilation, shot limits, and linked-account billing at submission time—
 zero catalog pricing is not a billing guarantee.
+
+## qBraid Lab teaching dashboard
+
+`notebooks/paperflip_dashboard.ipynb` is a self-contained, interactive
+ipywidgets dashboard designed for qBraid Lab. **It is not deployed to qBraid
+Lab yet.** It never submits a task, starts a server, or needs a secret.
+
+```bash
+.venv/bin/pip install -e '.[dashboard,quantum]'
+.venv/bin/python scripts/build_dashboard_notebook.py
+.venv/bin/jupyter lab notebooks/paperflip_dashboard.ipynb
+```
+
+The notebook teaches the business → energy → bits → circuit → sampled-versus-
+exact flow with a tangible three-industry lab, a 20-industry exact network
+heatmap, ties/no-ties and resistance-intervention controls, and cached Aer
+evidence. Quantum controls use only the committed
+`notebooks/data/quantum_cache_2033.json`; parameter changes visibly mark the
+cache stale rather than silently resimulating. qBraid-imported results remain
+a separate, manually scored workflow described in `artifacts/README.md`.
+
+For a downloadable handoff, run `python scripts/build_dashboard_bundle.py`;
+the reproducible ZIP contains the notebook, cache, offline QASM artifacts, and
+handoff instructions. The source notebook centralizes notation in one
+`NOTATION` dictionary for theory updates.
