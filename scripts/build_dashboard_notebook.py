@@ -51,6 +51,7 @@ from paperflip.dashboard import (
     tiny_business_model, model_with_pressure, exact_at_pressure,
     energy_breakdown, model_fingerprint,
 )
+from paperflip.region_views import nested_regions, compute_region_view
 
 ROOT = Path.cwd()
 if not (ROOT / "configs" / "one_region.yaml").exists():
@@ -58,6 +59,8 @@ if not (ROOT / "configs" / "one_region.yaml").exists():
 model, YEARS, CONFIG = load_model(ROOT / "configs" / "one_region.yaml")
 CACHE_PATH = ROOT / "notebooks" / "data" / "quantum_cache_2033.json"
 QCACHE = json.loads(CACHE_PATH.read_text())
+REGION_CACHE_PATH = ROOT / "notebooks" / "data" / "independent_region_views_2033.json"
+REGION_PRECOMPUTED = json.loads(REGION_CACHE_PATH.read_text())
 
 # Centralized Aristotle notation/copy: update this single dictionary when theory wording evolves.
 NOTATION = {
@@ -287,10 +290,105 @@ python -m paperflip.cli score-qbraid \\
 Keep imported qBraid outcomes labelled **qBraid imported**; keep Aer outcomes
 labelled **Aer cached**; label actual hardware separately. Check entitlement,
 transpilation, and billing before any future submission."""),
+        markdown("""## 4. One, two, and five independent regions
+
+These are **separate 20-node simulations** of the same industry topology,
+never a 40- or 100-node circuit. Synthetic region shifts/noise are nested from
+one stable seed; no cross-region ties exist in this quantum scenario. The
+exact min-cut shown uses the same independent graph as the selected circuit."""),
+        code("""region_count = W.ToggleButtons(options=[1,2,5], value=1, description="Regions shown")
+region_select = W.Dropdown(description="Selected region")
+region_year = W.IntSlider(value=2033, min=2026, max=2040, description="Year")
+region_scenario = W.Dropdown(options=["Independent same-20", "Independent no-ties"], description="Scenario")
+region_compute = W.Button(description="Compute selected 20-node view", button_style="warning")
+region_reset = W.Button(description="Reset cached view")
+region_out = W.Output()
+region_memory_cache = {view["scenario_key"]: view for view in REGION_PRECOMPUTED["views"]}
+
+def set_region_options(change=None):
+    scenarios = nested_regions(model, seed=20261106, count=region_count.value)
+    region_select.options = [scenario.name for scenario in scenarios]
+    if region_select.value not in region_select.options:
+        region_select.value = region_select.options[0]
+
+def selected_region_scenario():
+    scenarios = nested_regions(model, seed=20261106, count=region_count.value)
+    selected = next(s for s in scenarios if s.name == region_select.value)
+    if region_scenario.value == "Independent no-ties":
+        selected = type(selected)(selected.name, IsingModel(selected.model.names, selected.model.resistance,
+            np.zeros_like(selected.model.ties), selected.model.pressure_step, selected.model.unit),
+            selected.regional_shift_int, selected.noise_int)
+    return selected
+
+def lookup_region_view(compute=False):
+    selected = selected_region_scenario()
+    probe = compute_region_view if compute else None
+    # Keys include region model, year and bounded objective grid; no stale reuse.
+    from paperflip.region_views import scenario_key
+    key = scenario_key(selected, region_year.value, (.2,.6,1.0), (.2,.5,.8))
+    if key in region_memory_cache:
+        return region_memory_cache[key], False
+    if not compute:
+        return None, True
+    view = compute_region_view(selected, region_year.value)
+    region_memory_cache[key] = view
+    return view, False
+
+def render_region(change=None):
+    view, stale = lookup_region_view(compute=False)
+    with region_out:
+        clear_output(wait=True)
+        display(caveat("Independent regional quantum scenario: exactly one 20-node circuit is selected. "
+                       "No 40/100-node circuit and no inter-region tie exists. CPU simulator only; not qBraid/hardware."))
+        if stale:
+            print("STALE / not precomputed for these selectors. Click ‘Compute selected 20-node view’ for an explicit local CPU recompute; sliders never auto-run it.")
+            return
+        records = view["fixed_configurations"]
+        labels = [item["bitstring_c_n_minus_1_to_c_0"][-8:] + "…" for item in records]
+        exact_mask = np.array([item["is_exact_minimum"] for item in records])
+        fig, axes = plt.subplots(2, 2, figsize=(12,7))
+        for stage, axis, color in [("initial",axes[0,0],"#8ecae6"),("cost_only",axes[0,1],"#8ecae6"),("post_mixer",axes[1,0],"#457b9d")]:
+            values=np.array([item[f"{stage}_probability"] for item in records])
+            axis.bar(range(len(records)), values, color=color)
+            axis.scatter(np.where(exact_mask)[0], values[exact_mask], color="#e63946", marker="*", s=80, label="exact minimum")
+            axis.set(title=f"{stage.replace('_',' ')} P=|amplitude|²; included={view['stages'][stage]['included_mass']:.3f}, omitted={view['stages'][stage]['omitted_mass']:.3f}",
+                     xticks=range(len(records)), xticklabels=labels, ylabel="probability")
+            axis.tick_params(axis="x", rotation=65); axis.legend(loc="upper right")
+        phases=np.ma.masked_invalid(np.array([[item["cost_only_phase_relative_radians"] if item["cost_only_phase_relative_radians"] is not None else np.nan for item in records]]))
+        image=axes[1,1].imshow(phases, cmap="twilight", vmin=-np.pi, vmax=np.pi, aspect="auto")
+        axes[1,1].set(title="Cost-only relative phase (cyclic; zero-amplitude masked)", yticks=[], xticks=range(len(records)), xticklabels=labels)
+        axes[1,1].tick_params(axis="x", rotation=65); fig.colorbar(image, ax=axes[1,1], label="radians")
+        plt.tight_layout(); plt.show()
+        fig, ax = plt.subplots(figsize=(10,2.8))
+        matrix=np.array([view["stages"][stage]["sector_digital_marginals"] for stage in ["initial","cost_only","post_mixer"]])
+        im=ax.imshow(matrix, vmin=0, vmax=1, cmap="viridis", aspect="auto")
+        ax.set(yticks=range(3), yticklabels=["initial","cost only","post mixer"], xticks=range(model.n), xticklabels=model.names,
+               title="Sector marginals: P(industry is digital)")
+        ax.tick_params(axis="x", rotation=70, labelsize=7); fig.colorbar(im, ax=ax); plt.tight_layout(); plt.show()
+        mode=max(records, key=lambda item: item["post_mixer_probability"])
+        print(f"{view['region']} | year {view['year']} | objective grid chose γ={view['optimization']['gamma']}, β={view['optimization']['beta']}.")
+        print(f"CPU simulator time={view['cpu_seconds']:.2f}s. Exact optimum probability={view['exact_optimum_probability_post_mixer']:.3e}; "
+              f"mode energy={mode['energy_model_units']:.3f}. Best sample: not computed (this is an exact statevector distribution, not sampled shots).")
+        print("Post-cost probability invariance is expected: cost-only phases change amplitudes’ phase, not computational-basis probabilities.")
+
+def compute_region(_):
+    view, _ = lookup_region_view(compute=True)
+    render_region()
+
+def reset_region(_):
+    region_count.value=1; set_region_options(); region_select.value="Pacific NW"; region_year.value=2033; region_scenario.value="Independent same-20"; render_region()
+
+region_count.observe(set_region_options,"value")
+for widget in [region_select,region_year,region_scenario]:
+    widget.observe(render_region,"value")
+region_compute.on_click(compute_region); region_reset.on_click(reset_region)
+set_region_options(); render_region()
+region_tab=W.VBox([title("Compare one, two and five regions without pretending they are one large quantum circuit"),
+                   W.HBox([region_count,region_select,region_year,region_scenario,region_compute,region_reset]),region_out])"""),
         code("""# Headless callback smoke: this exercises real widget observers without any remote call.
 import os
-dashboard_tabs = W.Tab(children=[tiny_tab, full_tab, quantum_tab])
-for index, label in enumerate(["1. Tiny tangible example", "2. 20-industry network", "3. Cached quantum evidence"]):
+dashboard_tabs = W.Tab(children=[tiny_tab, full_tab, quantum_tab, region_tab])
+for index, label in enumerate(["1. Tiny tangible example", "2. 20-industry network", "3. Cached quantum evidence", "4. Independent regions"]):
     dashboard_tabs.set_title(index, label)
 dashboard_tabs.selected_index = int(os.environ.get("PAPERFLIP_DASHBOARD_TAB", "0"))
 display(dashboard_tabs)
@@ -303,8 +401,11 @@ if os.environ.get("PAPERFLIP_DASHBOARD_SMOKE") == "1":
     tie_multiplier.value = original_tie
     quantum_year.value = 2034  # intentionally renders the stale-cache warning
     quantum_year.value = 2033  # returns to the cached baseline
+    region_count.value = 2
+    region_select.value = "California"
+    region_count.value = 1
     assert "cache" in QCACHE["source_label"].lower()
-    print("Widget callbacks exercised: tiny, full-network, and cache-staleness views.")"""),
+    print("Widget callbacks exercised: tiny, full-network, cache-staleness, and independent-region views.")"""),
     ]
     OUT.parent.mkdir(parents=True, exist_ok=True)
     nbf.write(nb, OUT)

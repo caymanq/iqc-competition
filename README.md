@@ -106,6 +106,12 @@ evidence. Quantum controls use only the committed
 cache stale rather than silently resimulating. qBraid-imported results remain
 a separate, manually scored workflow described in `artifacts/README.md`.
 
+The independent-regions tab uses
+`notebooks/data/independent_region_views_2033.json`: five nested, stable-seed
+synthetic regional models, each run as a separate 20-node local CPU circuit.
+The 1/2/5-region controls compare prefixes of that set. They do not construct
+a 40- or 100-node quantum circuit and include no cross-region ties.
+
 For a downloadable handoff, run `python scripts/build_dashboard_bundle.py`;
 the reproducible ZIP contains the notebook, cache, offline QASM artifacts, and
 handoff instructions. The source notebook centralizes notation in one

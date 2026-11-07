@@ -49,7 +49,8 @@ def render(tab: int, slug: str) -> None:
 
 
 def main() -> None:
-    for tab, slug in ((0, "01_tiny_teaching_view"), (1, "02_network_view"), (2, "03_quantum_evidence_view")):
+    for tab, slug in ((0, "01_tiny_teaching_view"), (1, "02_network_view"),
+                      (2, "03_quantum_evidence_view")):
         render(tab, slug)
     print(DESTINATION)
 
