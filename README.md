@@ -12,4 +12,4 @@ Navigate to the reports directory, or check out some of our other files.
 
 ### Want to learn more?
 
-We have a website!
+We have a website! https://paper-phase-transition-iqc-2026.jaxonkindred.chatgpt.site/#explore
