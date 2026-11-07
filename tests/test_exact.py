@@ -1,6 +1,7 @@
 import numpy as np
+import pytest
 from paperflip.model import IsingModel, load_model
-from paperflip.exact import mincut, enumerate_ground, flip_intervals
+from paperflip.exact import mincut, enumerate_ground, flip_intervals, cut_value_for_state, energy_offset
 from paperflip.metrics import flip_comparison
 
 
@@ -16,6 +17,7 @@ def test_mincut_matches_enumeration_and_extremes():
         assert result.energy == e
         assert np.array_equal(result.paper_state, low)
         assert np.array_equal(result.digital_state, high)
+        assert result.energy == result.cut_value + result.energy_offset
 
 
 def test_random_ferromagnetic_extremal_mincuts():
@@ -33,12 +35,40 @@ def test_random_ferromagnetic_extremal_mincuts():
                     and np.array_equal(actual.digital_state, high))
 
 
+def test_aristotle_worked_cut_regression_all_four_assignments():
+    """J12=4, h=(3,-2), source side=digital; explicit absolute-energy check."""
+    # At 2027, A=7 and r=(4,9), therefore h=A-r=(3,-2).
+    model = IsingModel(("1", "2"), np.array([4, 9]), np.array([[0, 4], [4, 0]]), 7, 1)
+    expected = {
+        (1, 1): (-5, 4),
+        (1, -1): (-1, 8),
+        (-1, 1): (9, 18),
+        (-1, -1): (-3, 6),
+    }
+    assert energy_offset(model, 2027) == -9
+    for spins, (energy, cut) in expected.items():
+        state = np.array(spins, dtype=np.int8)
+        assert model.energy(state, 2027) == energy
+        assert cut_value_for_state(model, 2027, state) == cut
+        assert energy == cut + energy_offset(model, 2027)
+    solved = mincut(model, 2027)
+    assert solved.energy == -5 and solved.cut_value == 4
+    assert np.array_equal(solved.paper_state, np.array([1, 1], dtype=np.int8))
+
+
+def test_negative_or_asymmetric_ties_are_rejected_before_mincut():
+    with pytest.raises(ValueError, match="negative/frustrated"):
+        IsingModel(("a", "b"), np.array([1, 1]), np.array([[0, -1], [-1, 0]]), 1, 1)
+    with pytest.raises(ValueError, match="symmetric"):
+        IsingModel(("a", "b"), np.array([1, 1]), np.array([[0, 1], [0, 0]]), 1, 1)
+
+
 def test_qubo_energy_consistency():
     model = tiny()
     q, const = model.qubo(2029)
     for bits in range(8):
         x = np.array([(bits >> i) & 1 for i in range(3)])
-        s = 2 * x - 1
+        s = 1 - 2 * x
         assert model.energy(s, 2029) == int(np.dot(x, q @ x) + const)
 
 
@@ -49,6 +79,16 @@ def test_zero_field_is_degenerate_not_float_flip():
     spans = flip_intervals(results)
     assert spans["early"][0] == 2031
     assert spans["late"][0] == 2032
+
+
+def test_disconnected_positive_negative_and_zero_fields_have_correct_extremes():
+    # At 2027 h=(+2,-2,0); nodes are disconnected, so the zero-field node is degenerate.
+    model = IsingModel(("positive", "negative", "zero"), np.array([5, 9, 7]),
+                       np.zeros((3, 3), dtype=int), 7, 1)
+    result = mincut(model, 2027)
+    assert np.array_equal(result.paper_state, np.array([1, -1, -1], dtype=np.int8))
+    assert np.array_equal(result.digital_state, np.array([1, -1, 1], dtype=np.int8))
+    assert np.array_equal(result.degenerate, np.array([False, False, True]))
 
 
 def test_censored_metric_has_no_numeric_error():

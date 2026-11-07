@@ -14,6 +14,8 @@ class ExactResult:
     paper_state: np.ndarray  # least digital minimum (source reachability)
     digital_state: np.ndarray  # most digital minimum (not sink-co-reachable)
     degenerate: np.ndarray
+    cut_value: int
+    energy_offset: int
 
 
 def _graph(model: IsingModel, year: int) -> nx.DiGraph:
@@ -37,6 +39,24 @@ def _graph(model: IsingModel, year: int) -> nx.DiGraph:
     return g
 
 
+def energy_offset(model: IsingModel, year: int) -> int:
+    """The state-independent constant in E(s)=cut(s)+offset."""
+    return int(-np.sum(np.triu(model.ties, 1)) - np.sum(np.abs(model.fields(year))))
+
+
+def cut_value_for_state(model: IsingModel, year: int, state: np.ndarray) -> int:
+    """Explicit s-t cut for an Ising assignment; source side means digital s=+1."""
+    s = np.asarray(state, dtype=np.int8)
+    if s.shape != (model.n,) or not set(s.tolist()) <= {-1, 1}:
+        raise ValueError("state must be n Ising spins in {-1, +1}")
+    source_side = {"source", *(i for i, spin in enumerate(s) if spin == 1)}
+    graph = _graph(model, year)
+    return int(sum(
+        data["capacity"] for left, right, data in graph.edges(data=True)
+        if left in source_side and right not in source_side
+    ))
+
+
 def mincut(model: IsingModel, year: int) -> ExactResult:
     g = _graph(model, year)
     cut, flow = nx.maximum_flow(g, "source", "sink", flow_func=nx.algorithms.flow.preflow_push)
@@ -55,9 +75,12 @@ def mincut(model: IsingModel, year: int) -> ExactResult:
     paper = np.array([1 if i in min_source else -1 for i in range(model.n)], dtype=np.int8)
     digital = np.array([1 if i not in can_reach_sink else -1 for i in range(model.n)], dtype=np.int8)
     # Use direct energy, not only the cut identity, as a guard against graph construction mistakes.
+    offset = energy_offset(model, year)
     e = model.energy(paper, year)
     assert e == model.energy(digital, year)
-    return ExactResult(e, paper, digital, paper != digital)
+    assert e == cut + offset
+    assert cut == cut_value_for_state(model, year, paper)
+    return ExactResult(e, paper, digital, paper != digital, int(cut), offset)
 
 
 def enumerate_ground(model: IsingModel, year: int) -> tuple[int, np.ndarray, np.ndarray]:
