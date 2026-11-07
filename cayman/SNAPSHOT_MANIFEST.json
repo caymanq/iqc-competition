@@ -95,6 +95,54 @@
       "sha256": "819f64e5cdcc9f4326d84df42c7694d4e8c5023b7c8cf36ba549f0d7fbb48433",
       "bytes": 1135
     },
+    "benchmarks/.gitignore": {
+      "sha256": "bc0bdc1d08b1355b4c551b1a3d1ee00eb81ba3de2825e9a6a525687260070ecc",
+      "bytes": 20
+    },
+    "benchmarks/README.md": {
+      "sha256": "1288c2af25dfcabe2a667eb150e68d0435f11e87358afeea2808a0575581c5e5",
+      "bytes": 2306
+    },
+    "benchmarks/ising_benchmark": {
+      "sha256": "0fa27835fc83b09625e3bb73510e9af37cae6e408538fa09ff0f71bf8bf11702",
+      "bytes": 44552
+    },
+    "benchmarks/ising_benchmark.cpp": {
+      "sha256": "8bf3641bcb278dc132166e1fc1c3a3b7b470ba1c5f99ed269c5314f291af3abd",
+      "bytes": 8667
+    },
+    "benchmarks/plot_results.py": {
+      "sha256": "e13aac07824bd04a9f27c0d7b7125369f42f14f7ec6c1ea3f1a953ee4d7e9a33",
+      "bytes": 3052
+    },
+    "benchmarks/results/machine_metadata.json": {
+      "sha256": "125ef968b2a13111c8341a9a52690e02306557f05bd911420b6c7c6d92ca27c9",
+      "bytes": 434
+    },
+    "benchmarks/results/raw.csv": {
+      "sha256": "841c0467db2d3114be6a4b075505e9c8046b8f542af5726668d86726a2877c2b",
+      "bytes": 5584
+    },
+    "benchmarks/results/raw.json": {
+      "sha256": "7881b90468e018c1dddf15ffa050ef5d347d7f6abe1e67cef0d3d8d10df78319",
+      "bytes": 24083
+    },
+    "benchmarks/results/runtime_empirical.png": {
+      "sha256": "3312b874b69e8a50e63a7ce1f127579a2d14a124752c6577a04c495cfc05d8e1",
+      "bytes": 139280
+    },
+    "benchmarks/results/runtime_empirical.svg": {
+      "sha256": "41b5d70f62474d6574ea58636c1fd0c718aebb13f65bbd97c65157c46730fa61",
+      "bytes": 86311
+    },
+    "benchmarks/results/summary.csv": {
+      "sha256": "dc92399429dccf07d11b888dfae5e881b071ba2b91490d9a7ab3a6dab8fd2dd7",
+      "bytes": 1012
+    },
+    "benchmarks/run_benchmark.sh": {
+      "sha256": "f7fa35205fd5c8c57363c90df9f2d8e33f6930ca2060335bba9542821297b53a",
+      "bytes": 1171
+    },
     "configs/one_region.yaml": {
       "sha256": "18559a1d8686ef60532f5c74ae3a1a953c2efde43f7e563e9100c9cf72f6f3ff",
       "bytes": 1338
