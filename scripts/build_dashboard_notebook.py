@@ -289,6 +289,11 @@ labelled **Aer cached**; label actual hardware separately. Check entitlement,
 transpilation, and billing before any future submission."""),
         code("""# Headless callback smoke: this exercises real widget observers without any remote call.
 import os
+dashboard_tabs = W.Tab(children=[tiny_tab, full_tab, quantum_tab])
+for index, label in enumerate(["1. Tiny tangible example", "2. 20-industry network", "3. Cached quantum evidence"]):
+    dashboard_tabs.set_title(index, label)
+dashboard_tabs.selected_index = int(os.environ.get("PAPERFLIP_DASHBOARD_TAB", "0"))
+display(dashboard_tabs)
 if os.environ.get("PAPERFLIP_DASHBOARD_SMOKE") == "1":
     original_pressure = tiny_pressure.value
     tiny_pressure.value = round(original_pressure + .01, 2)
