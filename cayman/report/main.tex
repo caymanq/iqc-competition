@@ -1,0 +1,769 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.82in,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,booktabs,array,longtable,tabularx}
+\usepackage{graphicx,xcolor,enumitem,fancyhdr,caption,pdflscape,listings,float}
+\usepackage[hyphens]{url}
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\definecolor{ink}{HTML}{15334B}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\sffamily\bfseries\color{ink}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\sffamily\bfseries\color{ink}}{\thesubsection}{0.6em}{}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\sffamily IQC / Paper Phase Transition}\fancyhead[R]{\small Cayman Quinn}\fancyfoot[C]{\thepage}
+\setlength{\parindent}{0pt}\setlength{\parskip}{6pt}
+\setlist{itemsep=3pt,topsep=4pt,leftmargin=1.6em}
+\renewcommand{\arraystretch}{1.18}
+\captionsetup{font=small,labelfont=bf}
+\lstset{basicstyle=\ttfamily\small,breaklines=true,columns=fullflexible,frame=single,rulecolor=\color{black!15}}
+\newcommand{\ket}[1]{\lvert #1\rangle}
+\newcommand{\bra}[1]{\langle #1\rvert}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\page}{\clearpage}
+\newcommand{\takeaway}[1]{\par\smallskip\textbf{Key point.} #1\par}
+\newcommand{\file}[1]{\nolinkurl{#1}}
+\newcommand{\fig}[3]{\begin{figure}[H]\centering\includegraphics[width=#2\linewidth]{figures/#1}\caption{#3}\end{figure}}
+\hypersetup{pageanchor=false,pdftitle={Quantum Approaches to the Paper Phase Transition},pdfauthor={Prepared for Cayman Quinn},pdfsubject={IQC pedagogical report: QAOA, exact min-cut, platform evidence, and constrained target selection}}
+\begin{document}
+\begin{titlepage}
+\color{ink}\sffamily
+{\small IQC PROJECT / PEDAGOGICAL TECHNICAL REPORT}\par\vspace{1.3cm}
+{\Huge\bfseries Quantum Approaches to the Paper Phase Transition\par}
+\vspace{0.7cm}
+{\LARGE From adoption equilibria to constrained outreach planning\par}
+\vspace{0.9cm}
+{\Large Prepared for Cayman Quinn}\par
+{\large Presentation team: Cayman Quinn, Jaxon Kindred, Luke Papenfuss, Michael Hannesson}\par
+\vspace{1cm}\normalfont\color{black}
+This report explains the model, derives QAOA from amplitudes to gates, and audits what the saved implementations establish. It follows the supplied presentation's narrative: problem and data, QAOA, platform approaches, classical comparisons, and the separate ``when to sell'' optimization.
+
+\vspace{0.5cm}
+\textbf{Evidence snapshot:} repository commit\par
+\file{e02f5fba57be8279aadc7f0ed7c597a61271f102}\par
+\textbf{Prepared:} November 7, 2026 (America/Denver, MST).\par
+\textbf{Scope:} existing artifacts only; no new provider jobs, performance benchmarks, or repository changes.
+\vfill
+\textbf{Read this distinction first.} Adoption uses \textbf{bit 0 = digital}. Target selection uses \textbf{bit 1 = selected}. Most quantum results here are classical CPU simulations of circuits. No quantum speed or hardware advantage is demonstrated.
+\end{titlepage}
+\hypersetup{pageanchor=true}
+\setcounter{tocdepth}{1}
+\tableofcontents
+\page
+\section{Executive abstract and evidence boundaries}\label{sec:scope}
+The motivating question is how a digital-document business might anticipate industries' movement from paper to digital workflows and use that context to plan outreach. The reviewed project turns that question into two different optimization problems. The first asks for low-energy \emph{adoption configurations} in a ferromagnetic Ising model. The second selects a budget-feasible set of industries to target in a four-year window. Neither model is, by itself, a validated forecast of customer behavior.
+
+The strongest computational baseline is exact classical optimization. Nonnegative adoption couplings permit an exact minimum-cut reduction. The target model's equal costs, positive values and absence of pair bonuses permit an exact top-$k$ reduction. Quantum-circuit methods are useful here as demonstrations of phase encoding, interference and constrained optimization, not as necessary solutions to classically intractable instances.
+
+\textbf{What the evidence supports.} Saved local Aer digitized quantum annealing (DQA), standard $p=1$ QAOA statevector views, a deterministic constrained $p=1/p=2$ target study, offline qBraid exports, one externally supplied completed three-qubit qBraid \emph{simulator} result, and measured C++ CPU scaling data are available. The qBraid 20-qubit job has only a historical pending/running status and no counts. The presentation reports Classiq Studio simulator work and shows a circuit visualization and heatmap; the reviewed repository has no corroborating Classiq source/synthesis/execution records. These are different levels of evidence.
+
+\subsection{How this report uses its sources}
+Immutable repository links identify the implementation snapshot \cite{repo,model,exact,views,qbraid,bench,target}. Numerical tables are read from supplied CSV/JSON copies, not transcribed uncritically from the dossier. The original QAOA paper was independently opened and verified \cite{farhi2014}. Mathematical derivations are self-contained; toy calculations are labeled illustrative.
+
+The supplied 15-slide presentation is an additional user source, especially its notes. It introduces later blended-input and 100-node classical scenarios, hardware comparisons, and a Classiq demonstration not independently documented in the repository dossier. Those claims are attributed to the presentation, not silently merged into saved metrics. Appendix~\ref{sec:mapping} maps each slide to this report and identifies disagreements.
+
+\takeaway{A circuit export is not a run; a simulator run is not hardware; an explanatory toy is not an empirical project result.}
+\section{Introduction to the problem: data, pressure and assumptions}\label{sec:problem}
+\subsection{From a business question to a model}
+The presentation asks, ``When and where should Vasion sell?'' A useful first step is to model a collective transition rather than isolated industry decisions. An industry may resist digitization while collaborators create pressure to move together. The project represents each industry by one binary state and each mutual dependence by a nonnegative tie.
+
+The repository calls the challenge the Vasion/IQC 2026 ``Paper Phase Transition'' project \cite{repo}. Its supplied coefficients are illustrative model inputs. A separately verified external challenge specification was not in the evidence archive, so the implemented assumptions below are the operative definition for this report.
+
+For year $y$, a shared pressure grows as
+\begin{equation}
+ A(y)=0.07(y-2026),\qquad h_i(y)=A(y)-r_i,\label{eq:pressure}
+\end{equation}
+where $r_i$ is resistance. The model treats each year as a fresh optimization problem. It does not integrate an adoption-rate differential equation or remember the previous year's sample. A reported ``flip year'' summarizes annual optimized states; it is not a measured switching delay.
+
+\subsection{Starter inputs versus presentation-reported extensions}
+The deck starts with 20 industries and given ties/resistances, then describes regional biases and real-world-inspired inputs: U.S. Census Business Trends and Outlook Survey, BEA Input--Output Accounts, Eurostat e-invoicing, and an AI-adoption-rate proxy. No independent external dataset or calibrated resistance estimation pipeline was supplied in this report's archive. Naming those sources does not establish a validated mapping from adoption statistics to resistance.
+
+The notes are more cautious than several slide labels. They describe the updated vector as \file{illustrative_blended_resistance_model}, read at four-decimal display precision from a notebook because raw external CSV data were unavailable. This report retains that caution. It does not substitute that vector into old simulator results or claim to have reproduced the deck's later counterfactual computations.
+
+\subsection{What a region means}
+In the saved teaching dashboard, 1/2/5 regions are independent 20-node instances, with stable-seed synthetic differences and no cross-region edges. This differs from the presentation's \emph{separate} 100-node coupled classical regional model. Selecting five dashboard regions does not allocate a 100-qubit statevector.
+\takeaway{Scenario inputs illustrate partner dependence in an equilibrium. Forecast accuracy requires data validation and out-of-sample evaluation.}
+\section{Notation and sign conventions}\label{sec:notation}
+\begin{tabularx}{\linewidth}{@{}p{0.19\linewidth}X@{}}\toprule
+Symbol & Meaning and convention\\\midrule
+$i,j$; $g$; $y$ & Industry indices; region index; independent scenario year.\\
+$n$; $p$ & Number of industry variables; alternating circuit layers (not shots).\\
+$x_i$; $s_i$ & \textbf{Adoption}: $x_i=0$ digital, $x_i=1$ paper; $s_i=1-2x_i$. Thus $s_i=+1$ is digital.\\
+$r_i,A,h_i$ & Resistance; annual common pressure; net field $h_i=A-r_i$. Positive field favors digital.\\
+$J_{ij}\geq0$ & Undirected mutual dependence counted once in energy; favors agreement, not a causal direction.\\
+$E(s)$; $E_*$ & Adoption energy; exact minimum for the same instance and year. Lower is better.\\
+$S,T$; $C(s)$ & Flow source/sink; directed cut capacity. Source side is digital. $T$ denotes anneal duration only in DQA.\\
+$\ket{z}$; $a_z$ & Basis configuration; complex amplitude. $P(z)=|a_z|^2$, not $|a_z|$.\\
+$X,Y,Z$; $H$ & Pauli matrices; Hadamard $H$. Subscripts $C,M,D$ denote Hamiltonians.\\
+$\gamma_\ell,\beta_\ell$ & Cost/mixer angles at layer $\ell$; signs fixed by the unitary convention.\\
+$H_C,H_M,H_D$ & Diagonal cost; QAOA mixer $+\sum X_i$; annealing driver $-\sum X_i$.\\
+$F_p$; $P_*$ & Expected energy; total probability on all ground configurations.\\
+$z_{ig}$; $b_i$ & \textbf{Target planning}: regional indicator; reduced industry indicator. Here \textbf{1 = selected}, not paper.\\
+$d_{ig},v_{ig}$ & Years until supplied flip; outreach value. Eligible if $1\leq d_{ig}\leq4$.\\
+$B,k,D$ & Budget $B=5$; count $k=\min(5,n)$; feasible dimension $D=\binom nk$.\\
+$V,V_*,\Delta$ & Target value; exact maximum; gap $V_*-\E[V]$ (or $V_*-V_{\rm MAP}$ when stated).\\
+$m_i$; MAP & Target marginal $P(b_i=1)$; maximum-a-posteriori \emph{whole feasible plan}.\\\bottomrule
+\end{tabularx}
+
+\subsection{Units and ordering}
+We use $\hbar=1$ and normalized energy/time units. Angles absorb energy scale. Rescaling $H_C$ changes equivalent $\gamma$, so grids are meaningful only together with coefficients.
+
+Two-qubit algebra uses basis $\ket{x_1x_2}$ ordered $00,01,10,11$. In saved Qiskit-style statevectors, integer bit $i$ indexes qubit $i$; displayed count keys run $c_{n-1}\cdots c_0$. Reverse an external key before matching industry index 0 to its qubit. The printed leftmost bit is not automatically industry 0.
+\section{The adoption Ising model and its exact reference}\label{sec:ising}
+\subsection{Reading the energy term by term}
+\begin{equation}
+ E(s;y)=-\sum_{i<j}J_{ij}s_is_j-\sum_i h_i(y)s_i.\label{eq:ising}
+\end{equation}
+For a positive tie $J$, aligned spins contribute $-J$, opposite spins $+J$. Disagreement costs an additional $2J$. This ferromagnetic tie favors paper--paper and digital--digital equally before fields are considered. It does not mean industry $i$ causes industry $j$ to adopt.
+
+For $h>0$, digital contributes $-h$ and paper $+h$, so digital is preferred by $2h$. For $h<0$ the preference reverses. Pressure can overcome resistance, but an equilibrium depends on all ties. An industry's own $h_i$ need not be positive at its collective transition.
+
+The quantum cost operator replaces each spin by Pauli $Z$:
+\begin{equation}
+ H_C=-\sum_{i<j}J_{ij}Z_iZ_j-\sum_i h_i Z_i,
+ \qquad H_C\ket{x}=E(1-2x)\ket{x}.\label{eq:HC}
+\end{equation}
+Every basis configuration is an eigenstate. A variational circuit must shape probabilities toward useful strings, not merely evaluate a formula on a known string.
+
+\subsection{Exact enumeration}
+For a tiny instance, enumerate $2^n$ strings, evaluate Eq.~\eqref{eq:ising}, find $E_*$ and retain \emph{every} minimizer. Enumeration checks signs, offsets and bit parsing independently. Its exponential growth makes it a poor primary large-$n$ baseline when exploitable structure exists.
+
+\subsection{Degeneracy and annual summaries}
+Ground-state sets can contain multiple configurations. An isolated zero-field node has equal energy for both bits. An arbitrary chosen minimizer can hide legitimate degeneracy. The reviewed exact implementation uses integer coefficient units (default $10{,}000$) and residual-network information to retain extremal ground states and flip intervals \cite{exact}. Exactness refers to represented discrete coefficients; integer arithmetic cannot repair an uncalibrated input model.
+
+\takeaway{This is an equilibrium model with a special tractable sign structure. Calling it ``Ising'' does not make it generically hard or make a quantum heuristic competitive by default.}
+\subsection{Deriving the source-side-digital minimum cut}\label{sec:mincut}
+Use source $S$, sink $T$ and one industry node each. Place digital nodes on the source side. Add both directed arcs of capacity $2J_{ij}$ for every tie. A cut crosses only the arc directed from its source side to sink side: disagreement pays $2J_{ij}$ once, not twice.
+
+For fields add
+\begin{equation}
+ c(S,i)=2\max(h_i,0),\qquad c(i,T)=2\max(-h_i,0).\label{eq:arcs}
+\end{equation}
+A positive field pays $2h_i$ if $i$ is paper/sink-side. A negative field pays $-2h_i$ if $i$ is digital/source-side. These are exactly the unfavorable-state penalties. Algebraically,
+\begin{align}
+ -J_{ij}s_is_j&=-J_{ij}+2J_{ij}\mathbf1[s_i\ne s_j],\\
+ -h_i s_i&=-|h_i|+2|h_i|\mathbf1[s_i\ne\operatorname{sign}(h_i)].
+\end{align}
+The second penalty vanishes at $h_i=0$. Hence
+\begin{equation}
+ \boxed{E(s)=C(s)-\sum_{i<j}J_{ij}-\sum_i|h_i|.}\label{eq:offset}
+\end{equation}
+The offset is assignment independent. A max-flow/min-cut solver therefore gives an exact classical optimum \cite{exact}. Negative couplings invalidate the nonnegative-capacity argument and are rejected by model validation.
+
+\subsection{An independent complete arithmetic check}
+Take \emph{illustrative} $J_{12}=4$, $h_1=3$, $h_2=-2$. Nonzero field arcs are $S\to1$ of capacity 6 and $2\to T$ of capacity 4; tie arcs each have capacity 8. The offset is $-4-3-2=-9$.
+\begin{center}\begin{tabular}{@{}ccrrr@{}}\toprule
+Bits & Spins & $E=-4s_1s_2-3s_1+2s_2$ & Cut & Cut $-9$\\\midrule
+00 & $++$ & $-5$ & 4 & $-5$\\
+01 & $+-$ & $-1$ & 8 & $-1$\\
+10 & $-+$ & 9 & 18 & 9\\
+11 & $--$ & $-3$ & 6 & $-3$\\\bottomrule
+\end{tabular}\end{center}
+These numbers were derived anew and checked by the tiny bundled algebra script. They correct an arithmetic error in the supplied dossier's example; they are \emph{not} claimed as an executed repository regression. For instance, $01$ costs only the disagreeing tie (8), while $10$ costs that tie plus both unfavorable fields ($8+6+4=18$).
+\section{QAOA: physical intuition and the full loop}\label{sec:qaoa}
+\subsection{Phases first, interference second}
+Start with qubits that coherently represent many configurations. A cost operation gives each configuration an energy-dependent phase. That alone does not make low-energy strings more likely. A noncommuting mixer combines complex amplitudes, allowing phase differences to become constructive or destructive interference. A classical procedure chooses angles to make the \emph{average} measured energy small.
+
+This is the alternating structure of the original QAOA proposal \cite{farhi2014}, written for energy \emph{minimization}. It is not classical evaluation of every assignment followed by a free readout of the best one.
+
+\subsection{State preparation and time order}
+Hadamard maps $\ket0$ to $\ket+=(\ket0+\ket1)/\sqrt2$. For $n$ qubits,
+\begin{equation}
+ \ket{\psi_0}=\ket+^{\otimes n}=2^{-n/2}\sum_{z\in\{0,1\}^n}\ket z.
+\end{equation}
+Every initial probability is $2^{-n}$, or $1/1{,}048{,}576$ at 20 qubits. Define
+\begin{equation}
+ U_C(\gamma)=e^{-i\gamma H_C},\quad H_M=\sum_iX_i,\quad
+ U_M(\beta)=e^{-i\beta H_M}.
+\end{equation}
+The recurrence and expanded product are
+\begin{align}
+ \ket{\psi_\ell}&=U_M(\beta_\ell)U_C(\gamma_\ell)\ket{\psi_{\ell-1}},\\
+ \ket{\psi_p}&=U_M(\beta_p)U_C(\gamma_p)\cdots
+ U_M(\beta_1)U_C(\gamma_1)\ket{\psi_0}.\label{eq:qaoa}
+\end{align}
+Rightmost operators act first: prepare, cost 1, mixer 1, cost 2, mixer 2, etc. ``Tune classically between layers'' on slide 4 is an informal summary. Standard variational QAOA optimizes a parameter vector through repeated \emph{whole-circuit} evaluations; it does not measure and retune an unknown coherent state between unitary layers.
+
+\subsection{Why noncommutation matters}
+All cost terms commute with each other, as do the different $X_i$. But $X_i$ does not commute with $Z_i$, so cost and mixer layers generally cannot be reordered. If every operation only changed computational-basis phases, the final probabilities would remain uniform.
+
+A larger $p$ increases expressivity but also adds parameters and operations. An identity layer embeds a shallower ansatz in a deeper one; this is an optimization-domain observation, not a guarantee that a practical noisy optimizer finds better parameters or that every measurement improves.
+\subsection{Two-qubit cost: from eigenvalues to phases}\label{sec:costexample}
+Use the \emph{illustrative} values of Section~\ref{sec:mincut}, not an empirical instance. In basis $00,01,10,11$,
+\[
+ Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+ Z_1=Z\otimes I=\operatorname{diag}(1,1,-1,-1),\quad
+ Z_2=I\otimes Z=\operatorname{diag}(1,-1,1,-1).
+\]
+Thus $Z\ket0=+\ket0$, $Z\ket1=-\ket1$, and
+\begin{align}
+ Z_1Z_2&=\operatorname{diag}(1,-1,-1,1),\\
+ H_C=-4Z_1Z_2-3Z_1+2Z_2
+ &=\begin{pmatrix}-5&0&0&0\\0&-1&0&0\\0&0&9&0\\0&0&0&-3\end{pmatrix}.\label{eq:twoH}
+\end{align}
+For $\ket{01}$, $s_1=+1,s_2=-1$, giving $+4-3-2=-1$. For $\ket{11}$ the energy is $-4+3-2=-3$. The unique ground configuration is $00$ with energy $-5$.
+
+Prepare $\ket{++}=\frac12(\ket{00}+\ket{01}+\ket{10}+\ket{11})$. Exponentiating a diagonal matrix exponentiates each diagonal entry:
+\begin{equation}
+ U_C(\gamma)=\operatorname{diag}(e^{5i\gamma},e^{i\gamma},e^{-9i\gamma},e^{3i\gamma}).
+\end{equation}
+Therefore
+\begin{equation}
+ U_C(\gamma)\ket{++}=\tfrac12\left(e^{5i\gamma}\ket{00}+e^{i\gamma}\ket{01}
+ +e^{-9i\gamma}\ket{10}+e^{3i\gamma}\ket{11}\right).\label{eq:phase}
+\end{equation}
+\begin{center}\begin{tabular}{@{}crcc@{}}\toprule
+State & $E$ & Cost-layer amplitude & Cost-layer probability\\\midrule
+$00$ & $-5$ & $e^{5i\gamma}/2$ & $1/4$\\
+$01$ & $-1$ & $e^{i\gamma}/2$ & $1/4$\\
+$10$ & $9$ & $e^{-9i\gamma}/2$ & $1/4$\\
+$11$ & $-3$ & $e^{3i\gamma}/2$ & $1/4$\\\bottomrule
+\end{tabular}\end{center}
+Each phase has unit magnitude. The mean energy remains $(-5-1+9-3)/4=0$ after cost alone. Adding a constant to $H_C$ only multiplies all amplitudes by one global phase and cannot change probabilities. Relative phases are what the subsequent mixer can exploit.
+\subsection{Turning the cost algebra into gates}\label{sec:gates}
+Use conventional definitions
+\begin{equation}
+ R_Z(\theta)=e^{-i\theta Z/2},\quad
+ R_{ZZ}(\theta)=e^{-i\theta Z\otimes Z/2},\quad
+ R_X(\theta)=e^{-i\theta X/2}.
+\end{equation}
+Commuting cost terms factor exactly:
+\begin{equation}
+ U_C(\gamma)=\prod_{i<j}e^{+i\gamma J_{ij}Z_iZ_j}
+ \prod_i e^{+i\gamma h_iZ_i}.
+\end{equation}
+Matching exponents yields
+\begin{equation}
+ \boxed{R_Z(-2\gamma h_i)\quad\text{and}\quad R_{ZZ}(-2\gamma J_{ij}).}
+\end{equation}
+For the worked example these are $R_Z(-6\gamma)$ on qubit 1, $R_Z(+4\gamma)$ on qubit 2 and $R_{ZZ}(-8\gamma)$ on the pair. Signs follow from the \emph{negative} field/tie coefficients, not an arbitrary library choice.
+
+A portable $ZZ$ gate encodes parity:
+\begin{equation}
+ R_{ZZ}(\theta)=\operatorname{CX}_{1\to2}\,
+ (I\otimes R_Z(\theta))\,\operatorname{CX}_{1\to2}.\label{eq:cnot}
+\end{equation}
+In circuit time order, apply CX, target $R_Z$, then CX. The first CX places $x_1\oplus x_2$ in the target. Its $Z$ eigenvalue is $+1$ on even parity and $-1$ on odd parity. The rotation supplies $e^{-i\theta/2}$ to even states and $e^{+i\theta/2}$ to odd ones. The final CX restores the bits. These are exactly the eigenphases of $Z_1Z_2$.
+
+\subsection{From two qubits to the industry network}
+A cost layer needs a single-qubit $Z$ rotation per nonzero field and a pair interaction per nonzero tie. A backend may decompose and route interactions differently. An exported source-gate count is not the compiled depth, physical gate count or error budget. Since the cost is diagonal, a CPU statevector implementation updates amplitudes directly by $a_z\mapsto e^{-i\gamma E(z)}a_z$ instead of creating a dense $2^n\times2^n$ matrix.
+
+For a practical audit, apply a single field gate to $\ket0$ and $\ket1$ and compare their relative phase with $E(1)-E(0)$. Then check a tie on even and odd parity. Only after verifying those local identities is it safe to interpret a full-network histogram.
+\takeaway{Factors of two arise from rotation definitions. Sign errors are caught most transparently by comparing eigenphases, not by judging whether a plot looks plausible.}
+\subsection{One-qubit mixer: coherent amplitude arithmetic}\label{sec:mixer}
+Pauli $X$ swaps $\ket0$ and $\ket1$:
+\[
+ X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad X^2=I.
+\]
+Even powers in the exponential series sum to $\cos\beta\,I$; odd powers sum to $-i\sin\beta\,X$. Therefore
+\begin{equation}
+ e^{-i\beta X}=\cos\beta I-i\sin\beta X
+ =\begin{pmatrix}c&-is\\-is&c\end{pmatrix}=R_X(2\beta),\label{eq:mixer}
+\end{equation}
+where $c=\cos\beta,s=\sin\beta$. For normalized generic amplitudes,
+\begin{equation}
+ a_0\ket0+a_1\ket1\longmapsto
+ (ca_0-isa_1)\ket0+(ca_1-isa_0)\ket1.
+\end{equation}
+The resulting probabilities are
+\begin{align}
+ P'_0&=c^2|a_0|^2+s^2|a_1|^2-2cs\operatorname{Im}(a_0a_1^*),\\
+ P'_1&=c^2|a_1|^2+s^2|a_0|^2+2cs\operatorname{Im}(a_0a_1^*).\label{eq:cross}
+\end{align}
+The cross terms cancel in the sum, preserving norm, but generally do not vanish individually. A stochastic bit-flip mixture with probabilities $c^2,s^2$ omits them and is \emph{not} this process.
+
+If $a_0=1/\sqrt2,a_1=i/\sqrt2$ and $\beta=\pi/4$, then $P'_0=1$. A classical mixture of the equal input probabilities stays equal. Conversely, mixing $\ket+$ with no cost phase only gives $e^{-i\beta}\ket+$, since $X\ket+=\ket+$. The mixer needs useful relative phases; it is not an automatic minimizer.
+
+For $n$ qubits the standard mixer is $\bigotimes_iR_X(2\beta)$. In the two-qubit example its matrix is
+\[
+ \begin{pmatrix}
+ c^2&-ics&-ics&-s^2\\
+ -ics&c^2&-s^2&-ics\\
+ -ics&-s^2&c^2&-ics\\
+ -s^2&-ics&-ics&c^2
+ \end{pmatrix}.
+\]
+Multiplying by the four cost-layer amplitudes in Eq.~\eqref{eq:phase} turns their phases into changed probabilities. For example the output amplitude for $00$ is
+\[
+ a'_{00}=\tfrac12\left(c^2e^{5i\gamma}-ics e^{i\gamma}-ics e^{-9i\gamma}-s^2e^{3i\gamma}\right).
+\]
+Its squared magnitude contains cross terms between all four paths; it is not a weighted average of their input probabilities.
+\subsection{A complete one-qubit cost-plus-mixer toy}\label{sec:toy}
+Choose a \emph{different illustrative Hamiltonian} $H_C=Z$. Its energies are $+1$ for $\ket0$ and $-1$ for $\ket1$. In adoption notation $-hZ$ this is $h=-1$, not a positive digital-favoring field. The desired ground bit in this toy is 1.
+
+Starting from $\ket+$, cost gives
+\[
+ e^{-i\gamma Z}\ket+=\frac{e^{-i\gamma}\ket0+e^{+i\gamma}\ket1}{\sqrt2}.
+\]
+Apply the mixer. The amplitudes become
+\begin{align}
+ a_0&=\frac{\cos\beta\,e^{-i\gamma}-i\sin\beta\,e^{+i\gamma}}{\sqrt2},\\
+ a_1&=\frac{\cos\beta\,e^{+i\gamma}-i\sin\beta\,e^{-i\gamma}}{\sqrt2}.
+\end{align}
+Expanding squared magnitudes retains complex cross terms:
+\begin{align}
+ |a_0|^2&=\tfrac12\left(c^2+s^2+ics e^{-2i\gamma}-ics e^{+2i\gamma}\right)\\
+ &=\tfrac12(1+2cs\sin2\gamma)
+ =\frac{1+\sin2\beta\sin2\gamma}{2},\\
+ |a_1|^2&=\frac{1-\sin2\beta\sin2\gamma}{2}.\label{eq:toyprobs}
+\end{align}
+Expected energy is
+\begin{equation}
+ \bra\psi Z\ket\psi=P_0-P_1=\sin2\beta\sin2\gamma.
+\end{equation}
+At $\gamma=-\pi/4,\beta=\pi/4$, $P_0=0$ and $P_1=1$. Substitution gives $a_0=0,a_1=e^{-i\pi/4}$, so the final state is the ground state $\ket1$ up to a global phase.
+
+\subsection{What the toy does and does not establish}
+This proves the mechanism for one Hamiltonian and two chosen angles, not a project benchmark. Generic angles do not project onto the ground state; at $\gamma=0$ probabilities remain equal. On larger problems a low mean energy need not imply high exact-optimum probability. The bundled document check computes only this tiny toy and the four-row energy/cut table, without launching project circuits, optimization jobs or performance benchmarks.
+
+Notice also that the state was not measured after cost. Measurement then would discard the relative phase and return equal frequencies, losing the resource needed for the interference step. The outer classical loop uses repeated full circuit preparations rather than attempting to recover the phase from a single intermediate measurement.
+\subsection{Expected energy, optimization and measurement}\label{sec:outerloop}
+For $\theta=(\gamma_1,\beta_1,\ldots,\gamma_p,\beta_p)$, minimize
+\begin{equation}
+ F_p(\theta)=\bra{\psi_p(\theta)}H_C\ket{\psi_p(\theta)}
+ =\sum_zP_\theta(z)E(z).
+\end{equation}
+A saved ideal statevector gives probabilities exactly up to floating-point precision. A sampled circuit estimates them from $N$ outcomes:
+\begin{equation}
+ \widehat F_p=\frac1N\sum_{a=1}^NE(z^{(a)}),\qquad
+ \widehat P_*=\frac1N\sum_{a=1}^N\mathbf1[E(z^{(a)})=E_*].
+\end{equation}
+These estimates fluctuate. Statevector marginals are not sampled histograms. For energies in integer units, equality checks should use that representation rather than unrelated decimal tolerances.
+
+The outer loop is:
+\begin{enumerate}
+ \item Fix instance, bit mapping, depth and parameter domain.
+ \item Prepare a new state, apply every layer, and evaluate expectation (exactly or by shots).
+ \item Let a classical search compare that value with its incumbent.
+ \item Repeat for candidate angles and retain best parameters and distribution.
+ \item Report expected-energy gap, ground probability and chosen whole-string score separately.
+\end{enumerate}
+The reviewed adoption sweeps use a bounded $3\times3$ grid at $p=1$; the target study uses $5\times5$ at $p=1$ and $5^4$ at $p=2$. A small grid is a valid strategy but not a certificate of a global continuous-angle optimum. We do not substitute an unrecorded optimizer.
+
+\subsection{Do not confuse probability summaries}
+A marginal $P(x_i=0)$ sums probabilities over every configuration of the other industries. The most probable whole string need not be composed of the most probable marginal bits; marginal thresholding can even violate planning constraints. Low expected energy does not identify the best measured string. Each statistic answers a distinct question.
+
+Similarly, theoretical expressivity improvements at larger $p$ do not guarantee a monotone sequence of sampled outcomes, nor better performance under hardware noise. The original QAOA framework motivates an ansatz and parameter search; it does not establish an advantage for this particular network and grid.
+\takeaway{QAOA is a distribution-shaping procedure inside classical parameter selection, not a free exact optimization oracle.}
+\section{Strategies implemented: DQA, QAOA and classical methods}\label{sec:methods}
+\subsection{DQA follows a schedule, not free-angle QAOA}
+The annealing driver is $H_D=-\sum_iX_i$. Its ground state is $\ket+^{\otimes n}$, unlike the $+\sum X_i$ QAOA mixer whose \emph{highest}-energy state is $\ket+^{\otimes n}$. The correctly normalized interpolation is
+\begin{equation}
+ H(s)=(1-s)H_D+sH_C,\qquad s=t/T\in[0,1].\label{eq:schedule}
+\end{equation}
+Both weights are dimensionless. The cost coefficient is $t/T$, \emph{not} an unnormalized $t$.
+
+With $\Delta t=T/p$ and schedule sample $s_\ell$, a first-order cost-then-driver splitting is
+\begin{equation}
+ e^{-i\Delta tH(s_\ell)}\approx
+ e^{-i\Delta t(1-s_\ell)H_D}\,e^{-i\Delta t s_\ell H_C}.
+\end{equation}
+In the standard positive-mixer convention this has $\gamma_\ell=\Delta t s_\ell$ and $\beta_\ell=-\Delta t(1-s_\ell)$; driver gates are $R_X(-2\Delta t(1-s_\ell))$. Endpoint/midpoint sampling and factor order must also be fixed for exact reproduction. This equation explains the schedule and sign, not a recovered unlisted schedule detail.
+
+The pinned baseline is local Aer DQA: year 2033, $p=40$, normalized $T=20$, 8,000 shots, seed 20264139 \cite{views,dashboard}. It is a sampled schedule-driven circuit. The standard $p=1$ QAOA sweep instead selects free angles by expected energy and returns ideal statevector marginals. Neither should be relabeled as the other.
+
+\subsection{Methods present in the reviewed artifact set}
+\begin{description}
+ \item[Enumeration / minimum cut.] Exact references for tiny instances / nonnegative-coupling networks; degeneracy retained.
+ \item[Seeded simulated annealing (SA).] A classical stochastic heuristic, with code and local result paths in the dossier. Seeds provide reproducibility, not exactness. No unsupported SA speed/quality statistic is inferred.
+ \item[Aer DQA.] Locally simulated gate evolution followed by sampling. Depth, schedule and shot variation are limitations.
+ \item[$p=1$ statevector QAOA.] Direct complex amplitudes and exact expectation on CPU, bounded grid selection, saved yearly/region teaching artifacts \cite{views}.
+\end{description}
+A schedule may be a useful starting point for variational parameters, but the evidence does not show a new schedule-training experiment. In all cases, minimum cut provides an independent exact adoption reference for the same coefficients, not an assumed quantum target inferred from the output.
+\section{Teaching dashboard and pinned adoption artifacts}\label{sec:dashboard}
+The notebook \file{notebooks/paperflip_dashboard.ipynb} is prepared as a teaching surface for qBraid Lab \cite{dashboard}. The user runs a local Lab notebook; automated deployment verification and Lab-only edits were not recovered. No authenticated Lab platform state was newly checked.
+
+\subsection{Independent regions, cache identity and probability mass}
+The 1/2/5-region selector compares nested stable-seed synthetic scenarios. Each region is a separate 20-industry circuit with the same topology and no cross-region edges. It is not a coupled 40- or 100-qubit state. Cache keys include region, model, year and angle grid to prevent result reuse across different scenarios.
+
+A \file{configID} identifies one full bit configuration rather than an ambiguous truncated label. A fixed subset of configurations is displayed across stages. The interface reports included/omitted probability mass instead of implying visible bars sum to one, and distinguishes relative phase, amplitude, full-string probability and marginals.
+
+\fig{qaoa_p1_walkthrough_pacific_nw_2033.png}{0.91}{Original Pacific-NW 2033 $p=1$ teaching stages: uniform initialization; cost phases with unchanged probabilities; post-mixer distribution. A displayed configuration subset is not the complete state space. Source: saved adoption artifacts \cite{views}.}
+
+\subsection{Pins establish a fixed audit boundary}
+The 2033 Aer DQA pin is saved read-only evidence. Regenerating it would be a new experiment, so this report embeds the original without running circuits. The Pacific-NW 2026--2040 $p=1$ sweep is the saved $3\times3$-grid statevector study. A cached image proves an output exists, not a live service deployment or an outcome on a changed input vector.
+\subsection{Reading the original adoption views}
+\fig{qaoa_yearly_probability_pacific_nw.png}{0.85}{Saved yearly \emph{adoption} $p=1$ statevector probabilities for Pacific NW. Digital is \emph{bit 0}; this is not target selection or a calibrated adoption frequency. Source: yearly sweep \cite{views}.}
+
+\fig{dqa_2033_aer_8000_seed20264139.png}{0.90}{Original \emph{local Aer DQA} pin: 2033, $p=40$, normalized $T=20$, 8,000 shots, seed 20264139. This is not the separate 1,000-shot three-qubit qBraid run \cite{views,dashboard}.}
+
+A smooth circuit marginal is uncertainty in a variational distribution, not the physical fraction of businesses that adopted. A histogram mode is a whole sampled configuration; choosing marginally most-likely bits is a different operation. These distinctions are essential when interpreting the presentation's side-by-side maps.
+\page
+\section{Platform approaches: Classiq and qBraid}\label{sec:platform}
+\subsection{Classiq: new presentation evidence and remaining gaps}\label{sec:classiq}
+The presentation states, ``We were able to use the classiq studio creatively to create a hybrid quantum and classical circuit and run on simulated bits'' (slide 5). We inspected the rendered slide, not just extracted text. It includes a dark circuit visualization with many wires/gates and a 20-industry 2026--2040 heatmap titled ``QAOA estimated adoption probability by year.'' Slide 8 repeats that heatmap under ``classiq Simulated Data.'' This supports describing a \emph{presentation-reported Classiq Studio simulator demonstration with visual circuit evidence}.
+
+The screenshot does not expose a readable source program, synthesis settings/resource summary, job identifier, raw counts, selected angles, or a verifiable link between the pictured circuit and every heatmap cell. Thus no gate count, depth, provider, shot count or performance statistic is inferred from it. The reviewed repository/archive still contains no Classiq implementation, synthesis report or execution record. That gap is scoped to this snapshot; it is not proof that external Classiq work never occurred.
+
+The deck is therefore stronger than ``Classiq was only proposed,'' but weaker than reproducible matched-input validation. We retain the claimed demonstration, distinguish it from corroborated numerical evidence, and do not invent a Classiq synthesis or hardware result.
+
+\fig{presentation_classiq_slide05.jpg}{0.90}{User-supplied slide 5, preserved as presentation evidence: a reported Classiq Studio demonstration, circuit visualization and adoption-probability heatmap. The screenshot does not provide auditable synthesis statistics or run metadata; plotted values are not imported into the report's verified metric tables \cite{presentation}.}
+
+\subsection{qBraid: offline code versus supplied execution}
+The repository module exports OpenQASM 3/manifests and scores supplied counts; it does not authenticate, submit, poll, spend credits or launch a server \cite{qbraid}.
+
+The three-qubit Healthcare--Insurance--Pharma smoke metrics record an externally supplied completed simulator job on \file{qbraid:qbraid:sim:qir-sv}:
+\begin{center}\begin{tabular}{@{}ll@{}}\toprule
+Quantity & Saved evidence\\\midrule
+Shots & 1,000\\
+Exact-ground shots / probability & 805 / 0.805 (80.5\%)\\
+Modal and best bitstring & 111 (adoption: all paper)\\
+Exact / modal integer energy & $-6850$ / $-6850$\\
+Reported charged credits & 0\\
+Recorded creation time & November 7, 2026, 2:07:25 a.m. MST\\\bottomrule
+\end{tabular}\end{center}
+Pressure is the export's $A(2033)=0.49$, not inferred from outcomes. Job suffix is \file{450c-qjob-6aeeea4bd1eb272b3e1c97c9}; full identifier and parent-supplied provenance are in the included JSON. Zero credits is the saved charge, not a guarantee of future free usage. This is an external \emph{simulator} result, not hardware.
+\subsection{Historical 20-qubit status and comparison guardrails}
+The 2033 20-qubit DQA export has a 2,000-shot request and zero reported estimate; job suffix \file{450c-qjob-6aeeea5ad1eb272b3e1c97cf}. Its \emph{last supplied} status was RUNNING/PENDING. No raw counts, mode, energy or ground probability were recovered. No live polling was performed, so this is not a statement about current status.
+
+Its manifest lists 4,480 nonmeasurement source gates and estimated source depth 576, before provider transpilation. These are not physical-hardware resource measurements.
+
+\begin{table}[H]\centering\small
+\begin{tabularx}{\linewidth}{@{}p{0.22\linewidth}p{0.33\linewidth}X@{}}\toprule
+Component & Evidence & Correct status\\\midrule
+Exact / enumeration & Local tests/results and sources & Exact classical implementation\\
+Seeded SA & Code and local result paths & Classical heuristic\\
+20q Aer DQA & Pinned 8,000-shot local result & CPU simulator, sampled\\
+20q standard QAOA & Yearly statevector views & Ideal CPU statevector\\
+qBraid QASM / manifest & Offline exports & Prepared, not itself submission\\
+qBraid 3q & Supplied completed counts/metrics & External simulator, 80.5\% ground\\
+qBraid 20q & Historical pending/running record & No completed-result metrics\\
+Classiq & Slide claim, circuit visual, heatmap & Reported simulator; source/run gap\\
+Target QAOA & Reduced feasible-basis results & Local constrained statevector\\
+C++ scaling & Repeats, summary, metadata & Measured CPU benchmark\\\bottomrule
+\end{tabularx}\caption{Status is scoped to reviewed artifacts, not a fresh authenticated platform check.}
+\end{table}
+
+\subsection{Why prominent slide labels are not copied literally}
+Slides 6--8 use ``Quantum Hardware / QAOA'' and qBraid/Classiq comparison labels. Available artifacts establish the specific simulator/export distinctions above, not a verified hardware comparison. The qBraid image on slide 8 is explicitly titled DQA digital probability, despite QAOA terminology elsewhere. Later notes mention user-supplied Rigetti classifications but say device/job IDs, shots, classification rule and runtimes are missing. Those observations are not the qBraid smoke job.
+
+Some slide notes describe maps labeled quantum as exact classical annual states. This report follows the cautious provenance in those notes rather than treating every visual label as verification. New-vector classical scenario results do not validate earlier quantum distributions.
+\section{Quantum versus classical: measured CPU evidence}\label{sec:benchmarks}
+The benchmark family is dense and seeded, with mixed-sign fields and $J\geq0$ \cite{bench}. Its original C++ source and Python plotting script are included in \file{reproducibility/}, along with the runner, reference check, guarded extension and saved results. C++ produces measurements; Python aggregates CSVs and renders graphs. C++ exact reference uses Dinic max flow. Its comparator is ideal $p=1$ QAOA \emph{simulated on a CPU}, with a $3\times3$ grid, nine exact-expectation evaluations and no shots.
+
+Direct diagonal kernels apply $a_z\leftarrow e^{-i\gamma E(z)}a_z$. In-place $R_X$ kernels update amplitude pairs using Eq.~\eqref{eq:mixer}; they do not materialize dense unitary matrices. Energy precomputation uses a Gray-code traversal, updating one flipped spin in $O(n)$ work per state. Statevector storage nevertheless grows as $2^n$. The benchmark grid is $\gamma\in\{0.2,0.6,1.0\}$ and $\beta\in\{0.2,0.5,0.8\}$.
+
+\begin{table}[H]\centering\small
+\begin{tabular}{@{}rrrrrr@{}}\toprule
+$n$ & Repeats & Min-cut E2E (s) & QAOA E2E (s) & Energy gap & Ground $P$\\\midrule
+% Generated from metrics; audit copy: tables/benchmark_rows.tex
+4 & 3 & 2.740e-06 & 5.014e-06 & 3.28459 & 3.134e-02 \\
+6 & 3 & 3.280e-06 & 1.391e-05 & 3.59533 & 9.397e-03 \\
+8 & 3 & 4.678e-06 & 5.362e-05 & 4.93293 & 1.976e-03 \\
+10 & 3 & 8.640e-06 & 2.341e-04 & 5.81045 & 4.366e-04 \\
+12 & 3 & 9.976e-06 & 1.018e-03 & 7.86022 & 7.643e-05 \\
+14 & 3 & 1.411e-05 & 4.574e-03 & 8.64521 & 1.504e-05 \\
+16 & 3 & 2.135e-05 & 1.873e-02 & 10.39283 & 3.489e-06 \\
+18 & 3 & 2.775e-05 & 8.243e-02 & 11.36977 & 7.778e-07 \\
+20 & 3 & 4.375e-05 & 3.581e-01 & 12.16376 & 1.562e-07 \\
+22 & 2 & 7.065e-05 & 1.699e+00 & 14.01206 & 2.846e-08 \\
+24 & 1 & 6.842e-05 & 9.730e+00 & 15.37372 & 6.997e-09 \\
+26 & 1 & 7.583e-05 & 4.781e+01 & 15.52317 & 1.607e-09 \\
+\bottomrule\end{tabular}
+\caption{Every measured common size, from actual summary CSV. Timing curves sum component medians across saved repeats. The saved energy-gap statistic is median QAOA expectation minus median exact energy, not necessarily the median per-run gap. E2E is the saved end-to-end definition, not queue time.}
+\end{table}
+
+At $n=20$, median min-cut time is $43.7\,\mu$s versus 0.3581 s for CPU QAOA. At $n=26$, times are $75.8\,\mu$s and 47.8079 s. The expected-energy gap reaches 15.52317 and exact-ground probability $1.60651\times10^{-9}$. This is unfavorable for \emph{this depth, grid and family}, not a theorem about all QAOA.
+
+\subsection{Recorded machine and measurement scope}
+Metadata gives Intel Xeon processor (no finer model supplied), Linux 6.12.113+ x86\_64, g++ Ubuntu 13.3.0, one process and no OpenMP/threaded libraries. There are three repeats through 20q, two at 22q and one each at 24q/26q. Raw seeds, component timings and norms are in \file{metrics/benchmark_raw.csv}. Single repeats do not support empirical error bars.
+\page
+\subsection{Scaling limits and original empirical figures}
+\fig{runtime_empirical.png}{0.85}{Original measured CPU runtime figure. The exact classical extension reaches 8,000 variables; the statevector curve stops at 26 qubits. Neither curve measures QPU runtime \cite{bench}.}
+
+\fig{runtime_common_zoom.png}{0.78}{Original common-size CPU runtime comparison. Small timings are machine dependent, and measured statevector growth cannot be reinterpreted as provider performance \cite{bench}.}
+
+Guarded exact classical extensions complete $n=4000,6000,8000$ in 2.5284, 5.3654 and 12.1760 s end-to-end, one repeat each. At 8000, solve time is 11.6376 s and peak RSS 2,535,428 KiB. At 10000, execution stopped before solve under a 3.5 GiB memory cap, recorded peak RSS 2,968,552 KiB; it is not a completed timing.
+\page
+\subsection{Quality is independent of speed}
+\fig{qaoa_quality.png}{0.76}{Original ideal-statevector quality. Expected-energy error and ground probability answer distinct questions; both are unfavorable at the larger measured sizes for this fixed $p=1$ grid \cite{bench}.}
+
+QAOA at $n=28$ was intentionally not attempted. Complex128 amplitudes at 26q need $16\times2^{26}$ bytes (1 GiB), and float64 energies add $8\times2^{26}$ bytes (512 MiB), before overhead. This is a CPU statevector limit, not a hardware-qubit limit. No curve beyond 26q is measured.
+
+\subsection{Illustrative assumptions versus empirical curves}
+Slide 11 suggests a large-$n$ advantage from simplified operation-count expressions; slide 12 combines illustrative and empirical plots. A circuit operation count omits physical realization, shots, parameter evaluations, routing and noise. It is not comparable directly to a CPU wall time. The slide explicitly labels assumed curves normalized to 1 at $N=20$: sparse fixed-overhead QAOA gate count proportional to $N$, versus an assumed min-cut curve proportional to $N^2$. These are not measured runtime data. The composite is preserved as \file{figures/presentation_scaling_slide12.jpg}. We do not reconstruct missing points, fit a crossover, or extend the measured curve. The empirical originals/CSVs are included; the deck's illustrative figures remain in the unmodified presentation, not a newly invented dataset.
+
+\takeaway{The measurements establish a strong exact classical baseline and the cost of CPU statevector simulation. They establish neither a quantum hardware speedup nor a quality advantage.}
+\page
+\section{The oracles on ``when to sell'': a separate planning model}\label{sec:targetmodel}
+The final presentation topic asks for an outreach plan, not an adoption equilibrium. Changing the question changes the bits: $z_{ig}=1$ means \emph{select industry $i$ in region $g$}, not paper. Selection does not mean adoption has already occurred.
+
+\subsection{Eligibility, value and annual scenarios}
+Let $f_{ig}$ be a supplied flip year and $d_{ig}=f_{ig}-y$. The four-year window and value are
+\begin{equation}
+ 1\leq d_{ig}\leq4,\quad u_{ig}=\frac{5-d_{ig}}4,\quad
+ v_{ig}=8(1-r_{ig})\frac{5-d_{ig}}4.\label{eq:value}
+\end{equation}
+For $d=1,2,3,4$, urgency is $1,3/4,1/2,1/4$. Same-year/past flips and those more than four years away are excluded. Implemented eligible values are positive. Budget is 5, costs and attractiveness are one, with at most one region per industry.
+
+Regions are California, Pacific NW, Texas, Mountain West and Southwest. Input is the saved \file{target_selection_4year/quantum_flip_years.csv} under supplied-user-results, not a new forecast generated for this report \cite{target}.
+
+Each year 2026--2040 is independent: no budget carryover, previous sales state or inventory dynamics. An industry can therefore appear in several independent annual recommendations. A practical multi-year sales campaign needs a different model.
+
+\subsection{Original regional formulation}
+For eligible set $\mathcal C_y$, maximize
+\begin{equation}
+ V(z)=\sum_{(i,g)\in\mathcal C_y}v_{ig}z_{ig},\quad
+ \sum_{(i,g)\in\mathcal C_y}z_{ig}\leq5,\quad
+ \sum_{g:(i,g)\in\mathcal C_y}z_{ig}\leq1\quad\forall i.
+\end{equation}
+Slide 13 mentions connected-industry bonuses and general costs. These are wider planning ideas, \emph{not} this neutral implemented study: no pair bonuses and equal unit costs. Its 2029 California example naming Technology, Media and Telecom also differs from the saved four-year model's 2029 optimum. We use the actual metrics/recommendations rather than importing that example.
+
+The purpose of the value formula is to favor high-value industries approaching a supplied transition. It does not estimate causal sales lift. The constant 8 is a planning scale, not a verified revenue figure; resistances and predicted flip context remain assumed inputs. The meaning of an expected circuit value is therefore an average \emph{planning score}, not expected dollars.
+\subsection{Regional QUBO, slack and reduction}\label{sec:qubo}
+A mathematical penalty encoding of the original regional constraints is
+\begin{align}
+ Q(z,a)={}&-\sum_{(i,g)\in\mathcal C_y}v_{ig}z_{ig}
+ +\lambda_B\left(\sum_{(i,g)\in\mathcal C_y}z_{ig}+a-5\right)^2\notag\\
+ &+\lambda_I\sum_i\sum_{g<h}z_{ig}z_{ih}.\label{eq:qubo}
+\end{align}
+Slack $a\geq0$ absorbs unused budget. Three binary auxiliaries, e.g. $a=a_0+2a_1+4a_2$, represent all needed slacks 0--5. Larger encoded values cannot satisfy the equality and are penalized. Pairwise same-industry terms penalize selecting two regions for one industry.
+
+This explains penalties mathematically, not a new penalty-tuning experiment or recovered choice of constants. Penalties must exceed any gain from violations. Choosing each minimum violation penalty larger than $\sum v_{ig}$ is a conservative sufficient positive-value bound. Expanding squares with $z^2=z$ gives a QUBO; substituting $z=(I-Z)/2$ gives a diagonal Ising operator plus a constant.
+
+The regional formulation has 75 candidates in 2031--2032, or 78 variables including auxiliaries. The actual QAOA study does \emph{not} simulate a $2^{78}$ state. It exploits structure \cite{target}.
+
+\subsection{Objective-equivalent industry reduction}
+Define each industry's best value and tied-best region set:
+\begin{equation}
+ v_i=\max_{g:(i,g)\in\mathcal C_y}v_{ig},\qquad
+ G_i^*=\operatorname*{arg\,max}_{g:(i,g)\in\mathcal C_y}v_{ig}.
+\end{equation}
+With equal costs, no interaction bonuses and no region quotas, replacing any selected region by a best region for the same industry cannot hurt feasibility or value. Thus the optimal value equals that of selecting industries with values $v_i$, then mapping each to any $g\in G_i^*$.
+
+Positive values imply $k=\min(5,n_{\rm eligible})$. Sorting descending and taking top $k$ is exact: if a selected industry's value is smaller than an unselected one's, swapping them increases value at equal cost. Repeating removes all inversions. Equal-value swaps explain tied optimal industry sets.
+
+This preserves the optimum objective, \emph{not} the original QUBO distribution, slack multiplicities or regional marginals. The saved industry distribution cannot be called a regional quantum distribution. ``Greedy'' and exact top-$k$ are identical here, not independent baselines.
+\section{Constrained target QAOA: feasible by construction}\label{sec:targetqaoa}
+\subsection{Initialization and phase}
+The actual statevector uses industry bits $b_i$ with exactly $k$ selected:
+\begin{equation}
+ \mathcal F_k=\{b\in\{0,1\}^n:\sum_i b_i=k\},\quad D=\binom nk,\quad
+ \ket{\psi_0^{\rm F}}=\frac1{\sqrt D}\sum_{b\in\mathcal F_k}\ket b.
+\end{equation}
+The simulator directly allocates this reduced basis. That is not evidence of a physically compiled preparation circuit for the uniform feasible state. With $V(b)=\sum_i v_i b_i$ and $H_C=-V$, cost applies
+\begin{equation}
+ a_b\longmapsto e^{+i\gamma V(b)}a_b.
+\end{equation}
+The exponent is positive because maximizing value means minimizing negative value, not because the unitary convention changed.
+
+\subsection{XY pair rotations preserve cardinality}
+For each industry pair use
+\begin{equation}
+ G_{ij}(\beta)=\exp[-i\beta(X_iX_j+Y_iY_j)/2].
+\end{equation}
+The generator annihilates $\ket{00},\ket{11}$ and swaps $\ket{01},\ket{10}$. On that block it is $X$, so
+\begin{align}
+ \ket{01}&\mapsto\cos\beta\ket{01}-i\sin\beta\ket{10},\\
+ \ket{10}&\mapsto\cos\beta\ket{10}-i\sin\beta\ket{01}.
+\end{align}
+No transition creates or destroys a selected bit. Each gate commutes with $N=\sum_i(I-Z_i)/2$, as does their product. Feasibility therefore holds at every layer.
+
+The implemented mixer is a \emph{fixed-order product},
+\begin{equation}
+ U_{\rm XY}(\beta)=G_{i_mj_m}(\beta)\cdots G_{i_1j_1}(\beta),
+\end{equation}
+where pair 1 acts first. Overlapping pair generators generally do not commute. This is not generally the exact exponential of a global summed XY Hamiltonian. Pair order is part of the ansatz and must be preserved.
+
+Reported feasibility mass is one by basis construction (floating-point roundoff aside), not by postselection, filtering or repair. Results are raw ideal reduced-statevector probabilities, not sampled counts or repaired plans. This is a constrained alternating-operator/product-formula ansatz, distinct from adoption's unconstrained $X$ mixer.
+\subsection{Search budgets and all yearly expected values}\label{sec:targetmetrics}
+The $p=1$ grid has 25 evaluations per eligible year; $p=2$ uses four angles and 625 evaluations. The $p=1$ result is retained as an identity-second-layer incumbent ($\gamma_2=\beta_2=0$), so selected $p=2$ expectation cannot be worse in exact arithmetic. Neither grid proves a continuous-parameter optimum.
+
+\begin{table}[H]\centering\small
+\begin{tabular}{@{}rrrrrrr@{}}\toprule
+Year & $n,k,D$ & Exact & Uniform & $p=1$ mean & $p=2$ mean & $p=2$ gap\\\midrule
+% Generated from metrics; audit copy: tables/target_expected_rows.tex
+2026 & 3,3,1 & 9.8000 & 9.8000 & 9.8000 & 9.8000 & 0.0000 \\
+2027 & 5,5,1 & 17.4000 & 17.4000 & 17.4000 & 17.4000 & 0.0000 \\
+2028 & 5,5,1 & 25.0000 & 25.0000 & 25.0000 & 25.0000 & 0.0000 \\
+2029 & 6,5,6 & 11.2000 & 9.8333 & 10.4535 & 10.4535 & 0.7465 \\
+2030 & 17,5,6188 & 17.0000 & 7.5882 & 8.6206 & 12.4968 & 4.5032 \\
+2031 & 15,5,3003 & 13.5000 & 8.7667 & 9.3003 & 10.2407 & 3.2593 \\
+2032 & 15,5,3003 & 18.7000 & 12.5333 & 13.4054 & 14.8170 & 3.8830 \\
+2033 & 12,5,792 & 18.4000 & 13.6667 & 14.4143 & 15.3692 & 3.0308 \\
+2034 & 12,5,792 & 18.4000 & 13.6667 & 14.4143 & 15.3692 & 3.0308 \\
+2035--2040 & 0,0,0 & --- & --- & --- & --- & --- \\
+\bottomrule\end{tabular}
+\caption{Full expected-value comparison rounded from saved CSVs. 2035--2040 have no eligible candidates and no circuit result, not failed zero-value runs.}
+\end{table}
+
+\begin{table}[H]\centering\small
+\begin{tabular}{@{}rrrrrrr@{}}\toprule
+Year & $p=1$ gap & $p=1$ ratio & $p=2$ ratio & $p=1$ opt. $P$ & $p=2$ opt. $P$ & $p=2$ sec\\\midrule
+% Generated from metrics; audit copy: tables/target_quality_rows.tex
+2026 & 0.0000 & 1.0000 & 1.0000 & 1.000000 & 1.000000 & 0.0354 \\
+2027 & 0.0000 & 1.0000 & 1.0000 & 1.000000 & 1.000000 & 0.0754 \\
+2028 & 0.0000 & 1.0000 & 1.0000 & 1.000000 & 1.000000 & 0.0753 \\
+2029 & 0.7465 & 0.9333 & 0.9333 & 0.473644 & 0.473644 & 0.1429 \\
+2030 & 8.3794 & 0.5071 & 0.7351 & 0.000270 & 0.002451 & 4.2929 \\
+2031 & 4.1997 & 0.6889 & 0.7586 & 0.000823 & 0.001025 & 2.3179 \\
+2032 & 5.2946 & 0.7169 & 0.7924 & 0.001031 & 0.002079 & 2.3161 \\
+2033 & 3.9857 & 0.7834 & 0.8353 & 0.000832 & 0.005227 & 0.8170 \\
+2034 & 3.9857 & 0.7834 & 0.8353 & 0.000832 & 0.005227 & 0.8123 \\
+2035--2040 & --- & --- & --- & --- & --- & --- \\
+\bottomrule\end{tabular}
+\caption{Ratio is mean value divided by exact optimum. Optimum probability sums all optimal industry strings. Times are saved local optimizer times, not hardware. Roundoff near $10^{-14}$ is displayed as zero.}
+\end{table}
+
+For uniform feasible initialization, $P(b_i=1)=k/n$, so $\E[V]=(k/n)\sum_i v_i$. This is the right baseline for the constrained ansatz, not uniform over all $2^n$ strings including infeasible ones. The full angle choices, feasibility mass and marginal sums are preserved in the bundled CSVs.
+\subsection{Whole plans, MAP and nontrivial years}\label{sec:targetmap}
+\begin{table}[H]\centering
+\begin{tabular}{@{}rrrrr@{}}\toprule
+Year & $p=2$ MAP value & MAP gap & MAP probability & Optimum probability\\\midrule
+% Generated from metrics; audit copy: tables/target_map_rows.tex
+2026 & 9.8000 & 0.0000 & 1.000000 & 1.000000 \\
+2027 & 17.4000 & 0.0000 & 1.000000 & 1.000000 \\
+2028 & 25.0000 & 0.0000 & 1.000000 & 1.000000 \\
+2029 & 11.2000 & 0.0000 & 0.473644 & 0.473644 \\
+2030 & 14.1000 & 2.9000 & 0.012904 & 0.002451 \\
+2031 & 11.0000 & 2.5000 & 0.031054 & 0.001025 \\
+2032 & 15.4000 & 3.3000 & 0.029514 & 0.002079 \\
+2033 & 16.4000 & 2.0000 & 0.076540 & 0.005227 \\
+2034 & 16.4000 & 2.0000 & 0.076540 & 0.005227 \\
+2035--2040 & --- & --- & --- & --- \\
+\bottomrule\end{tabular}
+\caption{The most probable single feasible string is not necessarily optimal. These are exact reduced-statevector probabilities, not samples.}
+\end{table}
+
+\textbf{2026--2028 are structurally trivial.} Each has $n=k$ and $D=1$: the only feasible plan selects all eligible industries. Ratio and optimum probability are one before useful optimization. These rows do not show a search advantage.
+
+\textbf{2029 has six feasible plans.} Mean is 10.4535 at both depths versus exact 11.2. MAP is optimal but has only 47.3644\% probability. An optimal recommendation and a distribution supported entirely on optimal plans are different claims.
+
+\textbf{2030 is the largest instructive case.} For $n=17,k=5,D=6188$, uniform mean is 7.5882, $p=1$ mean 8.6206, $p=2$ mean 12.4968. The ratio improves from 0.5071 to 0.7351, but exact remains 17.0. The $p=2$ MAP has value 14.1, gap 2.9, probability 0.0129044; optimum probability is only 0.00245091. Saved selected angles are $(\gamma_1,\beta_1,\gamma_2,\beta_2)=(0.35,0.0875,0,0.175)$. Although its second cost phase is zero, the second mixer is nonzero: this is not the identity-second-layer incumbent. Extra fixed-order pair products can matter because overlapping pair rotations do not commute. Marginals cannot turn this into an exact solution.
+
+\textbf{2031--2034 remain approximate.} Mean improves at $p=2$, but MAP gaps are 2.5, 3.3, 2.0 and 2.0. Identical 2033/2034 industry distributions reflect matching reduced values; their tied-best regional mappings differ. Equal industry marginals do not imply identical regional recommendations.
+
+\textbf{2035--2040 are intentionally empty.} No targets meet the input/window condition. The CSV's basis dimension zero is a no-run sentinel. Mathematically one could represent the empty plan with a one-dimensional $n=k=0$ basis; that does not make these missing metrics completed circuit runs.
+\subsection{Blue target heatmaps: read the legend first}\label{sec:heatmaps}
+\fig{target_classical_over_adoption_context_detail.png}{1}{Enlarged crop of the original exact target map (full original included): cells encode selected industry bits, not adoption. Black $\times$ marks are the exact reference. White marks give Pacific-NW adoption-flip context even though eligible targets span five regions \cite{target}.}
+
+\fig{target_p2_over_adoption_context_detail.png}{1}{Enlarged crop of original $p=2$ industry-selection marginals (full original included), on the same 0--1 blue scale. The identical black $\times$ mask is the \emph{exact classical reference}, not QAOA MAP. Pale blue also denotes ineligible/no-target context and is not automatically measured probability zero \cite{target}.}
+
+Only the right-hand annotation block and tiny footer were cropped for enlargement; chart values, axes and colorbar are unchanged, and the captions carry the legend. The aligned pair is included as \file{figures/target_classical_vs_p2_over_adoption_context.png}. Individual panels keep labels readable at report scale. Having exact-reference crosses in both panels does not mean QAOA returned the exact plan.
+
+High blue probability means this circuit favors assigning an outreach slot under assumed values. It is not a fraction of customers adopting, a sales-conversion rate, or the earlier adoption marginal $P(x_i=0)$. These are \emph{selection} cells with bit 1 meaning selected.
+\subsection{Recommendations, regional ties and decision use}\label{sec:recommend}
+The saved \file{metrics/target_p2_yearly_recommendations.csv} is the plan-level companion to the heatmaps. It contains value, tied-best regions, exact representative flag, $p=2$ marginal, MAP membership, and MAP joint probability/value/gap.
+
+In 2030 the exact set is Energy, Hospitality, Logistics, Manufacturing and Retail (17.0). The $p=2$ MAP is Accounting, Agriculture, Banking, Hospitality and Retail (14.1). Its inclusion marginals are not an optimality certificate; the whole plan must be scored.
+
+In 2033--2034 the exact set is Accounting, Banking, Education, Insurance and Pharma (18.4). The $p=2$ MAP is Accounting, Agriculture, Banking, Construction and Education (16.4). In 2033 Agriculture's best region is Pacific NW and many others tie California/Pacific NW. In 2034 best mappings shift to Texas, Mountain West and Southwest. Tied lists mean alternative best choices, \emph{not} selecting all listed regions for one unit of cost.
+
+\subsection{Marginals are not a joint recommendation}
+Because every basis string has $k$ ones, $\sum_i m_i=k$ to roundoff. Thresholding $m_i>1/2$ need not produce $k$ industries. Even choosing the $k$ largest marginals need not recover the MAP string or maximum-value plan: correlations matter. Saved MAP flags describe an actual feasible whole basis string and have a calculable score.
+
+The saved \file{exact_tied_industry_plans} count is 1 in every eligible year. This does not make full regional plans unique: a fixed industry set can have many tied-best regional mappings. The reduction keeps those ties and intentionally does not invent regional QAOA probabilities.
+
+\subsection{A defensible practical role}
+Exact top-$k$ is the decision baseline under these neutral assumptions; the circuit is an educational comparator. Unequal acquisition costs, region capacity, interaction bonuses, carryover and uncertain forecasts could make a richer future model. They would break the easy reduction and require fresh feasibility arguments and experiments. These are proposals, not results already established by the saved metrics.
+\section{Conclusions, limitations and acknowledgements}\label{sec:conclusion}
+The project offers a coherent path from collective adoption modeling to exact classical optimization and circuit probability shaping. Cost marks energies as phases; an $X$ mixer converts relative phases to probabilities. Constrained target QAOA instead uses number-preserving XY pair products within a feasible basis.
+
+\subsection{Contributions judges can credit without overclaiming}
+\begin{enumerate}
+ \item Explicit digital/paper signs, an exact cut reduction and degeneracy-aware summaries.
+ \item A teaching dashboard separating preparation, phase and mixing, with mass accounting and stable configuration identities.
+ \item Saved local DQA/QAOA, portable QASM/manifests, a scored external three-qubit simulator run, and a presentation-reported Classiq demonstration.
+ \item Measured CPU evidence exposing statevector costs against a strong exact classical baseline.
+ \item A justified planning reduction, constrained ansatz, full annual metrics and feasible whole-plan recommendations.
+\end{enumerate}
+
+\subsection{Limits and missing evidence}
+Inputs/proxies are not calibrated forecasts. The deck's later blended-input 100-node classical story is not the independent 20q dashboard experiment. Classiq visuals lack recovered source/synthesis/job metadata. The 20q qBraid result has no counts; no platform state was newly checked. Hardware labels are not established by the simulator evidence. Coarse grids, shallow depth, ideal statevectors and one-repeat large-size timings restrict interpretation.
+
+Target planning assumes independent years, unit costs, positive values and no bonuses; its reduced industry distribution is not a full regional quantum distribution. Feasible-basis simulation is not a demonstrated physical preparation circuit. Credible future hardware comparisons need matched inputs, raw counts, compiled circuits, device/job identifiers, shot counts, optimizer budgets, noise context and comparable end-to-end times. None was newly generated here.
+
+\subsection{Acknowledgements}
+Following the presentation, the team thanks Vasion for the challenge, and qBraid and Classiq for software/support and presentation-reported credits. This does not establish a particular spend. The sole verified saved charged-credit entry in this archive is zero for the three-qubit qBraid simulator job.
+\takeaway{The defensible accomplishment is an interpretable computational study and tutorial, not demonstrated quantum advantage or a validated sales prediction system.}
+\page
+\appendix
+\section{Reproduction and environment}\label{sec:reproduce}
+\subsection{Build the report only}
+Run \file{./build.sh} or \file{make} in the source directory. The script uses latexmk, pdflatex/bibtex, or Tectonic. First-use Tectonic can download public TeX support files. Figures and bibliography are local. Compilation does not run repository code or call providers.
+\begin{lstlisting}[language=bash]
+./build.sh
+python3 checks/verify_examples.py  # tiny illustrative algebra only
+pdfinfo IQC_Paper_Phase_Transition_Report.pdf
+\end{lstlisting}
+
+\subsection{Optional project reproduction: not executed here}
+These are the dossier's commands for an \emph{existing checkout at the cited commit}. This deliverable is not a checkout. No repository was cloned or modified during report authoring. Installing dependencies/tests can be costly; target tests may evaluate CPU statevectors. Commands document reproduction, not automatic job submission.
+\begin{lstlisting}[language=bash]
+cd cayman
+python3 -m venv .venv
+.venv/bin/pip install -e '.[dev,quantum,dashboard]'
+PYTHONPATH=src .venv/bin/python -m pytest -q
+.venv/bin/python scripts/build_dashboard_notebook.py
+# OPTIONAL local CPU statevector work, potentially expensive:
+.venv/bin/python target_qaoa/run_constrained_target_qaoa.py --test
+.venv/bin/python target_qaoa/run_p2_target_qaoa_overlay.py --test
+# Render already saved results only:
+.venv/bin/python target_qaoa/run_p2_target_qaoa_overlay.py --render-only
+# Offline export and scoring; no submission or polling:
+.venv/bin/python -m paperflip.cli export-qbraid --config configs/one_region.yaml --year 2033 --artifacts-dir artifacts
+.venv/bin/python -m paperflip.cli score-qbraid --manifest artifacts/qbraid_dqa_2033_3q_smoke.manifest.json --counts artifacts/qbraid_runs/smoke_3q_counts.json
+\end{lstlisting}
+The newly included original benchmark sources provide the exact build command below. In a scratch copy of \file{reproducibility/}, plotting existing CSVs needs Python/Matplotlib only; the full runner also needs NumPy/Qiskit and starts expensive measurements. All commands below are optional and were \emph{not executed} for this report. The guarded extension is Linux-specific. See \file{reproducibility/README_REPORT.md} for provenance, dependencies and output-overwrite cautions.
+\begin{lstlisting}[language=bash]
+cd reproducibility  # preferably a scratch copy
+# Plot saved CSVs only (writes figures/summary, no benchmarks):
+python3 plot_results.py
+# OPTIONAL build; does not itself run a benchmark:
+g++ -O3 -std=c++20 -DNDEBUG ising_benchmark.cpp -o ising_benchmark
+# OPTIONAL EXPENSIVE: tests + CPU benchmarks + rendering:
+PYTHON_BIN=python3 bash run_benchmark.sh
+\end{lstlisting}
+Report-build checks are recorded in \file{checks/QUALITY_ASSURANCE.md}. Historical compiler metadata are supplied; no Python package version lock was recovered.
+\page
+\section{Source and artifact index}\label{sec:index}
+\small
+\begin{longtable}{@{}p{0.37\linewidth}p{0.58\linewidth}@{}}\toprule
+Local input & Original role / repository location\\\midrule\endhead
+\file{metrics/benchmark_raw.csv} & Raw repeats from \file{cayman/benchmarks/results/}; seeds, component timings, norms.\\
+\file{metrics/benchmark_summary.csv} & Saved median runtime/quality, including classical 4000/6000/8000 extensions.\\
+\file{metrics/classical_extension.csv} & Guarded run records, RSS, cap and 10000 stop status.\\
+\file{metrics/machine_metadata.json} & CPU/compiler/kernel/thread policy.\\
+\file{metrics/qbraid_3q_verified_metrics.json} & Copy of \file{artifacts/qbraid_runs/smoke_3q_verified_metrics.json}; supplied counts scored offline.\\
+\file{metrics/target_p1_yearly_metrics.csv} & \file{results/target_selection_qaoa_4year/yearly_metrics.csv}.\\
+\file{metrics/target_p2_yearly_metrics.csv} & \file{results/target_selection_qaoa_p2_4year/yearly_metrics.csv}.\\
+\file{metrics/target_p2_yearly_recommendations.csv} & Same $p=2$ directory, \file{yearly_recommendations.csv}; region ties/MAP flags.\\
+\file{figures/qaoa_p1_walkthrough_pacific_nw_2033.png} & Original teaching stages under \file{cayman/artifacts/}.\\
+\file{figures/qaoa_yearly_probability_pacific_nw.png} & Original adoption marginals under \file{cayman/artifacts/}.\\
+\file{figures/dqa_2033_aer_8000_seed20264139.png} & Original Aer histogram under \file{artifacts/dashboard_pins/}.\\
+\file{figures/runtime_empirical.png}, \file{runtime_common_zoom.png}, \file{qaoa_quality.png} & Original C++ empirical figures under \file{benchmarks/results/}.\\
+\file{figures/target_classical_over_adoption_context.png}, \file{target_p2_over_adoption_context.png}, \file{target_classical_vs_p2_over_adoption_context.png} & Original blue target figures under \file{results/target_selection_qaoa_p2_4year/}.\\
+\file{tables/*.tex} & Formatted from included CSVs by \file{checks/generate_tables.py}.\\
+\file{presentation-extract.md}, \file{PRESENTATION_MAPPING.md} & User-supplied slide text/notes and evidence-aware mapping.\\
+\file{checks/verify_examples.py}, \file{algebra-checks.json} & Tiny illustrative algebra checks, not repository tests.\\\bottomrule
+\end{longtable}\normalsize
+This package is a report source bundle, not the entire repository. Raw target statevectors, all QASM/manifests and raw qBraid counts are not bundled; their repository paths are provenance pointers. Original figures are unmodified (enlargement crops are separate files). Actual benchmark source copies, exact build/plot instructions and saved CSVs are under \file{reproducibility/}; their immutable URLs/hashes are recorded in \file{SOURCE_PROVENANCE.json}. Included metrics make every numerical table auditable offline. The original deck remains unchanged; the local extract and mapping are structural reference material.
+\page
+\section{Presentation-to-report mapping and discrepancies}\label{sec:mapping}
+The 15-slide presentation \cite{presentation} progresses from introduction/data through QAOA, Classiq/qBraid, classical comparisons/advantage, target-selection oracles and acknowledgements. This report follows that order, adding exact-method foundations and detailed derivations. No slide was edited.
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}r p{0.43\linewidth}X@{}}\toprule
+Slide & Presentation topic & Report location\\\midrule
+1 & Quantum Approaches to the Paper Phase Transition & Title / Section~\ref{sec:scope}\\
+2 & Introduction to the Problem & Section~\ref{sec:problem}\\
+3 & Data / Model & Sections~\ref{sec:problem}--\ref{sec:ising}\\
+4 & QAOA & Section~\ref{sec:qaoa}, full worked algebra\\
+5 & Getting Some Results with classiq! & Section~\ref{sec:classiq}, evidence-qualified\\
+6 & Quantum Results with qBraid & Section~\ref{sec:platform}\\
+7--8 & Quantum vs Classical: 20 nodes & Sections~\ref{sec:dashboard}, \ref{sec:platform}\\
+9 & 100-node classical: improved data & Section~\ref{sec:problem}, notes below\\
+10 & Story: the new 20-industry model & Scenario qualifications below\\
+11--12 & Quantum Advantage? & Section~\ref{sec:benchmarks}\\
+13 & The Oracles on ``When Vasion Should Sell'' & Section~\ref{sec:targetmodel}\\
+14 & The Oracles ... -- QAOA! & Section~\ref{sec:targetqaoa}\\
+15 & Acknowledgements & Section~\ref{sec:conclusion}\\\bottomrule
+\end{tabularx}\end{center}
+
+\subsection{New classical scenario: presentation-reported only}
+Notes report the revised 20-node proxy vector has 3 first digital transitions in 2029, 1 in 2033, 6 in 2034 and 10 in 2035: Technology/Media/Telecom first, Accounting next, then finance/partners. The separate 100-node classical scenario reports 15 in 2028, 16 in 2033, 39 in 2034 and 30 in 2035. Underlying newly named JSON result files are not in this archive and were not rerun. Notes explicitly say these are not calibrated forecasts and no quantum execution on the revised vector was supplied. We do not use this story to validate the older simulator results.
+
+\subsection{Discrepancies kept visible}
+Hardware/QAOA labels conflict with notes describing exact classical maps and with saved DQA/simulator provenance. Slide 5 adds a reported Classiq circuit demonstration but no readable synthesis/run metadata. Slide 13's bonuses and 2029 California example do not match the neutral four-year results. Conceptual large-$n$ advantage is not measured advantage. The deck's coupled classical regional model is not the dashboard's independent regional circuits. See \file{PRESENTATION_MAPPING.md} for the screenshot-specific inspection and complete outline.
+\page
+\bibliographystyle{unsrt}
+\bibliography{references}
+\end{document}

@@ -1,0 +1,17 @@
+{
+  "checks_passed": true,
+  "target_years": 15,
+  "eligible_target_years": 9,
+  "no_eligible_years": 6,
+  "qbraid_ground_fraction": 0.805,
+  "metric_sha256": {
+    "benchmark_raw.csv": "a22c264f95db8fb149e35196c8050554c4f3705db41180ca39c97df862d8b965",
+    "benchmark_summary.csv": "eeaa9d99ea0bc94dd60694329aa927c8f8ef6fcb18d2e4a68e06552a301eeebe",
+    "classical_extension.csv": "573c8aad9f7a9bd3324b0311831577676721de7fdc4bd674d13910ab8d11167d",
+    "machine_metadata.json": "125ef968b2a13111c8341a9a52690e02306557f05bd911420b6c7c6d92ca27c9",
+    "qbraid_3q_verified_metrics.json": "819f64e5cdcc9f4326d84df42c7694d4e8c5023b7c8cf36ba549f0d7fbb48433",
+    "target_p1_yearly_metrics.csv": "d7836b4afcf40eb14e7e442d44e95a8c0d54321fd62c2f3295ada25816937aee",
+    "target_p2_yearly_metrics.csv": "85886ac91a11eca951f588a7d6f1d2a1b50df5e5ce1d22c3acccde134a01e7e0",
+    "target_p2_yearly_recommendations.csv": "3911fbe67279571bf587d51f777787025725a5b5f7c0682cb0fbad5d08123f33"
+  }
+}

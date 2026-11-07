@@ -8,6 +8,18 @@ not empirical forecasts**.
 > The Git branch is authoritative; `artifacts/paperflip_qbraid_lab_dashboard_bundle.zip`
 > is a convenience preview/handoff and is not a standalone source checkout.
 
+## Final report
+
+The self-contained 31-page final report is
+[`report/IQC_Paper_Phase_Transition_Report.pdf`](report/IQC_Paper_Phase_Transition_Report.pdf).
+Editable LaTeX is in [`report/main.tex`](report/main.tex), with figures,
+metrics, bibliography, validation checks, presentation mapping, and
+reproducibility sources in [`report/`](report/). The original supplied source
+bundle is retained as
+[`report/IQC_Report_Source_Figures_Bib.zip`](report/IQC_Report_Source_Figures_Bib.zip)
+without recursive inclusion. See [`report/README.md`](report/README.md) for
+document-only build/check commands and scope cautions.
+
 ## One-command reproduction
 
 ```bash

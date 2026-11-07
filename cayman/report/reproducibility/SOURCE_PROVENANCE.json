@@ -1,0 +1,37 @@
+{
+  "commit": "e02f5fba57be8279aadc7f0ed7c597a61271f102",
+  "files": {
+    "ising_benchmark.cpp": {
+      "immutable_source": "https://raw.githubusercontent.com/caymanq/iqc-competition/e02f5fba57be8279aadc7f0ed7c597a61271f102/cayman/benchmarks/ising_benchmark.cpp",
+      "retrieval": "Narrow immutable GitHub file read via sanctioned connector; transport wrapper removed; terminal newline normalized",
+      "sha256": "1cf821875f1b768686994426791527f8971f57bd3c21e5943a04803f16145a2e"
+    },
+    "plot_results.py": {
+      "immutable_source": "https://raw.githubusercontent.com/caymanq/iqc-competition/e02f5fba57be8279aadc7f0ed7c597a61271f102/cayman/benchmarks/plot_results.py",
+      "retrieval": "Narrow immutable GitHub file read via sanctioned connector; transport wrapper removed; terminal newline normalized",
+      "sha256": "8602d4ef76a80a588a1b5193dae7d710f760b99cc72bcdaa1633965119e477a5"
+    },
+    "run_benchmark.sh": {
+      "immutable_source": "https://raw.githubusercontent.com/caymanq/iqc-competition/e02f5fba57be8279aadc7f0ed7c597a61271f102/cayman/benchmarks/run_benchmark.sh",
+      "retrieval": "Narrow immutable GitHub file read via sanctioned connector; transport wrapper removed; terminal newline normalized",
+      "sha256": "6546ac453250c022dc91873ba29f0da9d4aca26853b16ee8c0369b839c134887"
+    },
+    "README_ORIGINAL.md": {
+      "immutable_source": "https://raw.githubusercontent.com/caymanq/iqc-competition/e02f5fba57be8279aadc7f0ed7c597a61271f102/cayman/benchmarks/README.md",
+      "retrieval": "Narrow immutable GitHub file read via sanctioned connector; transport wrapper removed; terminal newline normalized",
+      "sha256": "135d5f30b40051514cbd6185edf4a0615235bcdaf2f349a182a3abea346c3218"
+    },
+    "qaoa_python_reference_check.py": {
+      "immutable_source": "https://raw.githubusercontent.com/caymanq/iqc-competition/e02f5fba57be8279aadc7f0ed7c597a61271f102/cayman/benchmarks/qaoa_python_reference_check.py",
+      "retrieval": "Narrow immutable GitHub file read via sanctioned connector; transport wrapper removed; terminal newline normalized",
+      "sha256": "f4e85e71c6c5321f403dba65214c7a9c6c133e053fccab3d14c7f58d3e57ec2c"
+    },
+    "extend_classical.py": {
+      "immutable_source": "https://raw.githubusercontent.com/caymanq/iqc-competition/e02f5fba57be8279aadc7f0ed7c597a61271f102/cayman/benchmarks/extend_classical.py",
+      "retrieval": "Narrow immutable GitHub file read via sanctioned connector; transport wrapper removed; terminal newline normalized",
+      "sha256": "f48c25f392fb95c2a986c7fa95c4cb0409352dc0573b7f0b851b42085c773070"
+    }
+  },
+  "new_benchmarks_executed": false,
+  "source_compilation_executed": false
+}

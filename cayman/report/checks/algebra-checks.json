@@ -1,0 +1,27 @@
+{
+  "illustrative_not_empirical": true,
+  "two_qubit_rows": [
+    {
+      "bits": "00",
+      "energy": -5,
+      "cut": 4
+    },
+    {
+      "bits": "01",
+      "energy": -1,
+      "cut": 8
+    },
+    {
+      "bits": "10",
+      "energy": 9,
+      "cut": 18
+    },
+    {
+      "bits": "11",
+      "energy": -3,
+      "cut": 6
+    }
+  ],
+  "toy_probability_max_error": 2.220446049250313e-16,
+  "toy_ground_probability": 0.9999999999999998
+}

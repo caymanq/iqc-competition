@@ -1,0 +1,5 @@
+# Plot-only: matplotlib. Full original runner's reference check: numpy + qiskit.
+# No historical Python package lock was supplied; these names are not pinned versions.
+matplotlib
+numpy
+qiskit
