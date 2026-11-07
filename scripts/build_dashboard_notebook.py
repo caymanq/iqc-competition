@@ -42,6 +42,7 @@ import itertools, json, threading
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
+from matplotlib.patches import Patch
 import ipywidgets as W
 from IPython.display import display, Markdown, HTML, clear_output
 
@@ -542,6 +543,20 @@ def activate_region_on_first_display(change=None):
 dashboard_tabs.observe(activate_region_on_first_display, "selected_index")
 activate_region_on_first_display()
 if os.environ.get("PAPERFLIP_DASHBOARD_SMOKE") == "1":
+    # A widget Output can capture a callback exception without failing the
+    # notebook cell. Render each tab in this fresh kernel and reject both
+    # structured error outputs and textual tracebacks.
+    def assert_output_clean(label, output):
+        errors = [
+            item for item in output.outputs
+            if item.get("output_type") == "error"
+            or "Traceback" in item.get("text", "")
+        ]
+        assert not errors, f"{label} widget output contains rendering errors: {errors}"
+
+    for tab in range(len(dashboard_tabs.children)):
+        dashboard_tabs.selected_index = tab
+    render_full()  # direct Section 2 first-render/legend regression
     original_pressure = tiny_pressure.value
     tiny_pressure.value = round(original_pressure + .01, 2)
     tiny_pressure.value = original_pressure
@@ -556,8 +571,13 @@ if os.environ.get("PAPERFLIP_DASHBOARD_SMOKE") == "1":
     dashboard_tabs.selected_index = 3
     landscape_resolution.value = 3
     dashboard_tabs.selected_index = 0
+    for label, output in [
+        ("tiny", tiny_out), ("full-network", full_out), ("quantum", quantum_out),
+        ("regions", region_out), ("landscape", landscape_out),
+    ]:
+        assert_output_clean(label, output)
     assert "cache" in QCACHE["source_label"].lower()
-    print("Widget callbacks exercised: tiny, full-network, cache-staleness, and independent-region views.")"""),
+    print("Widget callbacks and all tab first activations passed without Output-captured rendering errors.")"""),
     ]
     OUT.parent.mkdir(parents=True, exist_ok=True)
     nbf.write(nb, OUT)
