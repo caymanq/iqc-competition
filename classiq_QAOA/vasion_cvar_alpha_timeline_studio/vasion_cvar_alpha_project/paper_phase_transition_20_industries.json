@@ -1,0 +1,334 @@
+{
+  "title": "Paper Phase Transition \u2014 20 Industry, One Region",
+  "source": "Vasion IQC 2026 user-supplied README, starting network",
+  "encoding": {
+    "qbit_zero": "paper",
+    "qbit_one": "digital",
+    "spin": "s=2*b-1 = -Z",
+    "qbit_order": "qubit_index ascending; reverse display bitstrings if printed MSB-first"
+  },
+  "years": {
+    "start": 2026,
+    "end": 2040,
+    "pressure": "A(year)=0.07*(year-2026)"
+  },
+  "coupling_multiplier": 0.15,
+  "industries": [
+    {
+      "id": 0,
+      "name": "Technology",
+      "resistance": 0.1
+    },
+    {
+      "id": 1,
+      "name": "Media",
+      "resistance": 0.2
+    },
+    {
+      "id": 2,
+      "name": "Telecom",
+      "resistance": 0.25
+    },
+    {
+      "id": 3,
+      "name": "Retail",
+      "resistance": 0.3
+    },
+    {
+      "id": 4,
+      "name": "Hospitality",
+      "resistance": 0.35
+    },
+    {
+      "id": 5,
+      "name": "Logistics",
+      "resistance": 0.4
+    },
+    {
+      "id": 6,
+      "name": "Banking",
+      "resistance": 0.45
+    },
+    {
+      "id": 7,
+      "name": "Accounting",
+      "resistance": 0.5
+    },
+    {
+      "id": 8,
+      "name": "Manufacturing",
+      "resistance": 0.5
+    },
+    {
+      "id": 9,
+      "name": "Insurance",
+      "resistance": 0.55
+    },
+    {
+      "id": 10,
+      "name": "Energy",
+      "resistance": 0.55
+    },
+    {
+      "id": 11,
+      "name": "Pharma",
+      "resistance": 0.6
+    },
+    {
+      "id": 12,
+      "name": "Education",
+      "resistance": 0.6
+    },
+    {
+      "id": 13,
+      "name": "Nonprofit",
+      "resistance": 0.65
+    },
+    {
+      "id": 14,
+      "name": "Real Estate",
+      "resistance": 0.65
+    },
+    {
+      "id": 15,
+      "name": "Construction",
+      "resistance": 0.7
+    },
+    {
+      "id": 16,
+      "name": "Agriculture",
+      "resistance": 0.7
+    },
+    {
+      "id": 17,
+      "name": "Healthcare",
+      "resistance": 0.75
+    },
+    {
+      "id": 18,
+      "name": "Government",
+      "resistance": 0.85
+    },
+    {
+      "id": 19,
+      "name": "Legal",
+      "resistance": 0.9
+    }
+  ],
+  "edges": [
+    {
+      "i": 17,
+      "j": 9,
+      "a": "Healthcare",
+      "b": "Insurance",
+      "strength": 1.0,
+      "J": 0.15
+    },
+    {
+      "i": 8,
+      "j": 5,
+      "a": "Manufacturing",
+      "b": "Logistics",
+      "strength": 0.9,
+      "J": 0.135
+    },
+    {
+      "i": 6,
+      "j": 14,
+      "a": "Banking",
+      "b": "Real Estate",
+      "strength": 0.8,
+      "J": 0.12
+    },
+    {
+      "i": 3,
+      "j": 5,
+      "a": "Retail",
+      "b": "Logistics",
+      "strength": 0.8,
+      "J": 0.12
+    },
+    {
+      "i": 15,
+      "j": 14,
+      "a": "Construction",
+      "b": "Real Estate",
+      "strength": 0.8,
+      "J": 0.12
+    },
+    {
+      "i": 17,
+      "j": 11,
+      "a": "Healthcare",
+      "b": "Pharma",
+      "strength": 0.7,
+      "J": 0.105
+    },
+    {
+      "i": 19,
+      "j": 14,
+      "a": "Legal",
+      "b": "Real Estate",
+      "strength": 0.7,
+      "J": 0.105
+    },
+    {
+      "i": 17,
+      "j": 18,
+      "a": "Healthcare",
+      "b": "Government",
+      "strength": 0.6,
+      "J": 0.09
+    },
+    {
+      "i": 19,
+      "j": 18,
+      "a": "Legal",
+      "b": "Government",
+      "strength": 0.6,
+      "J": 0.09
+    },
+    {
+      "i": 7,
+      "j": 6,
+      "a": "Accounting",
+      "b": "Banking",
+      "strength": 0.6,
+      "J": 0.09
+    },
+    {
+      "i": 18,
+      "j": 12,
+      "a": "Government",
+      "b": "Education",
+      "strength": 0.6,
+      "J": 0.09
+    },
+    {
+      "i": 16,
+      "j": 5,
+      "a": "Agriculture",
+      "b": "Logistics",
+      "strength": 0.6,
+      "J": 0.09
+    },
+    {
+      "i": 2,
+      "j": 0,
+      "a": "Telecom",
+      "b": "Technology",
+      "strength": 0.6,
+      "J": 0.09
+    },
+    {
+      "i": 9,
+      "j": 6,
+      "a": "Insurance",
+      "b": "Banking",
+      "strength": 0.5,
+      "J": 0.075
+    },
+    {
+      "i": 19,
+      "j": 6,
+      "a": "Legal",
+      "b": "Banking",
+      "strength": 0.5,
+      "J": 0.075
+    },
+    {
+      "i": 10,
+      "j": 8,
+      "a": "Energy",
+      "b": "Manufacturing",
+      "strength": 0.5,
+      "J": 0.075
+    },
+    {
+      "i": 0,
+      "j": 1,
+      "a": "Technology",
+      "b": "Media",
+      "strength": 0.5,
+      "J": 0.075
+    },
+    {
+      "i": 9,
+      "j": 19,
+      "a": "Insurance",
+      "b": "Legal",
+      "strength": 0.4,
+      "J": 0.06
+    },
+    {
+      "i": 7,
+      "j": 13,
+      "a": "Accounting",
+      "b": "Nonprofit",
+      "strength": 0.4,
+      "J": 0.06
+    },
+    {
+      "i": 15,
+      "j": 18,
+      "a": "Construction",
+      "b": "Government",
+      "strength": 0.4,
+      "J": 0.06
+    },
+    {
+      "i": 4,
+      "j": 3,
+      "a": "Hospitality",
+      "b": "Retail",
+      "strength": 0.4,
+      "J": 0.06
+    },
+    {
+      "i": 11,
+      "j": 5,
+      "a": "Pharma",
+      "b": "Logistics",
+      "strength": 0.4,
+      "J": 0.06
+    },
+    {
+      "i": 13,
+      "j": 12,
+      "a": "Nonprofit",
+      "b": "Education",
+      "strength": 0.4,
+      "J": 0.06
+    },
+    {
+      "i": 1,
+      "j": 3,
+      "a": "Media",
+      "b": "Retail",
+      "strength": 0.3,
+      "J": 0.045
+    }
+  ],
+  "hamiltonian": {
+    "classical": "E=-sum_{edges} J*s_i*s_j - sum_i (A-r_i)*s_i",
+    "quantum": "H_C=-sum_{edges} J*Z_i*Z_j + sum_i (A-r_i)*Z_i"
+  },
+  "qaoa": {
+    "depth_p": 2,
+    "initial_angles_order": [
+      "gamma_1",
+      "beta_1",
+      "gamma_2",
+      "beta_2"
+    ],
+    "initial_angles": [
+      0.7,
+      0.4,
+      0.7,
+      0.4
+    ],
+    "optimizer": "COBYLA",
+    "max_evaluations_initial": 100,
+    "shots_final": 4096
+  }
+}
