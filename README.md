@@ -110,6 +110,12 @@ evidence. Quantum controls use only the committed
 cache stale rather than silently resimulating. qBraid-imported results remain
 a separate, manually scored workflow described in `artifacts/README.md`.
 
+The dashboard’s **Run selected year (local CPU)** button makes an explicit new
+Aer DQA run for the selected 2026–2040 year, current ties/resistance model,
+actual shot budget, and seed. It saves raw counts and same-graph exact metrics
+under `results/dashboard_runs/` without overwriting older runs. One-year runs
+do not claim a flip-year error.
+
 The independent-regions tab uses
 `notebooks/data/independent_region_views_2033.json`: five nested, stable-seed
 synthetic regional models, each run as a separate 20-node local CPU circuit.

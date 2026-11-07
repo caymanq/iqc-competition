@@ -7,6 +7,7 @@ run Python callbacks after it has been opened outside Jupyter.
 from pathlib import Path
 import os
 import shutil
+import argparse
 import nbformat
 from nbclient import NotebookClient
 from nbconvert import HTMLExporter
@@ -49,8 +50,13 @@ def render(tab: int, slug: str) -> None:
 
 
 def main() -> None:
-    for tab, slug in ((0, "01_tiny_teaching_view"), (1, "02_network_view"),
-                      (2, "03_quantum_evidence_view")):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--tab", type=int, choices=(0, 1, 2), help="render just one dashboard tab")
+    args = parser.parse_args()
+    views = ((0, "01_tiny_teaching_view"), (1, "02_network_view"), (2, "03_quantum_evidence_view"))
+    for tab, slug in views:
+        if args.tab is not None and args.tab != tab:
+            continue
         render(tab, slug)
     print(DESTINATION)
 

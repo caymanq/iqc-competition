@@ -29,11 +29,39 @@ Then use **Kernel → Restart Kernel and Run All Cells**. The dashboard performs
 only local CPU/Aer simulation. It does not authenticate to qBraid, submit a
 job, purchase credits, or start a server.
 
+## Safely update an existing Lab checkout
+
+If you have edited the notebook in Lab, do **not** reset, force-pull, or
+overwrite it. First save it in the Lab UI, then make a backup/copy:
+
+```bash
+git status
+cp notebooks/paperflip_dashboard.ipynb notebooks/paperflip_dashboard.local-backup.ipynb
+git diff > local-lab-changes.patch
+```
+
+Only when `git status` is clean, update without rewriting history:
+
+```bash
+git fetch origin
+git merge --ff-only origin/cursor/paper-phase-transition-plan-8ab6
+```
+
+If it is not clean, keep the backup and ask for help merging the notebook
+changes; do not run `git reset`, `git checkout --`, force-pull, or overwrite
+the Lab notebook.
+
 ## Dashboard controls
 
 - Tabs 1–3 teach the tiny model, 20-industry exact scenarios, and a cached
   Aer distribution. Changes mark cache-backed evidence stale rather than
   silently launching a simulator.
+- Tab 3 **Run selected year (local CPU)** creates a new persisted result under
+  `results/dashboard_runs/` for the selected 2026–2040 year, current
+  ties/resistance scenario, actual shot count, and seed. It never runs
+  automatically on slider changes. Each record retains raw counts, model
+  fingerprint, exact same-graph reference, algorithm parameters and CPU
+  timing. Single-year results deliberately do not show flip-year errors.
 - Tab 4 compares one, two, and five nested synthetic regions. Every displayed
   quantum model is an independent 20-node circuit, with no cross-region ties.
   The yellow **Compute selected 20-node view** button is the only action that
