@@ -63,3 +63,33 @@ all tied industry optima count toward reported QAOA optimum probability.
 These are local simulated optimization outputs from supplied flip-year
 assumptions, not observed outcomes, causal estimates, hardware results, or
 forecasts.
+
+## p=2 comparison and adoption overlay
+
+Run the bounded two-layer comparison:
+
+```bash
+cd cayman/target_qaoa
+python run_p2_target_qaoa_overlay.py
+```
+
+It evaluates a deterministic 5⁴ grid (625 p=2 angle settings per eligible
+year) and includes every p=1 solution as an identity-second-layer incumbent
+(`gamma_2=beta_2=0`). Results therefore cannot report a p=2 expected value
+worse than that evaluated incumbent; any lack of material improvement is
+preserved rather than tuned away.
+
+`results/target_selection_qaoa_p2_4year/` contains p=2 metrics, a p=1-versus-
+p=2 marginal comparison, and `yearly_recommendations.csv`. The latter records
+the exact representative, tied-best regions, and a **whole feasible MAP
+bitstring** recommendation from p=2 (not a set manufactured from independent
+marginals), including its plan value and gap.
+
+The overlay uses the already-saved Pacific NW adoption heatmap only as a
+background. It retains its white adoption flip crosses and `P(digital bit 0)`
+colorbar; black × markers are exact target recommendations, magenta hollow
+circle area is `P(target selected bit 1)`, and black outlined squares are the
+p=2 MAP-plan selections. Target selection spans five regions, so neither its
+markers nor its bit convention are adoption probabilities. All target markers
+are placed at the planning year; 2035–2040 are explicitly no-eligible-target
+columns.

@@ -1,0 +1,1979 @@
+{
+  "source": "local ideal constrained feasible-subspace p=2 QAOA; no provider/hardware",
+  "bit_convention": "target selection bit 1 = selected; separate from adoption digital bit 0",
+  "reduction": "objective-equivalent best-region-per-industry; tied regions retained, not regional QAOA marginals",
+  "optimizer": {
+    "depth": 2,
+    "gamma_grid": [
+      0.0,
+      0.0875,
+      0.175,
+      0.26249999999999996,
+      0.35
+    ],
+    "beta_grid": [
+      0.0,
+      0.0875,
+      0.175,
+      0.26249999999999996,
+      0.35
+    ],
+    "evaluations_per_completed_year": 625,
+    "seed": 20261107,
+    "p1_incumbent": "identity second layer (gamma_2=beta_2=0) included in grid"
+  },
+  "results": [
+    {
+      "year": 2026,
+      "status": "completed",
+      "items": [
+        {
+          "industry": "Media",
+          "value": 3.2,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2029
+        },
+        {
+          "industry": "Technology",
+          "value": 3.6,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2029
+        },
+        {
+          "industry": "Telecom",
+          "value": 3.0,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2029
+        }
+      ],
+      "k": 3,
+      "basis_dimension": 1,
+      "xy_mixer_pair_gates_per_layer": 3,
+      "exact_optimum_value": 9.8,
+      "exact_representative_selection": [
+        1,
+        1,
+        1
+      ],
+      "exact_tied_industry_plans": 1,
+      "exact_tied_industry_sets": [
+        [
+          "Media",
+          "Technology",
+          "Telecom"
+        ]
+      ],
+      "p2": {
+        "expected_value": 9.8,
+        "optimum_probability_all_ties": 1.0,
+        "marginals": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "normalization": 1.0,
+        "feasibility_mass": 1.0,
+        "mode_mask": 7,
+        "mode_selected": [
+          1,
+          1,
+          1
+        ],
+        "mode_probability": 1.0,
+        "mode_value": 9.8,
+        "mode_value_gap": 0.0,
+        "gamma_1": 0.0,
+        "gamma_2": 0.0,
+        "beta_1": 0.0,
+        "beta_2": 0.0
+      },
+      "p1_identity_layer_incumbent": {
+        "expected_value": 9.8,
+        "optimum_probability_all_ties": 1.0,
+        "marginals": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "normalization": 1.0,
+        "feasibility_mass": 1.0,
+        "mode_mask": 7,
+        "mode_selected": [
+          1,
+          1,
+          1
+        ],
+        "mode_probability": 1.0,
+        "mode_value": 9.8,
+        "mode_value_gap": 0.0,
+        "gamma_1": 0.0,
+        "gamma_2": 0.0,
+        "beta_1": 0.0,
+        "beta_2": 0.0
+      },
+      "optimizer_evaluations": 625,
+      "optimizer_seconds": 0.03538240600028075,
+      "basis_and_mixer_map_seconds": 5.8585999795468524e-05,
+      "uniform_feasible_expected_value": 9.8
+    },
+    {
+      "year": 2027,
+      "status": "completed",
+      "items": [
+        {
+          "industry": "Hospitality",
+          "value": 1.3,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2031
+        },
+        {
+          "industry": "Media",
+          "value": 4.800000000000001,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2029
+        },
+        {
+          "industry": "Retail",
+          "value": 1.4,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2031
+        },
+        {
+          "industry": "Technology",
+          "value": 5.4,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2029
+        },
+        {
+          "industry": "Telecom",
+          "value": 4.5,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2029
+        }
+      ],
+      "k": 5,
+      "basis_dimension": 1,
+      "xy_mixer_pair_gates_per_layer": 10,
+      "exact_optimum_value": 17.4,
+      "exact_representative_selection": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "exact_tied_industry_plans": 1,
+      "exact_tied_industry_sets": [
+        [
+          "Hospitality",
+          "Media",
+          "Retail",
+          "Technology",
+          "Telecom"
+        ]
+      ],
+      "p2": {
+        "expected_value": 17.400000000000006,
+        "optimum_probability_all_ties": 1.0000000000000004,
+        "marginals": [
+          1.0000000000000004,
+          1.0000000000000004,
+          1.0000000000000004,
+          1.0000000000000004,
+          1.0000000000000004
+        ],
+        "normalization": 1.0000000000000004,
+        "feasibility_mass": 1.0000000000000004,
+        "mode_mask": 31,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "mode_probability": 1.0000000000000004,
+        "mode_value": 17.4,
+        "mode_value_gap": 0.0,
+        "gamma_1": 0.0875,
+        "gamma_2": 0.0875,
+        "beta_1": 0.0,
+        "beta_2": 0.0
+      },
+      "p1_identity_layer_incumbent": {
+        "expected_value": 17.4,
+        "optimum_probability_all_ties": 1.0,
+        "marginals": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "normalization": 1.0,
+        "feasibility_mass": 1.0,
+        "mode_mask": 31,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "mode_probability": 1.0,
+        "mode_value": 17.4,
+        "mode_value_gap": 0.0,
+        "gamma_1": 0.0,
+        "gamma_2": 0.0,
+        "beta_1": 0.0,
+        "beta_2": 0.0
+      },
+      "optimizer_evaluations": 625,
+      "optimizer_seconds": 0.07542816400018637,
+      "basis_and_mixer_map_seconds": 5.0882001232821494e-05,
+      "uniform_feasible_expected_value": 17.4
+    },
+    {
+      "year": 2028,
+      "status": "completed",
+      "items": [
+        {
+          "industry": "Hospitality",
+          "value": 2.6,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2031
+        },
+        {
+          "industry": "Media",
+          "value": 6.4,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2029
+        },
+        {
+          "industry": "Retail",
+          "value": 2.8,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2031
+        },
+        {
+          "industry": "Technology",
+          "value": 7.2,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2029
+        },
+        {
+          "industry": "Telecom",
+          "value": 6.0,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2029
+        }
+      ],
+      "k": 5,
+      "basis_dimension": 1,
+      "xy_mixer_pair_gates_per_layer": 10,
+      "exact_optimum_value": 25.0,
+      "exact_representative_selection": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "exact_tied_industry_plans": 1,
+      "exact_tied_industry_sets": [
+        [
+          "Hospitality",
+          "Media",
+          "Retail",
+          "Technology",
+          "Telecom"
+        ]
+      ],
+      "p2": {
+        "expected_value": 25.00000000000001,
+        "optimum_probability_all_ties": 1.0000000000000004,
+        "marginals": [
+          1.0000000000000004,
+          1.0000000000000004,
+          1.0000000000000004,
+          1.0000000000000004,
+          1.0000000000000004
+        ],
+        "normalization": 1.0000000000000004,
+        "feasibility_mass": 1.0000000000000004,
+        "mode_mask": 31,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "mode_probability": 1.0000000000000004,
+        "mode_value": 25.0,
+        "mode_value_gap": 0.0,
+        "gamma_1": 0.35,
+        "gamma_2": 0.35,
+        "beta_1": 0.0,
+        "beta_2": 0.0
+      },
+      "p1_identity_layer_incumbent": {
+        "expected_value": 25.0,
+        "optimum_probability_all_ties": 1.0,
+        "marginals": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "normalization": 1.0,
+        "feasibility_mass": 1.0,
+        "mode_mask": 31,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "mode_probability": 1.0,
+        "mode_value": 25.0,
+        "mode_value_gap": 0.0,
+        "gamma_1": 0.0,
+        "gamma_2": 0.0,
+        "beta_1": 0.0,
+        "beta_2": 0.0
+      },
+      "optimizer_evaluations": 625,
+      "optimizer_seconds": 0.07526015999974334,
+      "basis_and_mixer_map_seconds": 4.7442998038604856e-05,
+      "uniform_feasible_expected_value": 25.0
+    },
+    {
+      "year": 2029,
+      "status": "completed",
+      "items": [
+        {
+          "industry": "Agriculture",
+          "value": 0.6000000000000001,
+          "regions": [
+            "California"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Energy",
+          "value": 0.8999999999999999,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Hospitality",
+          "value": 3.9000000000000004,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2031
+        },
+        {
+          "industry": "Logistics",
+          "value": 1.2,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Manufacturing",
+          "value": 1.0,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Retail",
+          "value": 4.199999999999999,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2031
+        }
+      ],
+      "k": 5,
+      "basis_dimension": 6,
+      "xy_mixer_pair_gates_per_layer": 15,
+      "exact_optimum_value": 11.2,
+      "exact_representative_selection": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "exact_tied_industry_plans": 1,
+      "exact_tied_industry_sets": [
+        [
+          "Energy",
+          "Hospitality",
+          "Logistics",
+          "Manufacturing",
+          "Retail"
+        ]
+      ],
+      "p2": {
+        "expected_value": 10.453489052538274,
+        "optimum_probability_all_ties": 0.4736438706743249,
+        "marginals": [
+          0.5263561293256751,
+          0.781035767258905,
+          0.8918201829934892,
+          0.9331550682991192,
+          0.9397498719185955,
+          0.9278829802042162
+        ],
+        "normalization": 1.0,
+        "feasibility_mass": 1.0,
+        "mode_mask": 62,
+        "mode_selected": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "mode_probability": 0.4736438706743249,
+        "mode_value": 11.2,
+        "mode_value_gap": 0.0,
+        "gamma_1": 0.0,
+        "gamma_2": 0.175,
+        "beta_1": 0.35,
+        "beta_2": 0.0
+      },
+      "p1_identity_layer_incumbent": {
+        "expected_value": 10.453489052538272,
+        "optimum_probability_all_ties": 0.4736438706743248,
+        "marginals": [
+          0.5263561293256751,
+          0.7810357672589048,
+          0.8918201829934891,
+          0.9331550682991191,
+          0.9397498719185954,
+          0.9278829802042161
+        ],
+        "normalization": 0.9999999999999999,
+        "feasibility_mass": 0.9999999999999999,
+        "mode_mask": 62,
+        "mode_selected": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "mode_probability": 0.4736438706743248,
+        "mode_value": 11.2,
+        "mode_value_gap": 0.0,
+        "gamma_1": 0.0,
+        "gamma_2": 0.0,
+        "beta_1": 0.35,
+        "beta_2": 0.0
+      },
+      "optimizer_evaluations": 625,
+      "optimizer_seconds": 0.14290199700189987,
+      "basis_and_mixer_map_seconds": 9.116499859374017e-05,
+      "uniform_feasible_expected_value": 9.833333333333334
+    },
+    {
+      "year": 2030,
+      "status": "completed",
+      "items": [
+        {
+          "industry": "Accounting",
+          "value": 1.0,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Agriculture",
+          "value": 1.2000000000000002,
+          "regions": [
+            "California"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Banking",
+          "value": 1.1,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Construction",
+          "value": 0.6000000000000001,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Education",
+          "value": 0.8,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Energy",
+          "value": 1.7999999999999998,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Government",
+          "value": 0.30000000000000004,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Healthcare",
+          "value": 0.5,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Hospitality",
+          "value": 5.2,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2031
+        },
+        {
+          "industry": "Insurance",
+          "value": 0.8999999999999999,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Legal",
+          "value": 0.19999999999999996,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Logistics",
+          "value": 2.4,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Manufacturing",
+          "value": 2.0,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Nonprofit",
+          "value": 0.7,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Pharma",
+          "value": 0.8,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Real Estate",
+          "value": 0.7,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Retail",
+          "value": 5.6,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2031
+        }
+      ],
+      "k": 5,
+      "basis_dimension": 6188,
+      "xy_mixer_pair_gates_per_layer": 136,
+      "exact_optimum_value": 17.0,
+      "exact_representative_selection": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "exact_tied_industry_plans": 1,
+      "exact_tied_industry_sets": [
+        [
+          "Energy",
+          "Hospitality",
+          "Logistics",
+          "Manufacturing",
+          "Retail"
+        ]
+      ],
+      "p2": {
+        "expected_value": 12.496767999404234,
+        "optimum_probability_all_ties": 0.0024509119877406593,
+        "marginals": [
+          0.3497168556818228,
+          0.3176376667888717,
+          0.27387286212943207,
+          0.22275818813900106,
+          0.19501902835218562,
+          0.23447387853300344,
+          0.13873276606701487,
+          0.13898571378384106,
+          0.741043698882179,
+          0.13614222007897248,
+          0.11863868947952592,
+          0.34054108221552276,
+          0.2920234055540521,
+          0.18566601053127002,
+          0.22187504193934768,
+          0.24220261678212393,
+          0.8506702750618362
+        ],
+        "normalization": 1.0000000000000007,
+        "feasibility_mass": 1.0000000000000007,
+        "mode_mask": 65799,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "mode_probability": 0.012904414671455469,
+        "mode_value": 14.1,
+        "mode_value_gap": 2.9000000000000004,
+        "gamma_1": 0.35,
+        "gamma_2": 0.0,
+        "beta_1": 0.0875,
+        "beta_2": 0.175
+      },
+      "p1_identity_layer_incumbent": {
+        "expected_value": 8.620555672236707,
+        "optimum_probability_all_ties": 0.00026979574626292974,
+        "marginals": [
+          0.6898387094622442,
+          0.697577898001828,
+          0.6439803023266231,
+          0.5394503319423598,
+          0.35124941040468505,
+          0.19367043218266586,
+          0.14409200916851161,
+          0.08096718810436972,
+          0.3972972093507268,
+          0.08872772719857665,
+          0.07836445759210202,
+          0.15505087507161644,
+          0.12559402898332944,
+          0.11881491882784412,
+          0.13752023099409952,
+          0.15375848663610978,
+          0.4040457837522827
+        ],
+        "normalization": 0.9999999999999948,
+        "feasibility_mass": 0.9999999999999948,
+        "mode_mask": 31,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mode_probability": 0.08045123301084299,
+        "mode_value": 4.700000000000001,
+        "mode_value_gap": 12.299999999999999,
+        "gamma_1": 0.35,
+        "gamma_2": 0.0,
+        "beta_1": 0.26249999999999996,
+        "beta_2": 0.0
+      },
+      "optimizer_evaluations": 625,
+      "optimizer_seconds": 4.292943197000568,
+      "basis_and_mixer_map_seconds": 0.15023863099850132,
+      "uniform_feasible_expected_value": 7.5882352941176485
+    },
+    {
+      "year": 2031,
+      "status": "completed",
+      "items": [
+        {
+          "industry": "Accounting",
+          "value": 2.0,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Agriculture",
+          "value": 1.8000000000000003,
+          "regions": [
+            "California"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Banking",
+          "value": 2.2,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Construction",
+          "value": 1.2000000000000002,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Education",
+          "value": 1.6,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Energy",
+          "value": 2.6999999999999997,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Government",
+          "value": 0.6000000000000001,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Healthcare",
+          "value": 1.0,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Insurance",
+          "value": 1.7999999999999998,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Legal",
+          "value": 0.3999999999999999,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Logistics",
+          "value": 3.5999999999999996,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Manufacturing",
+          "value": 3.0,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Nonprofit",
+          "value": 1.4,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Pharma",
+          "value": 1.6,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Real Estate",
+          "value": 1.4,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        }
+      ],
+      "k": 5,
+      "basis_dimension": 3003,
+      "xy_mixer_pair_gates_per_layer": 105,
+      "exact_optimum_value": 13.5,
+      "exact_representative_selection": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "exact_tied_industry_plans": 1,
+      "exact_tied_industry_sets": [
+        [
+          "Accounting",
+          "Banking",
+          "Energy",
+          "Logistics",
+          "Manufacturing"
+        ]
+      ],
+      "p2": {
+        "expected_value": 10.240659383576627,
+        "optimum_probability_all_ties": 0.0010249136936421206,
+        "marginals": [
+          0.22156140462497856,
+          0.2041845708568056,
+          0.2360362158062688,
+          0.1599139877979436,
+          0.20154453883396545,
+          0.3482619025944508,
+          0.13610928548262127,
+          0.20611612754658515,
+          0.35393753649290377,
+          0.23043918402085767,
+          0.7109009057425553,
+          0.6230467625262415,
+          0.4147650151841309,
+          0.4774719619338452,
+          0.4757106005558209
+        ],
+        "normalization": 0.9999999999999949,
+        "feasibility_mass": 0.9999999999999949,
+        "mode_mask": 31744,
+        "mode_selected": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "mode_probability": 0.03105413683678215,
+        "mode_value": 11.0,
+        "mode_value_gap": 2.5,
+        "gamma_1": 0.35,
+        "gamma_2": 0.0,
+        "beta_1": 0.175,
+        "beta_2": 0.175
+      },
+      "p1_identity_layer_incumbent": {
+        "expected_value": 9.300347492353332,
+        "optimum_probability_all_ties": 0.0008233571447129871,
+        "marginals": [
+          0.6435569995611918,
+          0.6351959759885755,
+          0.6173928644557958,
+          0.5488532418650702,
+          0.41872112084059426,
+          0.2725240161851704,
+          0.2325286561472678,
+          0.1362686627865225,
+          0.13296037453230466,
+          0.1309396268860426,
+          0.3279456818267053,
+          0.24378420692307623,
+          0.1963955436563281,
+          0.22358224915310787,
+          0.2393507791922273
+        ],
+        "normalization": 0.9999999999999959,
+        "feasibility_mass": 0.9999999999999959,
+        "mode_mask": 31,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mode_probability": 0.12925238073914902,
+        "mode_value": 8.8,
+        "mode_value_gap": 4.699999999999999,
+        "gamma_1": 0.35,
+        "gamma_2": 0.0,
+        "beta_1": 0.26249999999999996,
+        "beta_2": 0.0
+      },
+      "optimizer_evaluations": 625,
+      "optimizer_seconds": 2.317876621000323,
+      "basis_and_mixer_map_seconds": 0.05822140799864428,
+      "uniform_feasible_expected_value": 8.766666666666666
+    },
+    {
+      "year": 2032,
+      "status": "completed",
+      "items": [
+        {
+          "industry": "Accounting",
+          "value": 3.0,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Agriculture",
+          "value": 2.4000000000000004,
+          "regions": [
+            "California"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Banking",
+          "value": 3.3000000000000003,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Construction",
+          "value": 1.8000000000000003,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Education",
+          "value": 2.4000000000000004,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Energy",
+          "value": 3.5999999999999996,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Government",
+          "value": 0.9000000000000001,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Healthcare",
+          "value": 1.5,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Insurance",
+          "value": 2.6999999999999997,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Legal",
+          "value": 0.5999999999999999,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Logistics",
+          "value": 4.8,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Manufacturing",
+          "value": 4.0,
+          "regions": [
+            "California",
+            "Pacific NW",
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2033
+        },
+        {
+          "industry": "Nonprofit",
+          "value": 2.0999999999999996,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Pharma",
+          "value": 2.4000000000000004,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Real Estate",
+          "value": 2.0999999999999996,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        }
+      ],
+      "k": 5,
+      "basis_dimension": 3003,
+      "xy_mixer_pair_gates_per_layer": 105,
+      "exact_optimum_value": 18.7,
+      "exact_representative_selection": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "exact_tied_industry_plans": 1,
+      "exact_tied_industry_sets": [
+        [
+          "Accounting",
+          "Banking",
+          "Energy",
+          "Logistics",
+          "Manufacturing"
+        ]
+      ],
+      "p2": {
+        "expected_value": 14.8170203131081,
+        "optimum_probability_all_ties": 0.0020786622261281047,
+        "marginals": [
+          0.24226374793103164,
+          0.1969481229295374,
+          0.27182851478612,
+          0.1521084944528002,
+          0.20808827760191181,
+          0.36931974063322404,
+          0.11105537825666213,
+          0.18432014599888855,
+          0.3777044211982588,
+          0.18066906913294872,
+          0.7652684410395928,
+          0.6454394635633608,
+          0.38694468358701567,
+          0.46203486787988357,
+          0.44600663100873783
+        ],
+        "normalization": 0.9999999999999947,
+        "feasibility_mass": 0.9999999999999947,
+        "mode_mask": 31744,
+        "mode_selected": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "mode_probability": 0.029513778982873027,
+        "mode_value": 15.4,
+        "mode_value_gap": 3.299999999999999,
+        "gamma_1": 0.35,
+        "gamma_2": 0.0,
+        "beta_1": 0.175,
+        "beta_2": 0.175
+      },
+      "p1_identity_layer_incumbent": {
+        "expected_value": 13.405407512192255,
+        "optimum_probability_all_ties": 0.0010314178511418005,
+        "marginals": [
+          0.6463111467152362,
+          0.6126374838147215,
+          0.5839223027481382,
+          0.5207179669562596,
+          0.3773525977754987,
+          0.2465200880904788,
+          0.2486535248156366,
+          0.13545994932199024,
+          0.14262010165167976,
+          0.15476239827401994,
+          0.39415332139973497,
+          0.2663783649343504,
+          0.1989605696113238,
+          0.22785941654115327,
+          0.24369076734975698
+        ],
+        "normalization": 0.9999999999999958,
+        "feasibility_mass": 0.9999999999999958,
+        "mode_mask": 31,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mode_probability": 0.10099099159004227,
+        "mode_value": 12.900000000000002,
+        "mode_value_gap": 5.799999999999997,
+        "gamma_1": 0.35,
+        "gamma_2": 0.0,
+        "beta_1": 0.26249999999999996,
+        "beta_2": 0.0
+      },
+      "optimizer_evaluations": 625,
+      "optimizer_seconds": 2.3161376059979375,
+      "basis_and_mixer_map_seconds": 0.05739614900085144,
+      "uniform_feasible_expected_value": 12.533333333333333
+    },
+    {
+      "year": 2033,
+      "status": "completed",
+      "items": [
+        {
+          "industry": "Accounting",
+          "value": 4.0,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Agriculture",
+          "value": 2.4000000000000004,
+          "regions": [
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Banking",
+          "value": 4.4,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Construction",
+          "value": 2.4000000000000004,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Education",
+          "value": 3.2,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Government",
+          "value": 1.2000000000000002,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Healthcare",
+          "value": 2.0,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Insurance",
+          "value": 3.5999999999999996,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Legal",
+          "value": 0.7999999999999998,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Nonprofit",
+          "value": 2.8,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Pharma",
+          "value": 3.2,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        },
+        {
+          "industry": "Real Estate",
+          "value": 2.8,
+          "regions": [
+            "California",
+            "Pacific NW"
+          ],
+          "flip_year": 2034
+        }
+      ],
+      "k": 5,
+      "basis_dimension": 792,
+      "xy_mixer_pair_gates_per_layer": 66,
+      "exact_optimum_value": 18.4,
+      "exact_representative_selection": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "exact_tied_industry_plans": 1,
+      "exact_tied_industry_sets": [
+        [
+          "Accounting",
+          "Banking",
+          "Education",
+          "Insurance",
+          "Pharma"
+        ]
+      ],
+      "p2": {
+        "expected_value": 15.369193450696889,
+        "optimum_probability_all_ties": 0.00522704623953274,
+        "marginals": [
+          0.5971624644971779,
+          0.4097370060079573,
+          0.6491070501961174,
+          0.3721344962090815,
+          0.44958283161126433,
+          0.17350786546961652,
+          0.27957338351076816,
+          0.5288315579060816,
+          0.18420662033575183,
+          0.4430566840626733,
+          0.4839049178387559,
+          0.429195122354731
+        ],
+        "normalization": 0.9999999999999952,
+        "feasibility_mass": 0.9999999999999952,
+        "mode_mask": 31,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mode_probability": 0.07654003781980129,
+        "mode_value": 16.400000000000002,
+        "mode_value_gap": 1.9999999999999964,
+        "gamma_1": 0.35,
+        "gamma_2": 0.0,
+        "beta_1": 0.175,
+        "beta_2": 0.26249999999999996
+      },
+      "p1_identity_layer_incumbent": {
+        "expected_value": 14.41433570506367,
+        "optimum_probability_all_ties": 0.0008316809490822253,
+        "marginals": [
+          0.5966631309997484,
+          0.4596833734541258,
+          0.5668040033320546,
+          0.4480731654297667,
+          0.3776346017185938,
+          0.31991968681922844,
+          0.25009849684780505,
+          0.2988206997166367,
+          0.3524710682472041,
+          0.40895740703935096,
+          0.4533454762723392,
+          0.46752889012313953
+        ],
+        "normalization": 0.9999999999999984,
+        "feasibility_mass": 0.9999999999999984,
+        "mode_mask": 31,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mode_probability": 0.09465469638261136,
+        "mode_value": 16.400000000000002,
+        "mode_value_gap": 1.9999999999999964,
+        "gamma_1": 0.26249999999999996,
+        "gamma_2": 0.0,
+        "beta_1": 0.35,
+        "beta_2": 0.0
+      },
+      "optimizer_evaluations": 625,
+      "optimizer_seconds": 0.8169664220004051,
+      "basis_and_mixer_map_seconds": 0.010487046998605365,
+      "uniform_feasible_expected_value": 13.66666666666667
+    },
+    {
+      "year": 2034,
+      "status": "completed",
+      "items": [
+        {
+          "industry": "Accounting",
+          "value": 4.0,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        },
+        {
+          "industry": "Agriculture",
+          "value": 2.4000000000000004,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        },
+        {
+          "industry": "Banking",
+          "value": 4.4,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        },
+        {
+          "industry": "Construction",
+          "value": 2.4000000000000004,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        },
+        {
+          "industry": "Education",
+          "value": 3.2,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        },
+        {
+          "industry": "Government",
+          "value": 1.2000000000000002,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        },
+        {
+          "industry": "Healthcare",
+          "value": 2.0,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        },
+        {
+          "industry": "Insurance",
+          "value": 3.5999999999999996,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        },
+        {
+          "industry": "Legal",
+          "value": 0.7999999999999998,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        },
+        {
+          "industry": "Nonprofit",
+          "value": 2.8,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        },
+        {
+          "industry": "Pharma",
+          "value": 3.2,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        },
+        {
+          "industry": "Real Estate",
+          "value": 2.8,
+          "regions": [
+            "Texas",
+            "Mountain West",
+            "Southwest"
+          ],
+          "flip_year": 2035
+        }
+      ],
+      "k": 5,
+      "basis_dimension": 792,
+      "xy_mixer_pair_gates_per_layer": 66,
+      "exact_optimum_value": 18.4,
+      "exact_representative_selection": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "exact_tied_industry_plans": 1,
+      "exact_tied_industry_sets": [
+        [
+          "Accounting",
+          "Banking",
+          "Education",
+          "Insurance",
+          "Pharma"
+        ]
+      ],
+      "p2": {
+        "expected_value": 15.369193450696889,
+        "optimum_probability_all_ties": 0.00522704623953274,
+        "marginals": [
+          0.5971624644971779,
+          0.4097370060079573,
+          0.6491070501961174,
+          0.3721344962090815,
+          0.44958283161126433,
+          0.17350786546961652,
+          0.27957338351076816,
+          0.5288315579060816,
+          0.18420662033575183,
+          0.4430566840626733,
+          0.4839049178387559,
+          0.429195122354731
+        ],
+        "normalization": 0.9999999999999952,
+        "feasibility_mass": 0.9999999999999952,
+        "mode_mask": 31,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mode_probability": 0.07654003781980129,
+        "mode_value": 16.400000000000002,
+        "mode_value_gap": 1.9999999999999964,
+        "gamma_1": 0.35,
+        "gamma_2": 0.0,
+        "beta_1": 0.175,
+        "beta_2": 0.26249999999999996
+      },
+      "p1_identity_layer_incumbent": {
+        "expected_value": 14.41433570506367,
+        "optimum_probability_all_ties": 0.0008316809490822253,
+        "marginals": [
+          0.5966631309997484,
+          0.4596833734541258,
+          0.5668040033320546,
+          0.4480731654297667,
+          0.3776346017185938,
+          0.31991968681922844,
+          0.25009849684780505,
+          0.2988206997166367,
+          0.3524710682472041,
+          0.40895740703935096,
+          0.4533454762723392,
+          0.46752889012313953
+        ],
+        "normalization": 0.9999999999999984,
+        "feasibility_mass": 0.9999999999999984,
+        "mode_mask": 31,
+        "mode_selected": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mode_probability": 0.09465469638261136,
+        "mode_value": 16.400000000000002,
+        "mode_value_gap": 1.9999999999999964,
+        "gamma_1": 0.26249999999999996,
+        "gamma_2": 0.0,
+        "beta_1": 0.35,
+        "beta_2": 0.0
+      },
+      "optimizer_evaluations": 625,
+      "optimizer_seconds": 0.8122632150007121,
+      "basis_and_mixer_map_seconds": 0.010386313002527459,
+      "uniform_feasible_expected_value": 13.66666666666667
+    },
+    {
+      "year": 2035,
+      "status": "no_eligible_candidates",
+      "items": [],
+      "k": 0,
+      "basis_dimension": 0
+    },
+    {
+      "year": 2036,
+      "status": "no_eligible_candidates",
+      "items": [],
+      "k": 0,
+      "basis_dimension": 0
+    },
+    {
+      "year": 2037,
+      "status": "no_eligible_candidates",
+      "items": [],
+      "k": 0,
+      "basis_dimension": 0
+    },
+    {
+      "year": 2038,
+      "status": "no_eligible_candidates",
+      "items": [],
+      "k": 0,
+      "basis_dimension": 0
+    },
+    {
+      "year": 2039,
+      "status": "no_eligible_candidates",
+      "items": [],
+      "k": 0,
+      "basis_dimension": 0
+    },
+    {
+      "year": 2040,
+      "status": "no_eligible_candidates",
+      "items": [],
+      "k": 0,
+      "basis_dimension": 0
+    }
+  ]
+}
