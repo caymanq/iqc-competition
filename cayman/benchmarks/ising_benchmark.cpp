@@ -123,8 +123,19 @@ Eval qaoa_eval(const std::vector<double>& e, int n, double gamma, double beta, d
 }
 
 std::vector<double> precompute_energies(const Instance& x) {
-  uint64_t m=1ULL<<x.n; std::vector<double> e(m);
-  for(uint64_t z=0;z<m;z++) e[z]=energy_from_index(x,z);
+  // Gray-code traversal: O(n 2^n), explicitly timed as precomputation.
+  // This replaces a misleading O(n^2 2^n) direct enumeration bottleneck.
+  uint64_t m=1ULL<<x.n; std::vector<double> e(m); std::vector<double> spin(x.n, 1.0);
+  double current=energy_from_index(x, 0); e[0]=current;
+  for(uint64_t step=1;step<m;step++) {
+    int q=__builtin_ctzll(step);  // bit flipped between Gray(step-1) and Gray(step)
+    double local=x.h[q];
+    for(int j=0;j<x.n;j++) if(j!=q) local+=x.at(q,j)*spin[j];
+    current += 2*spin[q]*local;
+    spin[q] = -spin[q];
+    uint64_t gray=step^(step>>1);
+    e[gray]=current;
+  }
   return e;
 }
 
@@ -145,7 +156,11 @@ bool tests() {
     Instance x=make_dense(n, 7); Exact cut=mincut(x); double brute=1e99;
     for(uint64_t z=0;z<(1ULL<<n);z++) brute=std::min(brute,energy_from_index(x,z));
     if(std::abs(cut.energy-brute)>1e-8) { std::cerr<<"mincut mismatch n="<<n<<"\n"; return false; }
-    auto e=precompute_energies(x); auto phase=qaoa_eval(e,n,.37,0,cut.energy);
+    auto e=precompute_energies(x);
+    for(uint64_t z=0;z<(1ULL<<n);z++) if(std::abs(e[z]-energy_from_index(x,z))>1e-10) {
+      std::cerr<<"Gray-code energy mismatch n="<<n<<"\n"; return false;
+    }
+    auto phase=qaoa_eval(e,n,.37,0,cut.energy);
     auto zero_gamma=qaoa_eval(e,n,0,.43,cut.energy);
     double uniform=0; for(double v:e) uniform+=v/e.size();
     if(std::abs(phase.norm-1)>1e-10 || std::abs(phase.expected-uniform)>1e-10 ||
@@ -160,13 +175,13 @@ int main(int argc,char** argv) {
   std::string mode=argc>1?argv[1]:"run", output=argc>2?argv[2]:"results/raw.csv";
   if(mode=="--test") { bool ok=tests(); std::cout<<(ok?"PASS\n":"FAIL\n"); return ok?0:1; }
   std::ofstream out(output); if(!out) { std::cerr<<"cannot open "<<output<<"\n"; return 2; } csv_header(out);
-  const std::vector<int> common={4,6,8,10,12,14,16,18,20};
+  const std::vector<int> common={4,6,8,10,12,14,16,18,20,22,24,26};
   const std::vector<int> classical={20,40,80,120,160,200,240,500,1000,2000};
   const std::vector<double> gammas={.2,.6,1.0}, betas={.2,.5,.8}; const int reps=3;
   // Untimed warmup avoids charging allocator/cache cold-start behavior to the first row.
   { Instance warm=make_dense(10, 1); Exact exact=mincut(warm); auto e=precompute_energies(warm);
     (void)qaoa_eval(e,10,.2,.2,exact.energy); }
-  for(int n:common) for(int rep=0;rep<reps;rep++) {
+  for(int n:common) for(int rep=0;rep<(n<=20 ? reps : (n==22 ? 2 : 1));rep++) {
     uint64_t seed=20261107ULL+1000*n+rep; auto start=Clock::now(); Instance x=make_dense(n,seed); double build=seconds(start);
     start=Clock::now(); Exact exact=mincut(x); double cut=seconds(start);
     start=Clock::now(); auto energies=precompute_energies(x); double pre=seconds(start);

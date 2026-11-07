@@ -5,6 +5,7 @@ python_bin="${PYTHON_BIN:-python3}"
 mkdir -p "$root/results"
 g++ -O3 -std=c++20 -DNDEBUG "$root/ising_benchmark.cpp" -o "$root/ising_benchmark"
 "$root/ising_benchmark" --test
+"$python_bin" "$root/qaoa_python_reference_check.py"
 {
   echo '{'
   printf '  "compiler": '; g++ --version | "$python_bin" -c 'import json,sys; print(json.dumps(sys.stdin.readline().strip()))'; echo ','

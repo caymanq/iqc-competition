@@ -24,7 +24,9 @@ always-uniform instance family.
   `Rx(2 beta)` pair updates. It never builds a dense unitary. A fixed 3×3
   `(gamma,beta)` grid performs exactly 9 objective evaluations at every common
   measured size. The CSV separates energy precomputation, one circuit
-  evaluation, and optimizer-inclusive time.
+  evaluation, and optimizer-inclusive time. The primary curve is end-to-end
+  QAOA setup: instance graph construction + energy precompute + the
+  nine-evaluation optimizer; a separate component plot exposes those costs.
 
 Expectation values are exact statevector expectations, not shots. Quality
 columns report expected energy and probability of any exact min-cut ground
@@ -41,11 +43,14 @@ PYTHON_BIN="$(command -v python)" ./run_benchmark.sh
 The program first runs an untimed warmup, then tiny tests: brute-force/min-cut agreement,
 statevector normalization, cost-only probability invariance (`beta=0`), and
 uniform-probability behavior for `gamma=0`. It then measures three repeats
-at common statevector sizes `4,6,...,20`, and exact min-cut alone at
+at common statevector sizes `4,6,...,20`, two repeats at `22`, one each at
+`24` and `26`,
+and exact min-cut alone at
 `20,40,80,120,160,200,240,500,1000,2000`.
 
 The plot uses only measured QAOA sizes. It deliberately does **not**
 extrapolate CPU statevector timings to 40–2000 qubits. Memory grows
 exponentially for this simulator; max-flow has a different scaling regime.
 All completed rows are marked `completed`; no timeout/censored row was needed
-on the recorded VM run.
+on the recorded VM run. `results/RUN_NOTES.md` records the n=26 memory
+ceiling and why n=28 was intentionally not attempted.

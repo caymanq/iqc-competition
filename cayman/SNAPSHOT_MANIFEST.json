@@ -100,48 +100,84 @@
       "bytes": 20
     },
     "benchmarks/README.md": {
-      "sha256": "1288c2af25dfcabe2a667eb150e68d0435f11e87358afeea2808a0575581c5e5",
-      "bytes": 2306
+      "sha256": "f4a4c6d3ca6738bf9a740e98de585ec07b74f16bc6bba1a4628ff4da448fd53d",
+      "bytes": 2631
     },
     "benchmarks/ising_benchmark": {
-      "sha256": "0fa27835fc83b09625e3bb73510e9af37cae6e408538fa09ff0f71bf8bf11702",
-      "bytes": 44552
+      "sha256": "532bbc2ec67ff88104e610586dc535d315f45d1e1392e486f1d7c474da984b29",
+      "bytes": 48712
     },
     "benchmarks/ising_benchmark.cpp": {
-      "sha256": "8bf3641bcb278dc132166e1fc1c3a3b7b470ba1c5f99ed269c5314f291af3abd",
-      "bytes": 8667
+      "sha256": "c2d2fc61daf9e9f9cd42294190cca16d8e239387c18a1b91360a6dd038c3aa4a",
+      "bytes": 9381
     },
     "benchmarks/plot_results.py": {
-      "sha256": "e13aac07824bd04a9f27c0d7b7125369f42f14f7ec6c1ea3f1a953ee4d7e9a33",
-      "bytes": 3052
+      "sha256": "daa1f7e998895677c755ac4590f34db66389766701ac2c4f74ce64e68b412e28",
+      "bytes": 4974
+    },
+    "benchmarks/qaoa_python_reference_check.py": {
+      "sha256": "584c3e008ffe4067678fc347d59d715f7ff8fb39b424b606af2ce9a564897b21",
+      "bytes": 1298
+    },
+    "benchmarks/results/RUN_NOTES.md": {
+      "sha256": "75392378305498c939c5ea081a864056e4b2c1c30e101bbd71c8699236007edd",
+      "bytes": 1206
+    },
+    "benchmarks/results/first_valid_n20_machine_metadata.json": {
+      "sha256": "125ef968b2a13111c8341a9a52690e02306557f05bd911420b6c7c6d92ca27c9",
+      "bytes": 434
+    },
+    "benchmarks/results/first_valid_n20_raw.csv": {
+      "sha256": "841c0467db2d3114be6a4b075505e9c8046b8f542af5726668d86726a2877c2b",
+      "bytes": 5584
+    },
+    "benchmarks/results/first_valid_n20_raw.json": {
+      "sha256": "7881b90468e018c1dddf15ffa050ef5d347d7f6abe1e67cef0d3d8d10df78319",
+      "bytes": 24083
+    },
+    "benchmarks/results/first_valid_n20_runtime_empirical.png": {
+      "sha256": "3312b874b69e8a50e63a7ce1f127579a2d14a124752c6577a04c495cfc05d8e1",
+      "bytes": 139280
+    },
+    "benchmarks/results/first_valid_n20_runtime_empirical.svg": {
+      "sha256": "41b5d70f62474d6574ea58636c1fd0c718aebb13f65bbd97c65157c46730fa61",
+      "bytes": 86311
+    },
+    "benchmarks/results/first_valid_n20_summary.csv": {
+      "sha256": "dc92399429dccf07d11b888dfae5e881b071ba2b91490d9a7ab3a6dab8fd2dd7",
+      "bytes": 1012
     },
     "benchmarks/results/machine_metadata.json": {
       "sha256": "125ef968b2a13111c8341a9a52690e02306557f05bd911420b6c7c6d92ca27c9",
       "bytes": 434
     },
+    "benchmarks/results/qaoa_components.png": {
+      "sha256": "950a2d9492584acf122b1ec25e9d5510dab2bb51938d0ea8c75d185f25414f00",
+      "bytes": 126642
+    },
     "benchmarks/results/raw.csv": {
-      "sha256": "841c0467db2d3114be6a4b075505e9c8046b8f542af5726668d86726a2877c2b",
-      "bytes": 5584
+      "sha256": "a22c264f95db8fb149e35196c8050554c4f3705db41180ca39c97df862d8b965",
+      "bytes": 6030
     },
     "benchmarks/results/raw.json": {
-      "sha256": "7881b90468e018c1dddf15ffa050ef5d347d7f6abe1e67cef0d3d8d10df78319",
-      "bytes": 24083
+      "sha256": "adc790061c456022c32d75f1bfd500aec3d59ebde13c1e018a9be52bfeb7c086",
+      "bytes": 25913
     },
     "benchmarks/results/runtime_empirical.png": {
-      "sha256": "3312b874b69e8a50e63a7ce1f127579a2d14a124752c6577a04c495cfc05d8e1",
-      "bytes": 139280
+      "sha256": "2228617503dee4bde27c06dd1a7bd83e5a27df1e118de948badab5170d5934ad",
+      "bytes": 142204
     },
     "benchmarks/results/runtime_empirical.svg": {
-      "sha256": "41b5d70f62474d6574ea58636c1fd0c718aebb13f65bbd97c65157c46730fa61",
-      "bytes": 86311
+      "sha256": "f77375f80a24d17aa5521c446c916688e8a70d4df5e418dd50368cef3813ccb5",
+      "bytes": 95483
     },
     "benchmarks/results/summary.csv": {
-      "sha256": "dc92399429dccf07d11b888dfae5e881b071ba2b91490d9a7ab3a6dab8fd2dd7",
-      "bytes": 1012
+      "sha256": "0f04134fd1464cd6932bfb44ff195e7d53a4d595f5dc4f3c9c8a0394a750c9c8",
+      "bytes": 1618
     },
     "benchmarks/run_benchmark.sh": {
-      "sha256": "f7fa35205fd5c8c57363c90df9f2d8e33f6930ca2060335bba9542821297b53a",
-      "bytes": 1171
+      "sha256": "ccf0106fe8c413954772a47322f9e88bbfc1ce04bd1bf28a1d5f0d30beb10292",
+      "bytes": 1224
     },
     "configs/one_region.yaml": {
       "sha256": "18559a1d8686ef60532f5c74ae3a1a953c2efde43f7e563e9100c9cf72f6f3ff",
