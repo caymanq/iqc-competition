@@ -1,0 +1,2582 @@
+{
+  "status": "PRECOMPUTED_LOCAL_CPU_SIMULATOR_NOT_QBRAID_NOT_HARDWARE",
+  "scenario": "nested stable-seed synthetic independent regional models",
+  "region_counts_available": [
+    1,
+    2,
+    5
+  ],
+  "no_cross_region_ties": true,
+  "views": [
+    {
+      "status": "LOCAL_CPU_SIMULATOR_CACHE_NOT_QBRAID_NOT_HARDWARE",
+      "scenario_key": "8009a450c9622c2e61fe",
+      "region": "Pacific NW",
+      "year": 2033,
+      "n_qubits": 20,
+      "assumption": "Independent same-20-node region; no cross-region ties or quantum circuit.",
+      "regional_shift_model_units": -0.12,
+      "noise_model_units": [
+        0.0315,
+        0.0278,
+        -0.0143,
+        0.0297,
+        -0.001,
+        -0.012,
+        0.0116,
+        0.0175,
+        -0.0506,
+        0.0003,
+        -0.0132,
+        -0.0024,
+        0.0075,
+        0.0058,
+        -0.0151,
+        0.0143,
+        -0.0117,
+        0.0217,
+        -0.0064,
+        0.0011
+      ],
+      "optimization": {
+        "objective": "minimize p=1 standard-QAOA expected Ising energy over bounded 3\u00d73 grid",
+        "gamma_grid": [
+          0.2,
+          0.6,
+          1.0
+        ],
+        "beta_grid": [
+          0.2,
+          0.5,
+          0.8
+        ],
+        "gamma": 0.2,
+        "beta": 0.2,
+        "expected_energy_model_units": 0.41825901979492963
+      },
+      "exact": {
+        "energy_model_units": -4.6797,
+        "paper_tie_ground_state": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          1,
+          -1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1,
+          -1,
+          -1,
+          -1
+        ],
+        "digital_extreme_ground_state": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          1,
+          -1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1,
+          -1,
+          -1,
+          -1
+        ]
+      },
+      "fixed_configurations": [
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100000",
+          "energy_model_units": -2.4539,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 2.530510733241582e-07,
+          "cost_only_phase_relative_radians": -0.5241379310344829
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100001",
+          "energy_model_units": -1.1669,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 4.268165889153995e-07,
+          "cost_only_phase_relative_radians": -1.0620689655172413
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100010",
+          "energy_model_units": -1.4495,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 3.801420845057894e-07,
+          "cost_only_phase_relative_radians": -0.9439498432601878
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100011",
+          "energy_model_units": -0.4625,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 5.384583552757558e-07,
+          "cost_only_phase_relative_radians": -1.3564890282131663
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100100",
+          "energy_model_units": -1.5253,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 3.6456156649386647e-07,
+          "cost_only_phase_relative_radians": -0.9122675026123304
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100101",
+          "energy_model_units": -0.5983,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 4.985859524924324e-07,
+          "cost_only_phase_relative_radians": -1.2997283176593522
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100110",
+          "energy_model_units": -0.5209,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062481e-07,
+          "post_mixer_probability": 5.443517798062182e-07,
+          "cost_only_phase_relative_radians": -1.3320794148380355
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100111",
+          "energy_model_units": 0.1061,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 6.249723920684079e-07,
+          "cost_only_phase_relative_radians": -1.594148380355277
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101100",
+          "energy_model_units": -0.9947,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 4.4711212156818907e-07,
+          "cost_only_phase_relative_radians": -1.1340438871473353
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101101",
+          "energy_model_units": -0.0677,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 6.095411203959113e-07,
+          "cost_only_phase_relative_radians": -1.5215047021943575
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101110",
+          "energy_model_units": -0.1703,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 6.003324154046526e-07,
+          "cost_only_phase_relative_radians": -1.4786206896551726
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101111",
+          "energy_model_units": 0.4567,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 6.870023245119661e-07,
+          "cost_only_phase_relative_radians": -1.740689655172414
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101111010110111",
+          "energy_model_units": 3.2789,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062468e-07,
+          "post_mixer_probability": 3.3455660781924634e-06,
+          "cost_only_phase_relative_radians": -2.920292580982236
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00010101101110011111",
+          "energy_model_units": 3.3237,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062462e-07,
+          "post_mixer_probability": 3.357401146901399e-06,
+          "cost_only_phase_relative_radians": -2.9390177638453503
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00010110001101100010",
+          "energy_model_units": 0.1299,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 9.515027363638835e-07,
+          "cost_only_phase_relative_radians": -1.6040961337513064
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00100001000111011111",
+          "energy_model_units": 2.6393,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 2.283007783656894e-06,
+          "cost_only_phase_relative_radians": -2.652957157784744
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00110111010101011101",
+          "energy_model_units": 2.0783,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 2.184733619377119e-06,
+          "cost_only_phase_relative_radians": -2.4184743991640545
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100101110011111",
+          "energy_model_units": 3.1881,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062468e-07,
+          "post_mixer_probability": 3.285130095177965e-06,
+          "cost_only_phase_relative_radians": -2.8823406478578897
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100111010110111",
+          "energy_model_units": 3.1667,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 3.446211803320474e-06,
+          "cost_only_phase_relative_radians": -2.8733960292580987
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100111010111111",
+          "energy_model_units": 3.2773,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 3.2622522272597284e-06,
+          "cost_only_phase_relative_radians": -2.9196238244514108
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000101111010110111",
+          "energy_model_units": 3.1117,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062468e-07,
+          "post_mixer_probability": 3.325955915294839e-06,
+          "cost_only_phase_relative_radians": -2.850407523510972
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000110111010110111",
+          "energy_model_units": 3.0751,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 3.352562874640649e-06,
+          "cost_only_phase_relative_radians": -2.835109717868338
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01010100101110011111",
+          "energy_model_units": 3.2115,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 3.4589019518686357e-06,
+          "cost_only_phase_relative_radians": -2.8921212121212125
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01010100111110011111",
+          "energy_model_units": 3.2079,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062462e-07,
+          "post_mixer_probability": 3.348049919095938e-06,
+          "cost_only_phase_relative_radians": -2.8906165099268546
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01010101101110011111",
+          "energy_model_units": 3.1565,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062466e-07,
+          "post_mixer_probability": 3.3382149998077018e-06,
+          "cost_only_phase_relative_radians": -2.869132706374086
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01010110101110011111",
+          "energy_model_units": 3.1199,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 3.364908308184064e-06,
+          "cost_only_phase_relative_radians": -2.8538349007314525
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01010110111110011111",
+          "energy_model_units": 3.1163,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 3.2570686148909677e-06,
+          "cost_only_phase_relative_radians": -2.852330198537095
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01011100110010100110",
+          "energy_model_units": 0.3031,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 1.1053282791638801e-06,
+          "cost_only_phase_relative_radians": -1.6764890282131664
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01110110011011100110",
+          "energy_model_units": 0.6381,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 1.240356552250331e-06,
+          "cost_only_phase_relative_radians": -1.8165099268547544
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01111100001010100010",
+          "energy_model_units": -0.9407,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 6.945263212233326e-07,
+          "cost_only_phase_relative_radians": -1.1566144200626962
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10011111001111100010",
+          "energy_model_units": -1.1309,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 5.091026022896398e-07,
+          "cost_only_phase_relative_radians": -1.0771159874608154
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10100100011101110110",
+          "energy_model_units": 0.7695,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 1.1192903016540194e-06,
+          "cost_only_phase_relative_radians": -1.8714315569487983
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10101001111010011001",
+          "energy_model_units": 0.4581,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 1.1961266914606464e-06,
+          "cost_only_phase_relative_radians": -1.7412748171368861
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11100010101111011001",
+          "energy_model_units": -0.1155,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 8.187413835634623e-07,
+          "cost_only_phase_relative_radians": -1.5015256008359457
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11101111101011000000",
+          "energy_model_units": -4.6797,
+          "is_exact_minimum": true,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 9.333153888074644e-08,
+          "cost_only_phase_relative_radians": 0.4061859979101361
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11110000000111011111",
+          "energy_model_units": 1.6083,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 1.73234242091671e-06,
+          "cost_only_phase_relative_radians": -2.2220271682340647
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11111001010011100110",
+          "energy_model_units": 0.0543,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062498e-07,
+          "post_mixer_probability": 1.0749623673632211e-06,
+          "cost_only_phase_relative_radians": -1.5724973876698016
+        }
+      ],
+      "stages": {
+        "initial": {
+          "included_mass": 3.528594970703125e-05,
+          "omitted_mass": 0.999964714050293,
+          "sector_digital_marginals": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "normalization": 1.0
+        },
+        "cost_only": {
+          "included_mass": 3.5285949707031175e-05,
+          "omitted_mass": 0.999964714050293,
+          "sector_digital_marginals": [
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867,
+            0.49999999999999867
+          ],
+          "normalization": 0.9999999999999973
+        },
+        "post_mixer": {
+          "included_mass": 6.112050430756145e-05,
+          "omitted_mass": 0.9999388794956925,
+          "sector_digital_marginals": [
+            0.42453972046791644,
+            0.43900705249958605,
+            0.44023536417615106,
+            0.4551085590457244,
+            0.4579072468763518,
+            0.46462595460265926,
+            0.47619015564949846,
+            0.48502052723963884,
+            0.4741548492406013,
+            0.4903941752800033,
+            0.48811633609131944,
+            0.49799203225183164,
+            0.4995947459543741,
+            0.5074341413874758,
+            0.5039964993989623,
+            0.516848571695602,
+            0.5126994754453755,
+            0.5258596416960223,
+            0.5374141820627754,
+            0.5464521612393315
+          ],
+          "normalization": 0.9999999999999971
+        }
+      },
+      "exact_optimum_probability_post_mixer": 9.333153888074644e-08,
+      "cpu_seconds": 4.826247267999861
+    },
+    {
+      "status": "LOCAL_CPU_SIMULATOR_CACHE_NOT_QBRAID_NOT_HARDWARE",
+      "scenario_key": "bcbcca8c6dd26d8cca54",
+      "region": "California",
+      "year": 2033,
+      "n_qubits": 20,
+      "assumption": "Independent same-20-node region; no cross-region ties or quantum circuit.",
+      "regional_shift_model_units": -0.06,
+      "noise_model_units": [
+        -0.0368,
+        -0.0198,
+        0.0233,
+        0.004,
+        -0.0248,
+        -0.0105,
+        0.0015,
+        0.0102,
+        0.0215,
+        -0.0187,
+        -0.0194,
+        0.0168,
+        -0.0191,
+        -0.0124,
+        -0.0092,
+        -0.0084,
+        -0.0473,
+        0.0119,
+        -0.0229,
+        0.0037
+      ],
+      "optimization": {
+        "objective": "minimize p=1 standard-QAOA expected Ising energy over bounded 3\u00d73 grid",
+        "gamma_grid": [
+          0.2,
+          0.6,
+          1.0
+        ],
+        "beta_grid": [
+          0.2,
+          0.5,
+          0.8
+        ],
+        "gamma": 0.2,
+        "beta": 0.2,
+        "expected_energy_model_units": 0.3918112510142659
+      },
+      "exact": {
+        "energy_model_units": -4.8186,
+        "paper_tie_ground_state": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          1,
+          -1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "digital_extreme_ground_state": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          1,
+          -1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      },
+      "fixed_configurations": [
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100000",
+          "energy_model_units": -1.5754,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062481e-07,
+          "post_mixer_probability": 3.5615089048184615e-07,
+          "cost_only_phase_relative_radians": -0.4646672144617914
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100001",
+          "energy_model_units": -0.2718,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062483e-07,
+          "post_mixer_probability": 5.966625313788614e-07,
+          "cost_only_phase_relative_radians": -1.0002465078060805
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100010",
+          "energy_model_units": -0.5958,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062489e-07,
+          "post_mixer_probability": 5.270219122520271e-07,
+          "cost_only_phase_relative_radians": -0.8671322925225966
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100011",
+          "energy_model_units": 0.4078,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 7.434945680855019e-07,
+          "cost_only_phase_relative_radians": -1.2794576828266229
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100100",
+          "energy_model_units": -0.842,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 4.801411713684167e-07,
+          "cost_only_phase_relative_radians": -0.7659819227608873
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100101",
+          "energy_model_units": 0.1016,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062481e-07,
+          "post_mixer_probability": 6.537991423300613e-07,
+          "cost_only_phase_relative_radians": -1.1536565324568613
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100110",
+          "energy_model_units": 0.1376,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 7.063249790609064e-07,
+          "cost_only_phase_relative_radians": -1.1684470008216927
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100111",
+          "energy_model_units": 0.7812,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062483e-07,
+          "post_mixer_probability": 8.096612378168673e-07,
+          "cost_only_phase_relative_radians": -1.4328677074774037
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101100",
+          "energy_model_units": -0.38,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 5.716079578246081e-07,
+          "cost_only_phase_relative_radians": -0.9557929334428925
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101101",
+          "energy_model_units": 0.5636,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062485e-07,
+          "post_mixer_probability": 7.759366984773207e-07,
+          "cost_only_phase_relative_radians": -1.3434675431388663
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101110",
+          "energy_model_units": 0.4196,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062481e-07,
+          "post_mixer_probability": 7.5730497696066e-07,
+          "cost_only_phase_relative_radians": -1.28430566967954
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101111",
+          "energy_model_units": 1.0632,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 8.653630138418165e-07,
+          "cost_only_phase_relative_radians": -1.548726376335251
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101011010110111",
+          "energy_model_units": 3.2732,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062481e-07,
+          "post_mixer_probability": 3.210191949591322e-06,
+          "cost_only_phase_relative_radians": -2.4566967953985213
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101111010110111",
+          "energy_model_units": 3.2296,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062485e-07,
+          "post_mixer_probability": 3.2479542812534523e-06,
+          "cost_only_phase_relative_radians": -2.4387838948233362
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000110000010101010",
+          "energy_model_units": 0.399,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 9.504232655110505e-07,
+          "cost_only_phase_relative_radians": -1.2758422350041085
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00001110000000101101",
+          "energy_model_units": 0.7336,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 1.0515738119513783e-06,
+          "cost_only_phase_relative_radians": -1.4133114215283484
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00010101101110011111",
+          "energy_model_units": 3.1234,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 3.115647953714743e-06,
+          "cost_only_phase_relative_radians": -2.395152013147083
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00100001101100100010",
+          "energy_model_units": -0.6106,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062508e-07,
+          "post_mixer_probability": 6.245365063487632e-07,
+          "cost_only_phase_relative_radians": -0.8610517666392772
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00101001010001110111",
+          "energy_model_units": 3.0378,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 3.108806595231322e-06,
+          "cost_only_phase_relative_radians": -2.3599835661462616
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00101001010011110111",
+          "energy_model_units": 3.0574,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 3.110797628400081e-06,
+          "cost_only_phase_relative_radians": -2.368036154478225
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00101110000011000101",
+          "energy_model_units": -0.3766,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 6.648202033203387e-07,
+          "cost_only_phase_relative_radians": -0.9571898110106822
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000001100110101101",
+          "energy_model_units": 0.8206,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 1.091055155063219e-06,
+          "cost_only_phase_relative_radians": -1.4490550534100246
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100011010110111",
+          "energy_model_units": 3.1408,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 3.3004248539816134e-06,
+          "cost_only_phase_relative_radians": -2.4023007395234184
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100111010110111",
+          "energy_model_units": 3.0972,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 3.3116311841392736e-06,
+          "cost_only_phase_relative_radians": -2.384387838948234
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000101011010110111",
+          "energy_model_units": 3.019,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062483e-07,
+          "post_mixer_probability": 3.1129213073751515e-06,
+          "cost_only_phase_relative_radians": -2.352259654889071
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000101111010110111",
+          "energy_model_units": 2.9754,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062481e-07,
+          "post_mixer_probability": 3.122753955101208e-06,
+          "cost_only_phase_relative_radians": -2.3343467543138865
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000110011010110111",
+          "energy_model_units": 2.9656,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062481e-07,
+          "post_mixer_probability": 3.121037589746398e-06,
+          "cost_only_phase_relative_radians": -2.330320460147904
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000110111010110111",
+          "energy_model_units": 2.922,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 3.1316238932739033e-06,
+          "cost_only_phase_relative_radians": -2.312407559572719
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01010100101110011111",
+          "energy_model_units": 2.991,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062466e-07,
+          "post_mixer_probability": 3.1771748527890104e-06,
+          "cost_only_phase_relative_radians": -2.3407559572719805
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01011100100001011100",
+          "energy_model_units": -0.1224,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 8.76787286764887e-07,
+          "cost_only_phase_relative_radians": -1.0616269515201315
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01100100101101000001",
+          "energy_model_units": -0.4846,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 7.349895358676332e-07,
+          "cost_only_phase_relative_radians": -0.9128184059161875
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01110111110110000011",
+          "energy_model_units": -0.2434,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 8.657966372163461e-07,
+          "cost_only_phase_relative_radians": -1.0119145439605592
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10000101101001011100",
+          "energy_model_units": -0.0214,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 8.565508487397206e-07,
+          "cost_only_phase_relative_radians": -1.1031224322103537
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10101010011111111010",
+          "energy_model_units": 0.066,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 8.617005520297708e-07,
+          "cost_only_phase_relative_radians": -1.139030402629417
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10101010100010101010",
+          "energy_model_units": -0.2774,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 9.294559042721702e-07,
+          "cost_only_phase_relative_radians": -0.9979457682826629
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11000110110101110001",
+          "energy_model_units": 0.0686,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 9.930916096389405e-07,
+          "cost_only_phase_relative_radians": -1.140098603122432
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11111111101011000000",
+          "energy_model_units": -4.8186,
+          "is_exact_minimum": true,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062481e-07,
+          "post_mixer_probability": 9.83775238193065e-08,
+          "cost_only_phase_relative_radians": 0.8677896466721444
+        }
+      ],
+      "stages": {
+        "initial": {
+          "included_mass": 3.528594970703125e-05,
+          "omitted_mass": 0.999964714050293,
+          "sector_digital_marginals": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "normalization": 1.0
+        },
+        "cost_only": {
+          "included_mass": 3.528594970703119e-05,
+          "omitted_mass": 0.999964714050293,
+          "sector_digital_marginals": [
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999,
+            0.499999999999999
+          ],
+          "normalization": 0.999999999999998
+        },
+        "post_mixer": {
+          "included_mass": 5.651359396501989e-05,
+          "omitted_mass": 0.999943486406035,
+          "sector_digital_marginals": [
+            0.4245274648019137,
+            0.44189190401822154,
+            0.4562308454046249,
+            0.4611733630511506,
+            0.464281632745582,
+            0.4747766743256493,
+            0.4844366156893029,
+            0.4936586049011752,
+            0.4954772951422029,
+            0.4970402166755635,
+            0.49690219594069707,
+            0.5106293756134066,
+            0.504923693076192,
+            0.5139691121198791,
+            0.5143196016893984,
+            0.5224665334211507,
+            0.5163667346893442,
+            0.5332595155677881,
+            0.5435390889721312,
+            0.5552636181971244
+          ],
+          "normalization": 0.9999999999999979
+        }
+      },
+      "exact_optimum_probability_post_mixer": 9.83775238193065e-08,
+      "cpu_seconds": 4.308658641000875
+    },
+    {
+      "status": "LOCAL_CPU_SIMULATOR_CACHE_NOT_QBRAID_NOT_HARDWARE",
+      "scenario_key": "2fb19a5dddd0329b5bee",
+      "region": "Mountain West",
+      "year": 2033,
+      "n_qubits": 20,
+      "assumption": "Independent same-20-node region; no cross-region ties or quantum circuit.",
+      "regional_shift_model_units": 0.0,
+      "noise_model_units": [
+        -0.0053,
+        0.0206,
+        -0.0071,
+        0.0153,
+        0.0039,
+        -0.0025,
+        -0.0366,
+        -0.0244,
+        -0.028,
+        -0.0381,
+        0.0014,
+        0.0111,
+        0.0062,
+        0.0193,
+        -0.0226,
+        0.0087,
+        0.0251,
+        0.0377,
+        0.0097,
+        -0.0396
+      ],
+      "optimization": {
+        "objective": "minimize p=1 standard-QAOA expected Ising energy over bounded 3\u00d73 grid",
+        "gamma_grid": [
+          0.2,
+          0.6,
+          1.0
+        ],
+        "beta_grid": [
+          0.2,
+          0.5,
+          0.8
+        ],
+        "gamma": 0.2,
+        "beta": 0.2,
+        "expected_energy_model_units": 0.46671942856712056
+      },
+      "exact": {
+        "energy_model_units": -5.0482,
+        "paper_tie_ground_state": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          1,
+          -1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "digital_extreme_ground_state": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          1,
+          -1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      },
+      "fixed_configurations": [
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100000",
+          "energy_model_units": -0.4002,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062483e-07,
+          "post_mixer_probability": 4.677209970158677e-07,
+          "cost_only_phase_relative_radians": -0.49135802469135825
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100001",
+          "energy_model_units": 0.7204,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 8.119531810639048e-07,
+          "cost_only_phase_relative_radians": -1.0447407407407416
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100010",
+          "energy_model_units": 0.3786,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 6.945316799266912e-07,
+          "cost_only_phase_relative_radians": -0.8759506172839511
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100011",
+          "energy_model_units": 1.1992,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 9.799061046467487e-07,
+          "cost_only_phase_relative_radians": -1.2811851851851856
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100100",
+          "energy_model_units": 0.274,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 6.548921160802066e-07,
+          "cost_only_phase_relative_radians": -0.8242962962962967
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100101",
+          "energy_model_units": 1.0346,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062466e-07,
+          "post_mixer_probability": 8.861533510157588e-07,
+          "cost_only_phase_relative_radians": -1.1999012345679017
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100110",
+          "energy_model_units": 1.0528,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062466e-07,
+          "post_mixer_probability": 9.641626205141356e-07,
+          "cost_only_phase_relative_radians": -1.2088888888888887
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100111",
+          "energy_model_units": 1.5134,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 1.0599211296051143e-06,
+          "cost_only_phase_relative_radians": -1.4363456790123457
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101100",
+          "energy_model_units": 0.5934,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 7.638395059093708e-07,
+          "cost_only_phase_relative_radians": -0.9820246913580246
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101101",
+          "energy_model_units": 1.354,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 1.028872076693014e-06,
+          "cost_only_phase_relative_radians": -1.3576296296296293
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101110",
+          "energy_model_units": 1.1922,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 9.911153603385071e-07,
+          "cost_only_phase_relative_radians": -1.2777283950617289
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101111",
+          "energy_model_units": 1.6528,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 1.0845595149267286e-06,
+          "cost_only_phase_relative_radians": -1.5051851851851854
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101001010110111",
+          "energy_model_units": 3.2434,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 3.83432177099336e-06,
+          "cost_only_phase_relative_radians": -2.290666666666667
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101011010110011",
+          "energy_model_units": 2.9564,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 3.7402786011673714e-06,
+          "cost_only_phase_relative_radians": -2.1489382716049383
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101011010110111",
+          "energy_model_units": 3.2706,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 4.045685748444758e-06,
+          "cost_only_phase_relative_radians": -2.304098765432099
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101101010100000",
+          "energy_model_units": 0.7854,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 1.3527085216481338e-06,
+          "cost_only_phase_relative_radians": -1.0768395061728393
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101101110011111",
+          "energy_model_units": 3.1716,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 3.7635914651307405e-06,
+          "cost_only_phase_relative_radians": -2.2552098765432103
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101111010110111",
+          "energy_model_units": 3.1184,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062464e-07,
+          "post_mixer_probability": 3.904029862585216e-06,
+          "cost_only_phase_relative_radians": -2.2289382716049384
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00001011100011011111",
+          "energy_model_units": 1.6114,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 1.4711936856515812e-06,
+          "cost_only_phase_relative_radians": -1.4847407407407405
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00010000110101100000",
+          "energy_model_units": -0.6862,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 4.977365039277065e-07,
+          "cost_only_phase_relative_radians": -0.35012345679012347
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00101000001101110011",
+          "energy_model_units": 2.024,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 2.178665767699184e-06,
+          "cost_only_phase_relative_radians": -1.6884938271604941
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100001010110111",
+          "energy_model_units": 3.0964,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 3.9014361348626645e-06,
+          "cost_only_phase_relative_radians": -2.2180740740740745
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100001110110111",
+          "energy_model_units": 3.0124,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406246e-07,
+          "post_mixer_probability": 3.7365570961484583e-06,
+          "cost_only_phase_relative_radians": -2.1765925925925926
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100011010110011",
+          "energy_model_units": 2.8094,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062483e-07,
+          "post_mixer_probability": 3.8057468189466674e-06,
+          "cost_only_phase_relative_radians": -2.0763456790123453
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100011010110110",
+          "energy_model_units": 2.663,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 3.7449782609734116e-06,
+          "cost_only_phase_relative_radians": -2.0040493827160497
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100011010110111",
+          "energy_model_units": 3.1236,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 4.116499681252065e-06,
+          "cost_only_phase_relative_radians": -2.2315061728395063
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100101110011111",
+          "energy_model_units": 3.0246,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 3.786750926644845e-06,
+          "cost_only_phase_relative_radians": -2.1826172839506173
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100111010110111",
+          "energy_model_units": 2.9714,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062481e-07,
+          "post_mixer_probability": 3.927140989675885e-06,
+          "cost_only_phase_relative_radians": -2.156345679012346
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01110100101010100011",
+          "energy_model_units": 0.3022,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 1.04452626647841e-06,
+          "cost_only_phase_relative_radians": -0.838222222222222
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10011101111011010011",
+          "energy_model_units": -0.106,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 7.573174776396856e-07,
+          "cost_only_phase_relative_radians": -0.6366419753086419
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10110100101100101100",
+          "energy_model_units": -1.0178,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 4.979840918632025e-07,
+          "cost_only_phase_relative_radians": -0.18637037037037052
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10110101111011010011",
+          "energy_model_units": -0.474,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 6.158227122607084e-07,
+          "cost_only_phase_relative_radians": -0.454913580246914
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11001101101100101100",
+          "energy_model_units": -0.9714,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 5.395332626741727e-07,
+          "cost_only_phase_relative_radians": -0.20928395061728366
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11100001011101010011",
+          "energy_model_units": -0.339,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 6.535700620418288e-07,
+          "cost_only_phase_relative_radians": -0.5215802469135804
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11101110100010101100",
+          "energy_model_units": -1.5964,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 4.5548959484380434e-07,
+          "cost_only_phase_relative_radians": 0.0993580246913579
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11110001011001011111",
+          "energy_model_units": -0.0916,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 7.221357771702632e-07,
+          "cost_only_phase_relative_radians": -0.6437530864197529
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11111111101011000000",
+          "energy_model_units": -5.0482,
+          "is_exact_minimum": true,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062468e-07,
+          "post_mixer_probability": 5.285052710785064e-08,
+          "cost_only_phase_relative_radians": 1.8039506172839506
+        }
+      ],
+      "stages": {
+        "initial": {
+          "included_mass": 3.528594970703125e-05,
+          "omitted_mass": 0.999964714050293,
+          "sector_digital_marginals": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "normalization": 1.0
+        },
+        "cost_only": {
+          "included_mass": 3.528594970703118e-05,
+          "omitted_mass": 0.999964714050293,
+          "sector_digital_marginals": [
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856,
+            0.49999999999999856
+          ],
+          "normalization": 0.9999999999999971
+        },
+        "post_mixer": {
+          "included_mass": 6.753417924556802e-05,
+          "omitted_mass": 0.9999324658207545,
+          "sector_digital_marginals": [
+            0.4263931995099108,
+            0.4489928765662973,
+            0.45313739454456337,
+            0.4668962033484033,
+            0.4739517911777346,
+            0.48261724608160655,
+            0.48552410961516834,
+            0.49724667018369434,
+            0.49657881511018115,
+            0.5041463179824522,
+            0.5117679539639399,
+            0.5230673166464,
+            0.5221698492272369,
+            0.5341801069093756,
+            0.5258339086564094,
+            0.5413654227462708,
+            0.5446289248154388,
+            0.5552908964040365,
+            0.5685851777058755,
+            0.5686940002998611
+          ],
+          "normalization": 0.9999999999999971
+        }
+      },
+      "exact_optimum_probability_post_mixer": 5.285052710785064e-08,
+      "cpu_seconds": 4.511175899000591
+    },
+    {
+      "status": "LOCAL_CPU_SIMULATOR_CACHE_NOT_QBRAID_NOT_HARDWARE",
+      "scenario_key": "400584c4ff95efb1deaf",
+      "region": "Southwest",
+      "year": 2033,
+      "n_qubits": 20,
+      "assumption": "Independent same-20-node region; no cross-region ties or quantum circuit.",
+      "regional_shift_model_units": 0.06,
+      "noise_model_units": [
+        -0.0125,
+        -0.0342,
+        -0.0053,
+        0.0114,
+        -0.0031,
+        0.0168,
+        -0.0146,
+        -0.0175,
+        -0.0015,
+        0.0296,
+        -0.0077,
+        0.017,
+        -0.0408,
+        0.0263,
+        0.0253,
+        -0.0431,
+        -0.0036,
+        0.0105,
+        -0.0027,
+        -0.0096
+      ],
+      "optimization": {
+        "objective": "minimize p=1 standard-QAOA expected Ising energy over bounded 3\u00d73 grid",
+        "gamma_grid": [
+          0.2,
+          0.6,
+          1.0
+        ],
+        "beta_grid": [
+          0.2,
+          0.5,
+          0.8
+        ],
+        "gamma": 0.2,
+        "beta": 0.2,
+        "expected_energy_model_units": 0.46608426240285306
+      },
+      "exact": {
+        "energy_model_units": -5.7381,
+        "paper_tie_ground_state": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "digital_extreme_ground_state": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      },
+      "fixed_configurations": [
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100000",
+          "energy_model_units": 0.6271,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 7.598014405156694e-07,
+          "cost_only_phase_relative_radians": -0.3633362293657685
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100001",
+          "energy_model_units": 1.6421,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062464e-07,
+          "post_mixer_probability": 1.1907717633459611e-06,
+          "cost_only_phase_relative_radians": -0.8042571676802774
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100010",
+          "energy_model_units": 1.3955,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062458e-07,
+          "post_mixer_probability": 1.0684554743897047e-06,
+          "cost_only_phase_relative_radians": -0.6971329278887923
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100011",
+          "energy_model_units": 2.1105,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062462e-07,
+          "post_mixer_probability": 1.3926264872118108e-06,
+          "cost_only_phase_relative_radians": -1.0077324066029538
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100100",
+          "energy_model_units": 1.1777,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062462e-07,
+          "post_mixer_probability": 9.77961345337765e-07,
+          "cost_only_phase_relative_radians": -0.6025195482189396
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100101",
+          "energy_model_units": 1.8327,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062453e-07,
+          "post_mixer_probability": 1.2278124811541176e-06,
+          "cost_only_phase_relative_radians": -0.8870547350130318
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100110",
+          "energy_model_units": 1.9461,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 1.365596527407331e-06,
+          "cost_only_phase_relative_radians": -0.9363162467419635
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100111",
+          "energy_model_units": 2.3011,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 1.4258102120136927e-06,
+          "cost_only_phase_relative_radians": -1.0905299739357082
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101100",
+          "energy_model_units": 1.3849,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062458e-07,
+          "post_mixer_probability": 1.0678606666790674e-06,
+          "cost_only_phase_relative_radians": -0.6925282363162468
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101101",
+          "energy_model_units": 2.0399,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062458e-07,
+          "post_mixer_probability": 1.335875349283218e-06,
+          "cost_only_phase_relative_radians": -0.9770634231103386
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101110",
+          "energy_model_units": 1.9733,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406246e-07,
+          "post_mixer_probability": 1.3337532960408973e-06,
+          "cost_only_phase_relative_radians": -0.948132059079061
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101111",
+          "energy_model_units": 2.3283,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062464e-07,
+          "post_mixer_probability": 1.3875822330444958e-06,
+          "cost_only_phase_relative_radians": -1.1023457862728057
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101001010110111",
+          "energy_model_units": 3.2941,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062466e-07,
+          "post_mixer_probability": 3.348840629883289e-06,
+          "cost_only_phase_relative_radians": -1.521894005212858
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101011010110011",
+          "energy_model_units": 3.0289,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062468e-07,
+          "post_mixer_probability": 3.3050250897326013e-06,
+          "cost_only_phase_relative_radians": -1.4066898349261507
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101011010110111",
+          "energy_model_units": 3.2195,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 3.383773287818786e-06,
+          "cost_only_phase_relative_radians": -1.489487402258905
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00010000000001110001",
+          "energy_model_units": 1.9247,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062487e-07,
+          "post_mixer_probability": 1.6119302368064458e-06,
+          "cost_only_phase_relative_radians": -0.927019982623805
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00100001010001110111",
+          "energy_model_units": 3.2925,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062458e-07,
+          "post_mixer_probability": 3.314764109248194e-06,
+          "cost_only_phase_relative_radians": -1.5211989574283225
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00101001000001110011",
+          "energy_model_units": 3.0827,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406246e-07,
+          "post_mixer_probability": 3.3421831300768843e-06,
+          "cost_only_phase_relative_radians": -1.4300608166811464
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00101001000001110111",
+          "energy_model_units": 3.2733,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062464e-07,
+          "post_mixer_probability": 3.421816684334857e-06,
+          "cost_only_phase_relative_radians": -1.5128583840139003
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00101001010001110011",
+          "energy_model_units": 3.0081,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062464e-07,
+          "post_mixer_probability": 3.3770328102839723e-06,
+          "cost_only_phase_relative_radians": -1.3976542137271935
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00101001010001110110",
+          "energy_model_units": 2.8437,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 3.311709825478356e-06,
+          "cost_only_phase_relative_radians": -1.3262380538662033
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00101001010001110111",
+          "energy_model_units": 3.1987,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062458e-07,
+          "post_mixer_probability": 3.4574967253751456e-06,
+          "cost_only_phase_relative_radians": -1.4804517810599471
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00111101000000100111",
+          "energy_model_units": 1.2845,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062487e-07,
+          "post_mixer_probability": 1.4507172302303705e-06,
+          "cost_only_phase_relative_radians": -0.648913987836663
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000001100101011101",
+          "energy_model_units": 2.1849,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062487e-07,
+          "post_mixer_probability": 2.1389063047799416e-06,
+          "cost_only_phase_relative_radians": -1.0400521285838393
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000011000111011000",
+          "energy_model_units": 0.1257,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062489e-07,
+          "post_mixer_probability": 8.424392904390984e-07,
+          "cost_only_phase_relative_radians": -0.1455256298870542
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100001010110111",
+          "energy_model_units": 3.0779,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 3.3282615141543687e-06,
+          "cost_only_phase_relative_radians": -1.4279756733275413
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100011010110011",
+          "energy_model_units": 2.8127,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062468e-07,
+          "post_mixer_probability": 3.284715203325841e-06,
+          "cost_only_phase_relative_radians": -1.3127715030408338
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100011010110111",
+          "energy_model_units": 3.0033,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062466e-07,
+          "post_mixer_probability": 3.3629794818204186e-06,
+          "cost_only_phase_relative_radians": -1.3955690703735877
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01011111001001111100",
+          "energy_model_units": -0.6817,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062487e-07,
+          "post_mixer_probability": 6.504240650697037e-07,
+          "cost_only_phase_relative_radians": 0.20521285838401404
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01111001000111011000",
+          "energy_model_units": -0.1593,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062489e-07,
+          "post_mixer_probability": 9.285306969129299e-07,
+          "cost_only_phase_relative_radians": -0.021720243266724282
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10011101000001011111",
+          "energy_model_units": 0.5809,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062487e-07,
+          "post_mixer_probability": 8.986500859730399e-07,
+          "cost_only_phase_relative_radians": -0.34326672458731444
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10110001001110100100",
+          "energy_model_units": -0.3565,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062487e-07,
+          "post_mixer_probability": 8.266424224685212e-07,
+          "cost_only_phase_relative_radians": 0.06394439617723746
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10110010001100111111",
+          "energy_model_units": 0.3511,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062492e-07,
+          "post_mixer_probability": 8.875878138882836e-07,
+          "cost_only_phase_relative_radians": -0.2434404865334483
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10111111110100110111",
+          "energy_model_units": -0.9383,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062487e-07,
+          "post_mixer_probability": 6.076599158717771e-07,
+          "cost_only_phase_relative_radians": 0.31668114682884463
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11101011011100111000",
+          "energy_model_units": -2.5915,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062487e-07,
+          "post_mixer_probability": 2.8292688662243754e-07,
+          "cost_only_phase_relative_radians": 1.0348392701998268
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11111001000110000011",
+          "energy_model_units": -0.3793,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062487e-07,
+          "post_mixer_probability": 8.569488956864025e-07,
+          "cost_only_phase_relative_radians": 0.0738488271068638
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11111111111111100000",
+          "energy_model_units": -5.7381,
+          "is_exact_minimum": true,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062458e-07,
+          "post_mixer_probability": 5.760690332840625e-08,
+          "cost_only_phase_relative_radians": 2.401737619461338
+        }
+      ],
+      "stages": {
+        "initial": {
+          "included_mass": 3.528594970703125e-05,
+          "omitted_mass": 0.999964714050293,
+          "sector_digital_marginals": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "normalization": 1.0
+        },
+        "cost_only": {
+          "included_mass": 3.5285949707031155e-05,
+          "omitted_mass": 0.999964714050293,
+          "sector_digital_marginals": [
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981,
+            0.4999999999999981
+          ],
+          "normalization": 0.9999999999999962
+        },
+        "post_mixer": {
+          "included_mass": 6.681347651603378e-05,
+          "omitted_mass": 0.999933186523484,
+          "sector_digital_marginals": [
+            0.4432073967642121,
+            0.4558257871115305,
+            0.468884279778782,
+            0.4801234931533055,
+            0.48597365865583975,
+            0.4978041764955876,
+            0.500901912407313,
+            0.5088389448467522,
+            0.5114770029366669,
+            0.5249349088844095,
+            0.5189268762570716,
+            0.5313213499566432,
+            0.5217140996504573,
+            0.5412358823837848,
+            0.5405674093396803,
+            0.5378768734201744,
+            0.5445278622274554,
+            0.5542826483551897,
+            0.5683322429108829,
+            0.5750155321714546
+          ],
+          "normalization": 0.999999999999996
+        }
+      },
+      "exact_optimum_probability_post_mixer": 5.760690332840625e-08,
+      "cpu_seconds": 4.232668705999458
+    },
+    {
+      "status": "LOCAL_CPU_SIMULATOR_CACHE_NOT_QBRAID_NOT_HARDWARE",
+      "scenario_key": "0b92ea340aac87ff71b7",
+      "region": "Texas",
+      "year": 2033,
+      "n_qubits": 20,
+      "assumption": "Independent same-20-node region; no cross-region ties or quantum circuit.",
+      "regional_shift_model_units": 0.12,
+      "noise_model_units": [
+        -0.0069,
+        0.0027,
+        0.0022,
+        0.0165,
+        0.0301,
+        0.0171,
+        0.0281,
+        -0.013,
+        -0.0055,
+        -0.026,
+        -0.0162,
+        -0.0043,
+        -0.0137,
+        0.0185,
+        0.0366,
+        -0.0189,
+        0.0372,
+        0.0077,
+        0.0156,
+        -0.005
+      ],
+      "optimization": {
+        "objective": "minimize p=1 standard-QAOA expected Ising energy over bounded 3\u00d73 grid",
+        "gamma_grid": [
+          0.2,
+          0.6,
+          1.0
+        ],
+        "beta_grid": [
+          0.2,
+          0.5,
+          0.8
+        ],
+        "gamma": 0.2,
+        "beta": 0.2,
+        "expected_energy_model_units": 0.5023148907731899
+      },
+      "exact": {
+        "energy_model_units": -6.3868,
+        "paper_tie_ground_state": [
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "digital_extreme_ground_state": [
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      },
+      "fixed_configurations": [
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100000",
+          "energy_model_units": 1.8686,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 1.1595827402589703e-06,
+          "cost_only_phase_relative_radians": -0.2726857142857142
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100001",
+          "energy_model_units": 2.7524,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062485e-07,
+          "post_mixer_probability": 1.6484247377355077e-06,
+          "cost_only_phase_relative_radians": -0.6093714285714285
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100010",
+          "energy_model_units": 2.4432,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 1.4727385612872912e-06,
+          "cost_only_phase_relative_radians": -0.49158095238095223
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100011",
+          "energy_model_units": 3.027,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 1.7785401589381851e-06,
+          "cost_only_phase_relative_radians": -0.7139809523809522
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100100",
+          "energy_model_units": 2.2842,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 1.386425642667073e-06,
+          "cost_only_phase_relative_radians": -0.4310095238095242
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100101",
+          "energy_model_units": 2.808,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 1.6204045704978367e-06,
+          "cost_only_phase_relative_radians": -0.6305523809523805
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100110",
+          "energy_model_units": 2.8588,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 1.7510341236927978e-06,
+          "cost_only_phase_relative_radians": -0.6499047619047618
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000100111",
+          "energy_model_units": 3.0826,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062481e-07,
+          "post_mixer_probability": 1.7386433421299716e-06,
+          "cost_only_phase_relative_radians": -0.7351619047619047
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101100",
+          "energy_model_units": 2.3612,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 1.429094925547919e-06,
+          "cost_only_phase_relative_radians": -0.46034285714285694
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101101",
+          "energy_model_units": 2.885,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 1.6655629015801619e-06,
+          "cost_only_phase_relative_radians": -0.6598857142857142
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101110",
+          "energy_model_units": 2.7558,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062475e-07,
+          "post_mixer_probability": 1.63600646043804e-06,
+          "cost_only_phase_relative_radians": -0.6106666666666665
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000000000000101111",
+          "energy_model_units": 2.9796,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 1.6198751946700799e-06,
+          "cost_only_phase_relative_radians": -0.6959238095238094
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000100001010110011",
+          "energy_model_units": 3.5116,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062481e-07,
+          "post_mixer_probability": 2.9794882461162955e-06,
+          "cost_only_phase_relative_radians": -0.8985904761904759
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101001010110011",
+          "energy_model_units": 3.379,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 3.0409839878944183e-06,
+          "cost_only_phase_relative_radians": -0.8480761904761902
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101001010110110",
+          "energy_model_units": 3.2108,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 2.9940932002727532e-06,
+          "cost_only_phase_relative_radians": -0.7839999999999998
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101001010110111",
+          "energy_model_units": 3.4346,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 2.9727648859103712e-06,
+          "cost_only_phase_relative_radians": -0.8692571428571427
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00000101011010110011",
+          "energy_model_units": 3.2014,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062483e-07,
+          "post_mixer_probability": 2.9743721637376295e-06,
+          "cost_only_phase_relative_radians": -0.7804190476190471
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00001110100000010111",
+          "energy_model_units": 1.3028,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 1.148753124455759e-06,
+          "cost_only_phase_relative_radians": -0.057142857142856496
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00100001000001110011",
+          "energy_model_units": 3.4126,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062477e-07,
+          "post_mixer_probability": 2.982671192179141e-06,
+          "cost_only_phase_relative_radians": -0.8608761904761906
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00100001000001110110",
+          "energy_model_units": 3.2444,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062472e-07,
+          "post_mixer_probability": 2.9366796033336175e-06,
+          "cost_only_phase_relative_radians": -0.7967999999999993
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00100010111010111011",
+          "energy_model_units": 0.8704,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 1.0119848039710236e-06,
+          "cost_only_phase_relative_radians": 0.10758095238095278
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "00101001000001110011",
+          "energy_model_units": 3.1504,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.53674316406247e-07,
+          "post_mixer_probability": 2.93972937250503e-06,
+          "cost_only_phase_relative_radians": -0.760990476190476
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100001010110011",
+          "energy_model_units": 3.1804,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 3.0392668736448414e-06,
+          "cost_only_phase_relative_radians": -0.7724190476190476
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100001010110110",
+          "energy_model_units": 3.0122,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 2.9924025622504817e-06,
+          "cost_only_phase_relative_radians": -0.7083428571428572
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100001010110111",
+          "energy_model_units": 3.236,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062483e-07,
+          "post_mixer_probability": 2.9710862921440384e-06,
+          "cost_only_phase_relative_radians": -0.7936000000000005
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000100011010110011",
+          "energy_model_units": 3.0028,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062483e-07,
+          "post_mixer_probability": 2.9726926433091298e-06,
+          "cost_only_phase_relative_radians": -0.7047619047619045
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01000111110100110010",
+          "energy_model_units": -0.029,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 8.968658714883053e-07,
+          "cost_only_phase_relative_radians": 0.45020952380952384
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01010000101111111001",
+          "energy_model_units": 0.885,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 1.171301903170144e-06,
+          "cost_only_phase_relative_radians": 0.10201904761904768
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01011010100100110010",
+          "energy_model_units": -0.2922,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 7.975870794371846e-07,
+          "cost_only_phase_relative_radians": 0.5504761904761906
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01101011000000010100",
+          "energy_model_units": -0.7002,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 5.98042157348095e-07,
+          "cost_only_phase_relative_radians": 0.7059047619047623
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01101110001011111101",
+          "energy_model_units": -0.4624,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 6.799964800433749e-07,
+          "cost_only_phase_relative_radians": 0.6153142857142857
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "01111101101110111011",
+          "energy_model_units": -1.7476,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 4.209078537061894e-07,
+          "cost_only_phase_relative_radians": 1.104914285714286
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10011000100010001011",
+          "energy_model_units": 1.4262,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 1.5216000245966522e-06,
+          "cost_only_phase_relative_radians": -0.10415238095238033
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10100100000101000100",
+          "energy_model_units": 0.6246,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 1.0695581765683127e-06,
+          "cost_only_phase_relative_radians": 0.20121904761904785
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10101001000001011101",
+          "energy_model_units": 1.8426,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062504e-07,
+          "post_mixer_probability": 1.8029085135884132e-06,
+          "cost_only_phase_relative_radians": -0.2627809523809521
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "10101100000001010100",
+          "energy_model_units": -0.1888,
+          "is_exact_minimum": false,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.5367431640625e-07,
+          "post_mixer_probability": 7.282618556160363e-07,
+          "cost_only_phase_relative_radians": 0.5110857142857146
+        },
+        {
+          "bitstring_c_n_minus_1_to_c_0": "11111111111111111000",
+          "energy_model_units": -6.3868,
+          "is_exact_minimum": true,
+          "initial_probability": 9.5367431640625e-07,
+          "cost_only_probability": 9.536743164062479e-07,
+          "post_mixer_probability": 6.342859719236338e-08,
+          "cost_only_phase_relative_radians": 2.872228571428572
+        }
+      ],
+      "stages": {
+        "initial": {
+          "included_mass": 3.528594970703125e-05,
+          "omitted_mass": 0.999964714050293,
+          "sector_digital_marginals": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "normalization": 1.0
+        },
+        "cost_only": {
+          "included_mass": 3.5285949707031196e-05,
+          "omitted_mass": 0.999964714050293,
+          "sector_digital_marginals": [
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988,
+            0.4999999999999988
+          ],
+          "normalization": 0.9999999999999976
+        },
+        "post_mixer": {
+          "included_mass": 6.661376082392343e-05,
+          "omitted_mass": 0.999933386239176,
+          "sector_digital_marginals": [
+            0.45938819250999097,
+            0.47530314791554495,
+            0.4825888555895523,
+            0.4921115144020426,
+            0.5014967533262122,
+            0.5068963595930159,
+            0.5158621938315702,
+            0.5172751502857293,
+            0.5183144606717828,
+            0.5225842185505142,
+            0.5241971162027101,
+            0.5331765291790034,
+            0.5318346594140604,
+            0.54380999078895,
+            0.54597814812126,
+            0.5454821698943837,
+            0.5536398502176039,
+            0.5560006658460437,
+            0.5712080383959177,
+            0.5752014748698422
+          ],
+          "normalization": 0.9999999999999974
+        }
+      },
+      "exact_optimum_probability_post_mixer": 6.342859719236338e-08,
+      "cpu_seconds": 4.252155944999686
+    }
+  ]
+}
