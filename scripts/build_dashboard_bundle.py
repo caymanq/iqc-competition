@@ -9,11 +9,16 @@ FILES = (
     "notebooks/data/quantum_cache_2033.json",
     "notebooks/data/independent_region_views_2033.json",
     "artifacts/README.md",
+    "artifacts/BUNDLE_NOT_STANDALONE.md",
     "artifacts/qbraid_dqa_2033_20q.qasm",
     "artifacts/qbraid_dqa_2033_20q.manifest.json",
     "artifacts/qbraid_dqa_2033_3q_smoke.qasm",
     "artifacts/qbraid_dqa_2033_3q_smoke.manifest.json",
+    "artifacts/qbraid_runs/README.md",
+    "artifacts/qbraid_runs/smoke_3q_counts.json",
+    "artifacts/qbraid_runs/smoke_3q_verified_metrics.json",
     "README.md",
+    "QBRAID_START_HERE.md",
 )
 
 

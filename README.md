@@ -4,6 +4,10 @@ This is a reproducible implementation of the Vasion/IQC Paper Phase Transition
 challenge. It treats the provided coefficients as **illustrative model inputs,
 not empirical forecasts**.
 
+> **Using qBraid Lab? Read [QBRAID_START_HERE.md](QBRAID_START_HERE.md).**
+> The Git branch is authoritative; `artifacts/paperflip_qbraid_lab_dashboard_bundle.zip`
+> is a convenience preview/handoff and is not a standalone source checkout.
+
 ## One-command reproduction
 
 ```bash
@@ -112,7 +116,8 @@ synthetic regional models, each run as a separate 20-node local CPU circuit.
 The 1/2/5-region controls compare prefixes of that set. They do not construct
 a 40- or 100-node quantum circuit and include no cross-region ties.
 
-For a downloadable handoff, run `python scripts/build_dashboard_bundle.py`;
-the reproducible ZIP contains the notebook, cache, offline QASM artifacts, and
-handoff instructions. The source notebook centralizes notation in one
+For a downloadable convenience handoff, run `python scripts/build_dashboard_bundle.py`;
+the ZIP contains the notebook, cache, offline QASM artifacts, and handoff
+instructions, but **not** the full source/config tree. Use the Git checkout
+above for a runnable environment. The source notebook centralizes notation in one
 `NOTATION` dictionary for theory updates.

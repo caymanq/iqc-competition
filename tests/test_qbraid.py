@@ -43,3 +43,14 @@ def test_external_counts_score_using_qasm_bit_order(tmp_path):
     assert scored["modal_bitstring"] == "111"
     assert scored["exact_energy_int"] == manifest["classical_reference"]["exact_energy_int"]
     assert scored["ground_shots"] <= 8
+
+
+def test_committed_parent_smoke_counts_match_committed_manifest():
+    scored = score_counts(
+        "artifacts/qbraid_dqa_2033_3q_smoke.manifest.json",
+        "artifacts/qbraid_runs/smoke_3q_counts.json",
+    )
+    assert scored["shots_received"] == 1000
+    assert scored["ground_shots"] == 805
+    assert scored["ground_shot_probability"] == 0.805
+    assert scored["modal_energy_error_int"] == 0

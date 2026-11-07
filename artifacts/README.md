@@ -1,7 +1,9 @@
 # qBraid handoff artifacts (offline only)
 
-Status: **exported, not submitted**. These files do not contain credentials and
-this repository does not contact qBraid.
+Status: exports are offline and contain no credentials. This repository never
+submits to qBraid. A parent-controlled executor has since supplied sanitized
+provenance in [`qbraid_runs/`](qbraid_runs/): the 3-qubit smoke completed; the
+20-qubit run remains pending. See that directory for authoritative status.
 
 ## Primary QIR-state-vector target
 
