@@ -1,0 +1,11 @@
+{
+  "compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0"
+,
+  "kernel": "Linux 6.12.113+ x86_64 GNU/Linux"
+,
+  "cpu_model": "Intel(R) Xeon(R) Processor"
+,
+  "thread_policy": "single process; no OpenMP/threaded libraries",
+  "qaoa": "ideal p=1 statevector; exact expectation; 3x3 gamma/beta grid (9 optimizer evaluations)",
+  "instance_family": "seeded dense ferromagnetic J>=0; mixed-sign h; bit 0=digital; E=-sum J ss-sum h s"
+}
