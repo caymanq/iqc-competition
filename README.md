@@ -48,3 +48,40 @@ fragility does not erase it.
 
 Ties represent mutual dependence, not causal evidence. The yearly equilibria
 are not a model of adoption delay or switching costs.
+
+## Offline qBraid export and count scoring
+
+No qBraid credentials or API calls are in this repository. The command below
+only emits plain-text OpenQASM 3 and JSON manifests; it does **not** submit a
+job:
+
+```bash
+.venv/bin/python -m paperflip.cli export-qbraid \
+  --config configs/one_region.yaml --year 2033 --artifacts-dir artifacts
+```
+
+It creates:
+- `artifacts/qbraid_dqa_2033_20q.qasm` and matching manifest: the full
+  20-industry DQA at a representative near-transition year, configured for
+  qBraid's QIR state-vector simulator with a 2,000-shot request.
+- `artifacts/qbraid_dqa_2033_3q_smoke.qasm` and matching manifest: a connected
+  Healthcare–Insurance–Pharma smoke test with 256 requested shots.
+
+The manifest gives QASM bit ordering, industry/qubit mapping, Ising decoding,
+exact integer energy, ground states, source gate counts, and scoring rules.
+After a parent/controller receives provider counts as a JSON map (or
+`{"counts": {...}}`), score them locally:
+
+```bash
+.venv/bin/python -m paperflip.cli score-qbraid \
+  --manifest artifacts/qbraid_dqa_2033_20q.manifest.json \
+  --counts provider_counts.json
+```
+
+The resulting JSON reports modal and best-observed raw sample energy errors
+and ground-shot probability. It does not resubmit or alter provider results.
+The export already decomposes each ZZ term to portable `cx; rz; cx`; provider
+compilation can still change depth/counts. Hardware
+follow-on should use shallow small-QAOA circuits; confirm backend entitlement,
+transpilation, shot limits, and linked-account billing at submission time—
+zero catalog pricing is not a billing guarantee.

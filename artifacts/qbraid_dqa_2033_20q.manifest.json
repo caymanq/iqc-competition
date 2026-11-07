@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "status": "EXPORTED_NOT_SUBMITTED",
+  "target": "qbraid:qbraid:sim:qir-sv",
+  "format": "openqasm3",
+  "qasm_file": "qbraid_dqa_2033_20q.qasm",
+  "year": 2033,
+  "dqa": {
+    "p": 40,
+    "normalized_total_time": 20.0,
+    "normalization_scale_int": 4100,
+    "schedule": "linear: H(t)=(1-t/T)(-sum X)+t/T*H_problem; first-order product formula",
+    "sample_budget_requested": 2000
+  },
+  "bitstring_contract": {
+    "result_key_order": "c[19]...c[0] (left-to-right), as returned by common OpenQASM result APIs",
+    "qubit_to_industry": [
+      {
+        "qubit": 0,
+        "industry": "Technology"
+      },
+      {
+        "qubit": 1,
+        "industry": "Media"
+      },
+      {
+        "qubit": 2,
+        "industry": "Telecom"
+      },
+      {
+        "qubit": 3,
+        "industry": "Retail"
+      },
+      {
+        "qubit": 4,
+        "industry": "Hospitality"
+      },
+      {
+        "qubit": 5,
+        "industry": "Logistics"
+      },
+      {
+        "qubit": 6,
+        "industry": "Banking"
+      },
+      {
+        "qubit": 7,
+        "industry": "Accounting"
+      },
+      {
+        "qubit": 8,
+        "industry": "Manufacturing"
+      },
+      {
+        "qubit": 9,
+        "industry": "Insurance"
+      },
+      {
+        "qubit": 10,
+        "industry": "Energy"
+      },
+      {
+        "qubit": 11,
+        "industry": "Pharma"
+      },
+      {
+        "qubit": 12,
+        "industry": "Education"
+      },
+      {
+        "qubit": 13,
+        "industry": "Nonprofit"
+      },
+      {
+        "qubit": 14,
+        "industry": "Real Estate"
+      },
+      {
+        "qubit": 15,
+        "industry": "Construction"
+      },
+      {
+        "qubit": 16,
+        "industry": "Agriculture"
+      },
+      {
+        "qubit": 17,
+        "industry": "Healthcare"
+      },
+      {
+        "qubit": 18,
+        "industry": "Government"
+      },
+      {
+        "qubit": 19,
+        "industry": "Legal"
+      }
+    ],
+    "spin_decoding": "displayed bit 0 -> s=+1 digital; displayed bit 1 -> s=-1 paper; reverse displayed key before indexing industry",
+    "scoring": "Use paperflip score-qbraid --manifest MANIFEST --counts COUNTS_JSON. Counts are scored directly; no state polishing."
+  },
+  "classical_reference": {
+    "exact_energy_int": -51100,
+    "exact_energy_model_units": -5.11,
+    "most_paper_ground_state": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    "most_digital_ground_state": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    "ground_state_degenerate": false
+  },
+  "predicted_source_gate_counts": {
+    "h": 20,
+    "rz": 1760,
+    "rx": 780,
+    "cx": 1920,
+    "measure": 20,
+    "total_nonmeasurement": 4480,
+    "estimated_source_depth_including_measurement": 576
+  },
+  "transpilation_note": "Counts are pre-transpilation source gates. ZZ terms are already decomposed to cx-rz-cx; qBraid/provider compilation may still alter depth and counts. Record provider-reported compilation data separately.",
+  "provider_note": "This artifact is not a submission. qBraid entitlement, backend availability, limits, and linked-account billing must be checked at submission time.",
+  "ising_model": {
+    "names": [
+      "Technology",
+      "Media",
+      "Telecom",
+      "Retail",
+      "Hospitality",
+      "Logistics",
+      "Banking",
+      "Accounting",
+      "Manufacturing",
+      "Insurance",
+      "Energy",
+      "Pharma",
+      "Education",
+      "Nonprofit",
+      "Real Estate",
+      "Construction",
+      "Agriculture",
+      "Healthcare",
+      "Government",
+      "Legal"
+    ],
+    "resistance_int": [
+      1000,
+      2000,
+      2500,
+      3000,
+      3500,
+      4000,
+      4500,
+      5000,
+      5000,
+      5500,
+      5500,
+      6000,
+      6000,
+      6500,
+      6500,
+      7000,
+      7000,
+      7500,
+      8500,
+      9000
+    ],
+    "ties_int": [
+      {
+        "i": 0,
+        "j": 1,
+        "value": 750
+      },
+      {
+        "i": 0,
+        "j": 2,
+        "value": 900
+      },
+      {
+        "i": 1,
+        "j": 3,
+        "value": 450
+      },
+      {
+        "i": 3,
+        "j": 4,
+        "value": 600
+      },
+      {
+        "i": 3,
+        "j": 5,
+        "value": 1200
+      },
+      {
+        "i": 5,
+        "j": 8,
+        "value": 1350
+      },
+      {
+        "i": 5,
+        "j": 11,
+        "value": 600
+      },
+      {
+        "i": 5,
+        "j": 16,
+        "value": 900
+      },
+      {
+        "i": 6,
+        "j": 7,
+        "value": 900
+      },
+      {
+        "i": 6,
+        "j": 9,
+        "value": 750
+      },
+      {
+        "i": 6,
+        "j": 14,
+        "value": 1200
+      },
+      {
+        "i": 6,
+        "j": 19,
+        "value": 750
+      },
+      {
+        "i": 7,
+        "j": 13,
+        "value": 600
+      },
+      {
+        "i": 8,
+        "j": 10,
+        "value": 750
+      },
+      {
+        "i": 9,
+        "j": 17,
+        "value": 1500
+      },
+      {
+        "i": 9,
+        "j": 19,
+        "value": 600
+      },
+      {
+        "i": 11,
+        "j": 17,
+        "value": 1050
+      },
+      {
+        "i": 12,
+        "j": 13,
+        "value": 600
+      },
+      {
+        "i": 12,
+        "j": 18,
+        "value": 900
+      },
+      {
+        "i": 14,
+        "j": 15,
+        "value": 1200
+      },
+      {
+        "i": 14,
+        "j": 19,
+        "value": 1050
+      },
+      {
+        "i": 15,
+        "j": 18,
+        "value": 600
+      },
+      {
+        "i": 17,
+        "j": 18,
+        "value": 900
+      },
+      {
+        "i": 18,
+        "j": 19,
+        "value": 900
+      }
+    ],
+    "pressure_step_int": 700,
+    "unit": 10000
+  }
+}

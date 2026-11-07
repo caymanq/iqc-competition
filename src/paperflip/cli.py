@@ -16,6 +16,7 @@ from .exact import mincut, flip_intervals
 from .solvers import simulated_annealing, dqa_aer, qaoa_aer, _decode
 from .metrics import observed_flip_years, flip_comparison
 from .scenarios import twelve_region, no_ties, resistance_influence
+from .qbraid import export_artifact, induced_model, score_counts
 
 
 def _exact(model, years):
@@ -226,7 +227,7 @@ def run(args) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=["all"])
+    parser.add_argument("command", choices=["all", "export-qbraid", "score-qbraid"])
     parser.add_argument("--config", default="configs/one_region.yaml")
     parser.add_argument("--out", default="results/mvp")
     parser.add_argument("--seed", type=int, default=20261106)
@@ -234,7 +235,42 @@ def main() -> int:
     parser.add_argument("--dqa-p", type=int, default=40)
     parser.add_argument("--dqa-time", type=float, default=20.0)
     parser.add_argument("--quantum-nodes", type=int, default=20)
-    return run(parser.parse_args())
+    parser.add_argument("--year", type=int, default=2033)
+    parser.add_argument("--artifacts-dir", default="artifacts")
+    parser.add_argument("--manifest")
+    parser.add_argument("--counts")
+    args = parser.parse_args()
+    if args.command == "all":
+        return run(args)
+    if args.command == "score-qbraid":
+        if not args.manifest or not args.counts:
+            parser.error("score-qbraid requires --manifest and --counts")
+        print(json.dumps(score_counts(args.manifest, args.counts), indent=2))
+        return 0
+    model, _, _ = load_model(args.config)
+    if args.year < 2026:
+        parser.error("--year must be 2026 or later")
+    root = Path(args.artifacts_dir)
+    full = export_artifact(
+        model, args.year, p=40, total_time=20.0, shots=2000,
+        target="qbraid:qbraid:sim:qir-sv",
+        qasm_path=root / f"qbraid_dqa_{args.year}_20q.qasm",
+        manifest_path=root / f"qbraid_dqa_{args.year}_20q.manifest.json",
+    )
+    tiny_model = induced_model(model, ("Healthcare", "Insurance", "Pharma"))
+    tiny = export_artifact(
+        tiny_model, args.year, p=8, total_time=4.0, shots=256,
+        target="qbraid:qbraid:sim:qir-sv",
+        qasm_path=root / f"qbraid_dqa_{args.year}_3q_smoke.qasm",
+        manifest_path=root / f"qbraid_dqa_{args.year}_3q_smoke.manifest.json",
+    )
+    print(json.dumps({
+        "status": "EXPORTED_NOT_SUBMITTED",
+        "artifacts_dir": str(root),
+        "full_manifest": full,
+        "smoke_manifest": tiny,
+    }, indent=2))
+    return 0
 
 
 if __name__ == "__main__":
