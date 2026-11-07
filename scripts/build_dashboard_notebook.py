@@ -55,7 +55,10 @@ from paperflip.dashboard import (
 )
 from paperflip.region_views import nested_regions, compute_region_view
 from paperflip.dashboard_runs import run_local_dqa_and_persist, latest_matching_run
-from paperflip.qaoa_landscape import compute_qaoa_landscape, persist_landscape
+from paperflip.qaoa_year_sweep import (
+    DEFAULT_BETA_GRID, DEFAULT_GAMMA_GRID, compute_qaoa_year_sweep,
+    latest_matching_qaoa_year_sweep, persist_qaoa_year_sweep,
+)
 
 ROOT = Path.cwd()
 if not (ROOT / "configs" / "one_region.yaml").exists():
@@ -448,88 +451,100 @@ region_count.observe(set_region_options,"value")
 for widget in [region_select,region_year,region_scenario]:
     widget.observe(render_region,"value")
 region_compute.on_click(compute_region); region_reset.on_click(reset_region)
-landscape_resolution = W.ToggleButtons(options=[3,5,7], value=5, description="Grid")
-landscape_compute = W.Button(description="Compute QAOA landscape (local CPU)", button_style="warning")
-landscape_status = W.HTML("<b style='color:#0b4f78'>Landscape is not computed until requested.</b>")
-landscape_out = W.Output()
-landscape_memory_cache, landscape_lock = {}, threading.Lock()
+year_sweep_compute = W.Button(description="Compute yearly probability heatmap (local CPU)", button_style="warning")
+year_sweep_status = W.HTML("<b style='color:#0b4f78'>Yearly QAOA heatmap is not computed until requested.</b>")
+year_sweep_out = W.Output()
+year_sweep_memory, year_sweep_lock = {}, threading.Lock()
 
-def landscape_parameters():
-    resolution = landscape_resolution.value
-    # Low-resolution bounded surface: same selected 20-node model/year, no hidden sweep.
-    # The symmetric gamma interval avoids arbitrarily excluding the direction
-    # that lowers this signed ferromagnetic cost; beta uses one standard period.
-    return np.linspace(-np.pi, np.pi, resolution), np.linspace(0.0, np.pi/2, resolution)
+def year_sweep_key(selected):
+    return (model_fingerprint(selected.model), selected.name, 20261106, tuple(YEARS),
+            tuple(DEFAULT_GAMMA_GRID), tuple(DEFAULT_BETA_GRID))
 
-def render_landscape(change=None):
+def render_year_sweep(change=None):
     selected = selected_region_scenario()
-    gamma, beta = landscape_parameters()
-    key = (model_fingerprint(selected.model), region_year.value, tuple(gamma), tuple(beta))
-    landscape = landscape_memory_cache.get(key)
-    with landscape_out:
+    key = year_sweep_key(selected)
+    result = year_sweep_memory.get(key)
+    persisted = None
+    if result is None:
+        persisted = latest_matching_qaoa_year_sweep(
+            ROOT / "results" / "qaoa_year_sweeps", selected.model, YEARS, region=selected.name,
+            region_seed=20261106, gamma_grid=DEFAULT_GAMMA_GRID, beta_grid=DEFAULT_BETA_GRID,
+        )
+        if persisted:
+            result, path = persisted
+            year_sweep_memory[key] = result
+    with year_sweep_out:
         clear_output(wait=True)
-        display(caveat("Standard p=1 QAOA expected-energy landscape: same selected independent 20-node region/year/model as above. "
-                       "The bounded grid uses γ from −π to π and β from 0 to π/2. This is not DQA, not qBraid, and not hardware; it is computed only by the explicit button."))
-        if landscape is None:
-            print("STALE / absent. Click Compute QAOA landscape for this exact model, year, and grid. Changing region/year/scenario/grid invalidates reuse.")
+        display(caveat("Each cell is an exact local-statevector marginal P(bit_i=0): **digital**, because this notebook uses "
+                       "x_i=0, s_i=+1 for digital. It is not a measured-shot estimate, empirical forecast, remote qBraid run, or hardware result. "
+                       "Each of the 15 years independently optimizes a bounded 3×3 standard-p1-QAOA expected-energy grid on this one selected 20-node region."))
+        if result is None:
+            print("STALE / absent. Click ‘Compute yearly probability heatmap (local CPU)’ for the selected independent region/scenario. "
+                  "Selectors never launch this 15-year calculation; only one selected region is computed.")
             return
-        g, b = np.array(landscape["gamma_values"]), np.array(landscape["beta_values"])
-        energy = np.array(landscape["expected_energy_model_units"])
-        grad = np.array(landscape["gradient_norm_model_units_per_radian"])
-        G, B = np.meshgrid(g, b)
-        fig = plt.figure(figsize=(12,4.5))
-        ax = fig.add_subplot(1,2,1, projection="3d")
-        norm = plt.Normalize(grad.min(), grad.max() if grad.max() > grad.min() else grad.min()+1)
-        surface = ax.plot_surface(G, B, energy, facecolors=plt.cm.viridis(norm(grad)), rstride=1, cstride=1,
-                                  linewidth=.2, antialiased=True, shade=False)
-        picked = landscape["selected_grid_minimum"]
-        ax.scatter([picked["gamma"]], [picked["beta"]], [picked["expected_energy_model_units"]],
-                   color="#e63946", s=55, label="selected grid angle")
-        ax.set(xlabel="γ (cost angle)", ylabel="β (standard +ΣX mixer angle)",
-               zlabel="expected energy", title="Actual p=1 QAOA expected energy")
-        ax.legend()
-        mapper = plt.cm.ScalarMappable(norm=norm, cmap="viridis"); mapper.set_array(grad)
-        fig.colorbar(mapper, ax=ax, pad=.1, label="||∇E|| (finite difference)")
-        contour = fig.add_subplot(1,2,2)
-        cs = contour.contourf(G, B, energy, levels=min(12, landscape_resolution.value + 3), cmap="cividis")
-        contour.contour(G, B, grad, colors="white", linewidths=.7)
-        contour.scatter([picked["gamma"]], [picked["beta"]], color="#e63946", marker="*", s=100)
-        contour.set(xlabel="γ", ylabel="β", title="Energy contours; white = gradient-norm contours")
-        fig.colorbar(cs, ax=contour, label="expected energy")
+        years = result["years"]
+        probabilities = np.array([row["digital_probability_by_industry"] for row in result["rows"]]).T
+        fig, ax = plt.subplots(figsize=(12, 7))
+        image = ax.imshow(probabilities, vmin=0, vmax=1, cmap="viridis", aspect="auto")
+        ax.set(title="QAOA digital probability by year — P(bit 0), not bit 1",
+               xlabel="year", ylabel="industry", xticks=range(len(years)), xticklabels=years,
+               yticks=range(selected.model.n), yticklabels=selected.model.names)
+        for index, marker in enumerate(result["exact_flip_markers"]):
+            early, late = marker["earliest_digital_year"], marker["latest_digital_year"]
+            if marker["has_exact_degeneracy"]:
+                left, right = years.index(marker["degenerate_years"][0]), years.index(marker["degenerate_years"][-1])
+                ax.hlines(index, left, right, color="white", linewidth=1.5)
+            if marker["never_digital_through_window"]:
+                ax.scatter([len(years)-1], [index], marker=">", s=55, facecolors="none", edgecolors="white", linewidths=1.4)
+            elif marker["already_digital_at_window_start"]:
+                ax.scatter([0], [index], marker="<", s=55, color="white", linewidths=1.4)
+            elif marker["degenerate_tipping_interval"]:
+                left, right = years.index(early), years.index(late)
+                ax.scatter([left, right], [index, index], marker="|", s=85, color="white", linewidths=1.5)
+            else:
+                ax.scatter([years.index(early)], [index], marker="x", s=32, color="white", linewidths=1.4)
+        from matplotlib.lines import Line2D
+        ax.legend(handles=[
+            Line2D([0], [0], marker="x", color="white", linestyle="None", label="exact classical flip"),
+            Line2D([0], [0], color="white", linewidth=1.5, label="exact degeneracy / flip-uncertainty range"),
+            Line2D([0], [0], marker="<", color="white", linestyle="None", label="already digital at 2026"),
+            Line2D([0], [0], marker=">", markerfacecolor="none", color="white", linestyle="None", label="never digital through 2040"),
+        ], loc="upper right", fontsize=8, framealpha=.8)
+        fig.colorbar(image, ax=ax, label="QAOA statevector P(industry is digital = bit 0)")
         plt.tight_layout(); plt.show(); plt.close(fig)
-        print(f"Selected grid angles: γ={picked['gamma']:.3f}, β={picked['beta']:.3f}; E={picked['expected_energy_model_units']:.3f}.")
-        print(f"CPU={landscape['cpu_seconds']:.2f}s; exact min-cut reference={landscape['exact_minimum_model_units']:.3f}. "
-              "Finite differences use actual grid spacing and one-sided boundaries. A small gradient is not claimed to prove a minimum; "
-              "the exact reference does not alter circuit probabilities.")
+        angles = [(row["year"], row["selected_gamma"], row["selected_beta"]) for row in result["rows"]]
+        print(f"{result['region']} | 15 independent same-20-node QAOA circuits | CPU={result['cpu_seconds']:.2f}s.")
+        if persisted:
+            print(f"Loaded matching persisted local result: {path.name}")
+        print("Per-year selected (year, γ, β):", angles)
+        print("Exact min-cut markers use extremal ground states: lines are legitimate degeneracy intervals; < and > denote left/right censoring.")
+        print("Expected QAOA energy and exact reference are retained in persisted provenance; no probability is forced to match the exact solution.")
 
-def do_landscape(_):
-    if landscape_lock.locked():
+def do_year_sweep(_):
+    if year_sweep_lock.locked():
         return
     selected = selected_region_scenario()
-    gamma, beta = landscape_parameters()
-    key = (model_fingerprint(selected.model), region_year.value, tuple(gamma), tuple(beta))
-    landscape_status.value = "<b style='color:#92400e'>Computing bounded local CPU p=1 QAOA grid… no provider job is being submitted.</b>"
+    key = year_sweep_key(selected)
+    year_sweep_status.value = "<b style='color:#92400e'>Computing 15 × bounded 3×3 local CPU QAOA objectives… no provider job is being submitted.</b>"
     def worker():
         try:
-            with landscape_lock:
-                result = compute_qaoa_landscape(selected.model, region_year.value, gamma, beta)
-                result["region"] = selected.name
-                result["assumption"] = "Independent 20-node region; no cross-region ties."
-                path = persist_landscape(result, ROOT / "results" / "dashboard_landscapes")
-                landscape_memory_cache[key] = result
-            landscape_status.value = f"<b style='color:#166534'>Saved local landscape: {path.name}</b>"
+            with year_sweep_lock:
+                result = compute_qaoa_year_sweep(selected.model, YEARS, region=selected.name, region_seed=20261106)
+                path = persist_qaoa_year_sweep(result, ROOT / "results" / "qaoa_year_sweeps")
+                year_sweep_memory[key] = result
+            year_sweep_status.value = f"<b style='color:#166534'>Saved local yearly heatmap provenance: {path.name}</b>"
         except Exception as exc:
-            landscape_status.value = f"<b style='color:#b91c1c'>Landscape failed: {type(exc).__name__}: {exc}</b>"
-        render_landscape()
+            year_sweep_status.value = f"<b style='color:#b91c1c'>Yearly heatmap failed: {type(exc).__name__}: {exc}</b>"
+        render_year_sweep()
     threading.Thread(target=worker, daemon=True).start()
 
-for widget in [region_count,region_select,region_year,region_scenario,landscape_resolution]:
-    widget.observe(render_landscape, "value")
-landscape_compute.on_click(do_landscape)
+for widget in [region_count,region_select,region_scenario]:
+    widget.observe(render_year_sweep, "value")
+year_sweep_compute.on_click(do_year_sweep)
 set_region_options()  # defer plotting until the Tab is attached and visible
 region_tab=W.VBox([title("Compare one, two and five regions without pretending they are one large quantum circuit"),
                    W.HBox([region_count,region_select,region_year,region_scenario,region_compute,region_reset]),region_out,
-                   title("Optional energy-and-gradient landscape"), W.HBox([landscape_resolution,landscape_compute]),landscape_status,landscape_out])"""),
+                   title("Primary QAOA teaching view: industry-by-year digital probability"), year_sweep_compute,year_sweep_status,year_sweep_out])"""),
         code("""# Headless callback smoke: this exercises real widget observers without any remote call.
 import os
 dashboard_tabs = W.Tab(children=[tiny_tab, full_tab, quantum_tab, region_tab])
@@ -569,11 +584,10 @@ if os.environ.get("PAPERFLIP_DASHBOARD_SMOKE") == "1":
     region_select.value = "California"
     region_count.value = 1
     dashboard_tabs.selected_index = 3
-    landscape_resolution.value = 3
     dashboard_tabs.selected_index = 0
     for label, output in [
         ("tiny", tiny_out), ("full-network", full_out), ("quantum", quantum_out),
-        ("regions", region_out), ("landscape", landscape_out),
+        ("regions", region_out), ("yearly probability heatmap", year_sweep_out),
     ]:
         assert_output_clean(label, output)
     assert "cache" in QCACHE["source_label"].lower()

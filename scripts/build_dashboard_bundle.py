@@ -19,6 +19,8 @@ FILES = (
     "artifacts/qbraid_runs/smoke_3q_verified_metrics.json",
     "artifacts/qaoa_landscape_pacific_nw_2033.png",
     "artifacts/qaoa_landscape_pacific_nw_2033.json",
+    "artifacts/qaoa_yearly_probability_pacific_nw.png",
+    "artifacts/qaoa_yearly_probability_pacific_nw.json",
     "README.md",
     "QBRAID_START_HERE.md",
 )

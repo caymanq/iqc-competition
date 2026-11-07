@@ -23,3 +23,13 @@ def test_smoke_rejects_output_captured_callback_tracebacks():
     assert 'item.get("output_type") == "error"' in source
     assert '"Traceback" in item.get("text", "")' in source
     assert 'render_full()  # direct Section 2 first-render/legend regression' in source
+
+
+def test_generated_notebook_uses_digital_bit_zero_yearly_heatmap():
+    notebook = nbformat.read(ROOT / "notebooks" / "paperflip_dashboard.ipynb", as_version=4)
+    source = "\n".join(cell.source for cell in notebook.cells if cell.cell_type == "code")
+    assert "Compute yearly probability heatmap (local CPU)" in source
+    assert "P(bit_i=0): **digital**" in source
+    assert "QAOA digital probability by year — P(bit 0), not bit 1" in source
+    assert "exact degeneracy / flip-uncertainty range" in source
+    assert "never digital through 2040" in source

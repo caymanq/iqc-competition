@@ -66,12 +66,12 @@ the Lab notebook.
   quantum model is an independent 20-node circuit, with no cross-region ties.
   The yellow **Compute selected 20-node view** button is the only action that
   may run a new local CPU statevector calculation; it does not contact qBraid.
-- Tab 4's **Compute QAOA landscape (local CPU)** is separately explicit. It
-  evaluates only the selected independent 20-node region/year on a bounded
-  3×3, 5×5, or 7×7 standard-p1-QAOA grid, persists local provenance under
-  `results/dashboard_landscapes/`, and never submits a provider job. The
-  surface colors encode finite-difference gradient magnitude, not a
-  probability or a claim that a zero gradient is a minimum.
+- Tab 4's **Compute yearly probability heatmap (local CPU)** is separately
+  explicit. It runs one selected independent 20-node region for 2026–2040:
+  each year uses a bounded 3×3 standard-p1-QAOA expected-energy grid, then
+  displays exact-statevector `P(bit_i=0)` marginals, where bit 0 is digital.
+  It persists provenance under `results/qaoa_year_sweeps/`, never submits a
+  provider job, and does not imply empirical adoption probabilities.
 - Save with **File → Save Notebook** or Ctrl/Cmd+S. When finished, use
   **Kernel → Shut Down Kernel** and stop the Lab session in the qBraid UI.
 
